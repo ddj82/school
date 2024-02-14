@@ -1,0 +1,32 @@
+
+<조건문 - switch문>
+
+switch () {
+case 1: {
+	실행문; 
+	break;
+}
+case 2: {
+	실행문; 
+	break;
+}
+case 3: {
+	실행문; 
+	break;
+}
+case 3: {
+	실행문; 
+	break;
+}
+case 4: {
+	프로그램 종료; 
+	break;
+}
+default: {
+	실행문;
+}
+
+
+
+
+System.arraycopy(복사할배열1, 배열1의 복사시작번호, 붙여넣을배열2, 배열2붙일시작인덱스, 복사길이);

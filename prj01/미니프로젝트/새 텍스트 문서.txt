@@ -1,0 +1,107 @@
+회원 테이블
+
+주문자명: 
+닉네임: 
+연락처: 01044448888
+주소: 서울시 강남구 역삼동
+요청사항: 문앞에 두고 가주세요
+
+
+주문자명, 닉네임 >> 아무것도 입력 안할시 디폴트값 (비회원) << 들어가게
+
+연락처, 주소 낫널
+요청사항 널가능
+
+
+
+
+주문서
+지점명: 맥도날드 안양점
+주문일자: 2024-02-05 17:23:23
+
+담당자명: 홍길동
+
+주문자: 회원입니당
+연락처: 01044448888
+주소: 서울시 강남구 역삼동
+주문내용:
+맥스파이시 상하이 버거 5개 	28,000원
+보성녹돈 버거 2개 		14,200원
+골든 모짜렐라 치즈스틱 4조각 1개 	4,800원
+아이스 바닐라 라떼 1개 	4,000원
+아이스 아메리카노(시럽없음) 2개 	6,200원
+
+총 금액: 57,200원
+
+
+
+주문서테이블
+
+버거명 버거세트명
+
+
+
+
+
+
+
+
+
+burger
+상품번호 : [7, 3, 7], 
+
+b_num
+상품수량 : [2, 3, 5]
+
+
+SELECT MENU_NM, MENU_PR FROM MENU_INFO WHERE MENU_NO = burger.get(0);
+rs.getInt("MENU_PR") >>>6600
+rs.getInt("MENU_PR") *  b_num.get(0)
+6600 * 2
+
+
+SELECT MENU_NM,  MENU_PR FROM MENU_INFO WHERE MENU_NO = burger.get(1);
+rs.getInt("MENU_PR") >>>5000
+rs.getInt("MENU_PR") *  b_num.get(1)
+5000 * 3
+
+SELECT MENU_NM,  MENU_PR FROM MENU_INFO WHERE MENU_NO = burger.get(2);
+rs.getInt("MENU_PR") >>>6600
+rs.getInt("MENU_PR") *  b_num.get(2)
+6600 * 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+주문번호 메뉴번호 수량 총가격
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
