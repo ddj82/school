@@ -41,21 +41,37 @@ public class Ex {
 //        System.out.println(ss[5].length());
 //        System.out.println(ss.length);
 
-        int[] num_list = {-1, 2, 5, 6, 3};
-            int answer = 0;
-            int a = 0;
-            int b = 0;
+//        int[] num_list = {-1, 2, 5, 6, 3};
+//            int answer = 0;
+//            int a = 0;
+//            int b = 0;
+//
+//            for (int i = 0; i < num_list.length; i++) {
+//                if (i % 2 == 1) {
+//                    b += i;
+//                    System.out.println("b: " + b + ", " + i);
+//                } else {
+//                    a += i;
+//                    System.out.println("a: " + a + ", " + i);
+//                }
+//            }
+//            answer = Math.max(a, b);
+//        System.out.println(answer);
 
-            for (int i = 0; i < num_list.length; i++) {
-                if (i % 2 == 1) {
-                    b += i;
-                    System.out.println("b: " + b + ", " + i);
-                } else {
-                    a += i;
-                    System.out.println("a: " + a + ", " + i);
+        int[] arr = {1, 0, 0, 1, 0, 0};
+        int[] arr1 = {0, 0, 0, 1};
+        int[] arr2 = {1, 1, 1, 1, 0};
+        int idx = 4;
+        int idx1 = 1;
+        int idx2 = 3;
+        int a = 0;
+        for (int i = 0; i < arr1.length; i++) {
+            if (i >= idx1) {
+                if (arr1[i] != 0) {
+                    a = i;
                 }
             }
-            answer = Math.max(a, b);
-        System.out.println(answer);
+        }
+
     }
 }

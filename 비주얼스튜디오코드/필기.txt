@@ -5012,8 +5012,8 @@ width속성이나 height속성을 바로 사용하는 경우는 단위를 픽셀
 
 
 - IMG태그 형식 (= 문법, Syntax) : 
-<img src = "경로" alt = "값" title = "텍스트" width = "값" height = "값">
-<img src = "경로" alt = "값" title = "텍스트" style = "width : 값(px 또는 %, vw); height = 값(px 또는 %, vh);">
+<img src = "이미지파일 경로" alt = "값" title = "텍스트" width = "값" height = "값">
+<img src = "이미지파일 경로" alt = "값" title = "텍스트" style = "width : 값(px 또는 %, vw); height = 값(px 또는 %, vh);">
 
 
 - src 속성 : 
@@ -5093,8 +5093,8 @@ form -> 특수케이스블록레벨 위아래 여백이 없음
 
 
 label -> 인라인레벨
-label이 입력요소의 앞에 있으면 머릿말 역할
-label이 입력요소의 뒤에 있으면 꼬릿말 역할
+label이 입력요소의 앞에 있으면 머리말 역할
+label이 입력요소의 뒤에 있으면 꼬리말 역할
 type = "text" : 한줄문자열
 type = "submit"이 있는 나를 감싸고 있는 입력요소가 있다면 그 데이터를 담아서 폼태그의 액션주소로 실행하는 기능
 나(type = "submit")를 감싸고 있는 폼태그의 액션주소로 실행하는 기능
@@ -5105,12 +5105,14 @@ input이 label태그 안에 있으면 for속성이 없어도 label의 영역이 
 
 input -> 특수케이스인라인레벨
 input태그의 type의 디폴트는 text이다.
+input태그의 value는 데이터의 기본값을 설정하는것
 
 
 button -> 특수케이스인라인레벨
 submit버튼
 <input type="submit" value = "가입하기">
 <button type = "submit">가입하기</button>
+<button type = "reset"> - 처음상태로 되돌려라, 초기값으로 되돌려라
 
 type="submit" 일때 value를 쓰지 않으면 디폴트값이 한국은 "제출"이다
 button태그가 form태그 안에 있으면 type의 디폴트는 submit이다.
@@ -5133,7 +5135,7 @@ form태그의
 길이 제한이 없어 대용량 데이터를 전송할 수 있으며, 보안처리 되어야 하는 데이터를 전송할 때 사용한다.
 
 - submit속성
-나를 감싸고 있는(submit을 가지고 있는) form태그의 action속성을 활성화 한다.(실행시킨다.)
+나를 감싸고 있는(submit을 가지고 있는) form태그의 action속성을 실행시킨다.(활성화한다.)
 
 
 
