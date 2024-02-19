@@ -1,6 +1,7 @@
 package study;
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.*;
 
 public class Ex {
     public static void main(String[] args) {
@@ -57,21 +58,47 @@ public class Ex {
 //            }
 //            answer = Math.max(a, b);
 //        System.out.println(answer);
-
-        int[] arr = {1, 0, 0, 1, 0, 0};
-        int[] arr1 = {0, 0, 0, 1};
-        int[] arr2 = {1, 1, 1, 1, 0};
-        int idx = 4;
-        int idx1 = 1;
-        int idx2 = 3;
-        int a = 0;
-        for (int i = 0; i < arr1.length; i++) {
-            if (i >= idx1) {
-                if (arr1[i] != 0) {
-                    a = i;
-                }
+//
+//        int[] arr = {1, 0, 0, 1, 0, 0};
+//        int[] arr1 = {0, 0, 0, 1};
+//        int[] arr2 = {1, 1, 1, 1, 0};
+//        int idx = 4;
+//        int idx1 = 1;
+//        int idx2 = 3;
+//        int a = 0;
+//        for (int i = 0; i < arr1.length; i++) {
+//            if (i >= idx1) {
+//                if (arr1[i] != 0) {
+//                    a = i;
+//                }
+//            }
+//        }
+//        String my_string = "hello";
+//        String answer = "";
+//        int num1 = 1;
+//        int num2 = 2;
+//        char c = my_string.charAt(num1);
+//
+//        for (int i = 0; i < my_string.length(); i++) {
+//            if (i == num1) {
+//                answer += my_string.charAt(num2);
+//            } else if (i == num2) {
+//                answer += c;
+//            } else {
+//                answer += my_string.charAt(i);
+//            }
+//        }
+        String my_string = "hi12392";
+        String s = "";
+        List<Integer> a = new ArrayList<>();
+        for (int i = 0; i < my_string.length(); i++) {
+            if (Character.isDigit(my_string.charAt(i))) {
+                s += my_string.charAt(i);
+                a.add(Integer.parseInt(s));
+                s = "";
             }
         }
-
+        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
+        int[] answer = a.stream().mapToInt(i -> i).toArray();
     }
 }
