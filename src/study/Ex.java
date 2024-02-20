@@ -88,17 +88,39 @@ public class Ex {
 //                answer += my_string.charAt(i);
 //            }
 //        }
-        String my_string = "hi12392";
-        String s = "";
+//        String my_string = "hi12392";
+//        String s = "";
+//        List<Integer> a = new ArrayList<>();
+//        for (int i = 0; i < my_string.length(); i++) {
+//            if (Character.isDigit(my_string.charAt(i))) {
+//                s += my_string.charAt(i);
+//                a.add(Integer.parseInt(s));
+//                s = "";
+//            }
+//        }
+//        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
+//        int[] answer = a.stream().mapToInt(i -> i).toArray();
+        int n = 10;
         List<Integer> a = new ArrayList<>();
-        for (int i = 0; i < my_string.length(); i++) {
-            if (Character.isDigit(my_string.charAt(i))) {
-                s += my_string.charAt(i);
-                a.add(Integer.parseInt(s));
-                s = "";
+        a.add(n);
+        while (true) {
+            if (n % 2 == 0) {
+                n = n / 2;
+                a.add(n);
+            } else {
+                n = (3 * n) + 1;
+                a.add(n);
+            }
+            if (n == 1) {
+                break;
             }
         }
         System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
-        int[] answer = a.stream().mapToInt(i -> i).toArray();
+        String s = "asdfg";
+//        Character.toString(s.charAt(1)).equals("s");
+        if (s.charAt(1) == '1') {
+
+        }
+        System.out.println(s.charAt(0) + 1);
     }
 }
