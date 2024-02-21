@@ -5359,6 +5359,7 @@ style=""		1	0	0	0	specificity = 1,0,0,0
 
         display속성은 해당 요소를
         none : 보여지지 않도록 처리함. 영역이 완전히 사라짐.
+        
         block : 영역을 블록으로 보여지도록 처리함.
 
 
@@ -5450,6 +5451,7 @@ style=""		1	0	0	0	specificity = 1,0,0,0
         :optional 선택자는 익스플로러9버전 이하는 지원하지 않는다.
 
 
+[ ] -> 속성선택자
 
         /* 속성 선택자는 특정 속성을 가진 요소를 선택하는데 사용된다. */
         형식 1 : a[target] => 엘리먼트명[속성명]
@@ -5478,31 +5480,84 @@ style=""		1	0	0	0	specificity = 1,0,0,0
 
 
 
+-------------------------------------------------------------------------
+//
+//49
+//필기
+//
+
+
+        /* 
+        title속성 중에서 flower라는 단독 문자열이 있는(공백으로 구분) 요소만 선택
+        flowers, my-flower, flower-tree 같이 무언가 연결된 문자열은 해당 안됨.
+        [title~="flower"] or [title~=flower]
+        */
+        [title~="flower"] {border: 5px solid red;}
+
+        /* top라는 문자열이 맨 앞에 있으면서 단독으로 있거나 -(하이픈, 대시)로 나뉘어져 있는 요소만 선택.
+        topcontent, content-top과 같은 문자열은 해당 안됨. */
+        [class|=top] {background: lavender;}
+
+        /* top라는 문자열로 시작되는 모든 요소 */
+        [id^="top"] {background: skyblue;}
+
+        /* class명이 test라는 문자열로 끝나는 모든 요소 */
+        [class$="test"] {background: red;}
+
+        /* class명의 일부에 te라는 문자열이 포함된 모든 요소 */
+        [class*="te"] {color: green;}
+
+
+
+textarea의 스타일요소 중 resize => 크기 조절 기능을 조정함
+
+
+*****웹 접근성을 잘 지키자*****
+//데이터는 전송해야하고, 내용은 지정해놔야 할 때 웹 접근성에 맞추기 위해 readonly 처리와 background-color를 연한회색으로 해줌
 
 
 
 
+list-style-type : 마커 모양(ul, ol)변경 속성.
+
+list-style-position : 마커 들여쓰기 속성. 기본값:outside
+**inside속성은 list-style-type: none; 일때는 적용되지 않는다.
+
+list-style-image : 마커 스타일을 이미지로 사용 할 수 있는 속성.
+
+list-style : shorthand방식. 마커모양, 들여쓰기속성, 이미지사용속성 값들을 같이 사용 가능.
 
 
 
 
+<link>태그 (head에 기술)
+ - href 속성 : 참조 할 파일 위치(필수)
+ - rel 속성 : 문서와의 관계를 명시하는 속성(필수)
+ - type 속성 : 링크된 문서의 MIME타입을 정의하는 속성(type 생략가능)
+ **MIME(Multipurpose Internet Mail Extensions : 다목적의 인터넷 메일 확장자) : 웹을 통해 여러 형태의 파일을 전달하는데 사용하는 속성.
 
 
 
 
+text-align : 
+- 인라인 레벨 요소의 수평 정렬을 시키는 속성 
+- 속성값 : left, center, right
+***- 수평정렬을 시키고자 하는 인라인레벨 요소를 감싸고 있는 부모태그에 속성을 기술해주어야 한다.***
+
+
+vertical-align : 
+- 인라인 레벨 요소의 수직 정렬을 시키는 속성
+- 속성값 : top, middle, bottom
+***- 수직정렬을 시키고자 하는 인라인레벨 요소에 직접 속성을 기술해주어야 한다.
 
 
 
 
-
-
-
-
-
-
-
-
-
+        - clear속성값: 
+        left - 해당 요소에 바로 인접한 좌측에 플로팅 요소가 허용되지 않음
+        right - 해당 요소에 바로 인접한 우측에 플로팅 요소가 허용되지 않음
+        both - 해당 요소에 바로 인접한 양쪽에 플로팅 요소가 허용되지 않음
+        inherit - 상위 요소(부모요소)의 클리어 값을 상속받음.
 
 
 

@@ -100,27 +100,45 @@ public class Ex {
 //        }
 //        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
 //        int[] answer = a.stream().mapToInt(i -> i).toArray();
-        int n = 10;
-        List<Integer> a = new ArrayList<>();
-        a.add(n);
-        while (true) {
-            if (n % 2 == 0) {
-                n = n / 2;
-                a.add(n);
-            } else {
-                n = (3 * n) + 1;
-                a.add(n);
-            }
-            if (n == 1) {
-                break;
-            }
+//        int n = 10;
+//        List<Integer> a = new ArrayList<>();
+//        a.add(n);
+//        while (true) {
+//            if (n % 2 == 0) {
+//                n = n / 2;
+//                a.add(n);
+//            } else {
+//                n = (3 * n) + 1;
+//                a.add(n);
+//            }
+//            if (n == 1) {
+//                break;
+//            }
+//        }
+//        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
+//        String s = "asdfg";
+////        Character.toString(s.charAt(1)).equals("s");
+//        if (s.charAt(1) == '1') {
+//
+//        }
+//        System.out.println(s.charAt(0) + 1);
+        int answer = 0;
+        String a = "43 + 12";
+        String[] s = a.split(" ");
+        for (int i = 0; i < s.length; i++) {
+            s[i] = s[i].trim();
         }
-        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
-        String s = "asdfg";
-//        Character.toString(s.charAt(1)).equals("s");
-        if (s.charAt(1) == '1') {
+        if (s[1].equals("+")) {
+            answer = Integer.parseInt(s[0]) + Integer.parseInt(s[2]);
+        }
+        else if (s[1] == "-") {
+            answer = Integer.parseInt(s[0]) - Integer.parseInt(s[2]);
+        }
+        else {
+            answer = Integer.parseInt(s[0]) * Integer.parseInt(s[2]);
+        }
+        System.out.println(Arrays.toString(Arrays.stream(s).toArray()));
+        System.out.println(answer);
 
-        }
-        System.out.println(s.charAt(0) + 1);
     }
 }
