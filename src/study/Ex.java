@@ -122,23 +122,32 @@ public class Ex {
 //
 //        }
 //        System.out.println(s.charAt(0) + 1);
-        int answer = 0;
-        String a = "43 + 12";
-        String[] s = a.split(" ");
-        for (int i = 0; i < s.length; i++) {
-            s[i] = s[i].trim();
+//        int answer = 0;
+//        String a = "43 + 12";
+//        String[] s = a.split(" ");
+//        for (int i = 0; i < s.length; i++) {
+//            s[i] = s[i].trim();
+//        }
+//        if (s[1].equals("+")) {
+//            answer = Integer.parseInt(s[0]) + Integer.parseInt(s[2]);
+//        }
+//        else if (s[1] == "-") {
+//            answer = Integer.parseInt(s[0]) - Integer.parseInt(s[2]);
+//        }
+//        else {
+//            answer = Integer.parseInt(s[0]) * Integer.parseInt(s[2]);
+//        }
+//        System.out.println(Arrays.toString(Arrays.stream(s).toArray()));
+//        System.out.println(answer);
+        int[] arr = {1, 2, 3, 4, 5};
+        int[][] inter = {{1, 3}, {0, 4}};
+        List<Integer> a = new ArrayList<>();
+        for (int i = inter[0][0]; i <= inter[0][1]; i++) {
+            a.add(arr[i]);
         }
-        if (s[1].equals("+")) {
-            answer = Integer.parseInt(s[0]) + Integer.parseInt(s[2]);
+        for (int i = inter[1][0]; i <= inter[1][1]; i++) {
+            a.add(arr[i]);
         }
-        else if (s[1] == "-") {
-            answer = Integer.parseInt(s[0]) - Integer.parseInt(s[2]);
-        }
-        else {
-            answer = Integer.parseInt(s[0]) * Integer.parseInt(s[2]);
-        }
-        System.out.println(Arrays.toString(Arrays.stream(s).toArray()));
-        System.out.println(answer);
-
+        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
     }
 }
