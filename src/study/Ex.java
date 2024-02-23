@@ -139,15 +139,16 @@ public class Ex {
 //        }
 //        System.out.println(Arrays.toString(Arrays.stream(s).toArray()));
 //        System.out.println(answer);
-        int[] arr = {1, 2, 3, 4, 5};
-        int[][] inter = {{1, 3}, {0, 4}};
-        List<Integer> a = new ArrayList<>();
-        for (int i = inter[0][0]; i <= inter[0][1]; i++) {
-            a.add(arr[i]);
-        }
-        for (int i = inter[1][0]; i <= inter[1][1]; i++) {
-            a.add(arr[i]);
-        }
-        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
+//        int[] arr = {1, 2, 3, 4, 5};
+//        int[][] inter = {{1, 3}, {0, 4}};
+//        List<Integer> a = new ArrayList<>();
+//        for (int i = inter[0][0]; i <= inter[0][1]; i++) {
+//            a.add(arr[i]);
+//        }
+//        for (int i = inter[1][0]; i <= inter[1][1]; i++) {
+//            a.add(arr[i]);
+//        }
+//        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
+        
     }
 }
