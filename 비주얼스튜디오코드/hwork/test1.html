@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input[type="radio"] {
+            display: none
+        }
+        label {
+            border: 1px solid black;
+        }
+        input:checked + label{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="radio" id="m" name="gen" required>
+        <label for="m">남자</label>
+        <input type="radio" id="w" name="gen" required>
+        <label for="w">여자</label>
+        <input type="radio" id="n" name="gen" required>
+        <label for="n">선택안함</label>
+    </div>
+</body>
+</html>
