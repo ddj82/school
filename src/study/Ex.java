@@ -149,6 +149,54 @@ public class Ex {
 //            a.add(arr[i]);
 //        }
 //        System.out.println(Arrays.toString(a.stream().mapToInt(i -> i).toArray()));
-        
+
+
+//        String my_string = "banana";
+//
+//        List<String> s = new ArrayList<>();
+//
+//        String str = "";
+//
+//        for (int i = 0; i < my_string.length(); i++) {
+//            str = my_string.substring(i, my_string.length());
+//            s.add(str);
+//        }
+//        System.out.println(s);
+//        String[] answer = s.toArray(String[]::new);
+//        Arrays.sort(answer);
+//        s.stream().toArray(String[]::new);
+//        System.out.println(Arrays.toString(s.toArray(String[]::new)));
+
+//        int age = 51;
+//        String answer = Integer.toString(age);
+//        String[] a = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
+//        for (int i = 0; i < a.length; i++) {
+//            String s = Integer.toString(i);
+//            answer = answer.replaceAll(s, a[i]);
+//        }
+//        System.out.println(answer);
+
+//        String myString = "axbxcxdx";
+//        String[] answer = myString.split("x");
+//        List<String> s = new ArrayList<>();
+//        for (int i = 0; i < answer.length; i++) {
+//            if (answer[i].isEmpty()) {
+//
+//            }
+//        }
+        int num = 29183;
+        int k = 1;
+        int answer = 0;
+
+        String n = Integer.toString(num);
+        String n1 = Integer.toString(k);
+
+        if (n.indexOf(n1) != -1) {
+            answer = n.indexOf(n1) + 1;
+        } else {
+            answer = -1;
+        }
+        int a = Integer.parseInt(n);
+
     }
 }
