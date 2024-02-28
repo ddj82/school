@@ -90,29 +90,33 @@
     </form>
     <br><br>
     <div>
+        <!-- <form action="" onsubmit="return "> -->
+        <form action="">
+            
+        </form>
         <form action="">
             <div id="id"><input type="text" name="id" pattern="[a-zA-Z0-9_\-]+" minlength="5" maxlength="20" placeholder=" 아이디" required><div class="com">@naver.com</div></div>
-            <input type="password" name="paw" pattern="[a-zA-Z0-9~!@#$%^&\*_]+" minlength="8" maxlength="16" placeholder=" 비밀번호" required>
-            <input class="email" type="email" name="email" pattern="[a-zA-Z0-9_]+[@]+[a-zA-Z]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*" placeholder=" [선택] 이메일주소 (비밀번호 찾기 등 본인 확인용)">
+            <div><input type="password" name="paw" pattern="[a-zA-Z0-9~!@#$%^&\*_]+" minlength="8" maxlength="16" placeholder=" 비밀번호" required></div>
+            <div><input onclick="" class="email" type="email" name="email" pattern="[a-zA-Z0-9_]+[@]+[a-zA-Z]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*" placeholder=" [선택] 이메일주소 (비밀번호 찾기 등 본인 확인용)"></div>
+            <p></p>
         </form>
     </div>
-    <br>
     <div>
         <form>
-            <input type="text" name="uname" pattern="[가-힣a-zA-Z\s]+" placeholder=" 이름" required>
-            <input type="text" name="uage" pattern="[0-9]+" minlength="8" maxlength="8" placeholder=" 생년월일 8자리" required>
+            <div><input type="text" name="uname" pattern="[가-힣a-zA-Z\s]+" placeholder=" 이름" required></div>
+            <div><input type="text" name="uage" pattern="[0-9]+" minlength="8" maxlength="8" placeholder=" 생년월일 8자리" required></div>
 
-            <div id="gen">
-                <input type="radio" id="m" name="gen" required><label class="le" for="m">남자</label><input type="radio" id="w" name="gen" required><label class="cen" for="w">여자</label><input type="radio" id="n" name="gen" required><label class="ri" for="n">선택안함</label>
+            <div id="gen"><input type="radio" id="m" name="gen" required><label class="le" for="m">남자</label><input type="radio" id="w" name="gen" required><label class="cen" for="w">여자</label><input type="radio" id="n" name="gen" required><label class="ri" for="n">선택안함</label></div>
+
+            <div>
+                <select name="nation">
+                    <option selected>대한민국 +82</option>
+                    <option>네팔 +977</option>
+                    <option>브라질 +55</option>
+                    <option>콩고 +242</option>
+                </select>
             </div>
-
-            <select name="nation">
-                <option selected>대한민국 +82</option>
-                <option>네팔 +977</option>
-                <option>브라질 +55</option>
-                <option>콩고 +242</option>
-            </select><br>
-            <input class="tel" type="tel" name="tel" placeholder=" 휴대전화번호" pattern="(010)[0-9]{4}[0-9]{4}" required>
+            <div><input class="tel" type="tel" name="tel" placeholder=" 휴대전화번호" pattern="(010)[0-9]{4}[0-9]{4}" required></div>
         </form>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -121,6 +125,13 @@
             <button type="submit">인증요청</button>
         </div>
     </form>
+    <!-- <script>
+        var inpa = document.getElementsByTagName("input")[1];
+        var diva = document.getElementsByTagName("div")[1];
+        inpa.onclick = function() {
+            diva.style.border = "2px solid #00dc00";
+        };
+    </script> -->
 </body>
 
 </html>
