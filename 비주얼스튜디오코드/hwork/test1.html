@@ -14,6 +14,9 @@
         input:checked + label{
             border: 1px solid red;
         }
+        .hi::placeholder {
+            color: blueviolet;
+        }
     </style>
 </head>
 <body>
@@ -25,9 +28,21 @@
         <li>비밀번호: 필수 정보입니다.</li>
     </ul>
 
-    <input type="text" id="id1">
-    <input type="text" id="paw2">
-    <input type="text" id="id1">
-    <input type="text" id="id1">
+    <input type="text" id="id1" placeholder="글자색을 바꿔보자">
+    <input type="text" id="paw2" placeholder="글자색을 바꿔보자">
+    <script>
+        document.getElementById("id1").addEventListener("focus", (e) => {
+            console.log(e.target);
+            let inputph = document.getElementById("id1");
+            inputph.setAttribute("class", "hi");
+        });
+
+        document.getElementById("id1").addEventListener("blur", (e) => {
+            console.log(e.target);
+            let inputph = document.getElementById("id1");
+            inputph.removeAttribute("class");
+        });
+
+    </script>
 </body>
 </html>
