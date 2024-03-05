@@ -184,19 +184,29 @@ public class Ex {
 //
 //            }
 //        }
-        int num = 29183;
-        int k = 1;
-        int answer = 0;
-
-        String n = Integer.toString(num);
-        String n1 = Integer.toString(k);
-
-        if (n.indexOf(n1) != -1) {
-            answer = n.indexOf(n1) + 1;
-        } else {
-            answer = -1;
-        }
-        int a = Integer.parseInt(n);
+//        int num = 29183;
+//        int k = 1;
+//        int answer = 0;
+//
+//        String n = Integer.toString(num);
+//        String n1 = Integer.toString(k);
+//
+//        if (n.indexOf(n1) != -1) {
+//            answer = n.indexOf(n1) + 1;
+//        } else {
+//            answer = -1;
+//        }
+//        int a = Integer.parseInt(n);
+//        String str = "Python";
+//        str = str.toLowerCase();
+//        char[] c = str.toCharArray();
+//        Arrays.sort(c);
+//        String s = "";
+//        for (int i = 0; i < c.length; i++) {
+//            s += c[i];
+//        }
+//        System.out.println(str);
+//        System.out.println(s);
 
     }
 }
