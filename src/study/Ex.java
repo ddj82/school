@@ -207,6 +207,18 @@ public class Ex {
 //        }
 //        System.out.println(str);
 //        System.out.println(s);
+//
+//        String my_string = "people";
+//        char[] cc = my_string.toCharArray();
+//        List<Character> c = new ArrayList<>();
+//        for (int i = 0; i < cc.length; i++) {
+//            if (!(c.contains(cc[i]))) {
+//                c.add(cc[i]);
+//            }
+//        }
+//        for (int i = 0; i < c.size(); i++) {
+//            answer += c.get(i);
+//        }
 
     }
 }
