@@ -12,7 +12,7 @@
             $(".wrap_1 p.active").addClass("on");
             
             // attr("속성명", "속성값") : 해당 요소에 해당 속성과 값을 설정한다.
-            // attr("속성명") : 해당 요소에 해당 속성의 값을 가져오라는 의미. 동적 속성만 가능
+            // attr("속성명") : 해당 요소에 해당 속성의 값을 가져오라는 의미. 값이 정적 속성만 가능 (동적x)
             $(".wrap_1 p.active").attr("class", "on"); //class속성 값이 존재하면 덮어쓰기 됨
             $(".wrap_1 p.active").addClass("on"); // class속성 값이 존재하면 추가 됨
             $(".wrap_1 p:eq(2) a").attr("href", "http://www.naver.com");
