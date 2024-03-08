@@ -94,6 +94,11 @@
             padding-left: 20px;
             color: red;
         }
+        li#lioktxt {
+            display: none;
+        }
+
+
         div#divMain input {
             height: 100%;
         }
@@ -129,19 +134,22 @@
     <br><br>
     <div id="divMain">
         <form action="" onsubmit="return checkForm()" name="formJoin" class="formClass">
-            <div class="did"><input onclick="" id="uid" type="text" name="uid" pattern="[a-zA-Z0-9_\-]+" minlength="5" maxlength="20" placeholder=" 아이디" ><div class="com">@naver.com</div></div>
+            <div class="did ok"><input onclick="" id="uid" type="text" name="uid" pattern="[a-zA-Z0-9_\-]+" minlength="5" maxlength="20" placeholder=" 아이디" ><div class="com">@naver.com</div></div>
 
-            <div class="dpaw"><input onclick="" type="password" id="upaw" name="upaw" pattern="[a-zA-Z0-9~!@#$%^&\*_]+" minlength="8" maxlength="16" placeholder=" 비밀번호" ></div>
+            <div class="dpaw ok"><input onclick="" type="password" id="upaw" name="upaw" pattern="[a-zA-Z0-9~!@#$%^&\*_]+" minlength="8" maxlength="16" placeholder=" 비밀번호" ></div>
 
             <div class="demail"><input onclick="" class="email" type="email" id="uemail" name="3" pattern="[a-zA-Z0-9_]+[@]+[a-zA-Z]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*" placeholder=" [선택] 이메일주소 (비밀번호 찾기 등 본인 확인용)"></div>
 
-            <ul id="requiredinput"></ul>
+            <ul id="error1">
+                <small><li id="lioktxt" class='liid'>아이디: 필수 정보입니다.</li></small>
+                <small><li id="lioktxt" class='lipaw'>비밀번호: 필수 정보입니다.</li></small>
+            </ul>
 
-            <div class="dname"><input onclick="" type="text" id="uname" name="uname" pattern="[가-힣a-zA-Z\s]+" placeholder=" 이름" ></div>
+            <div class="dname ok"><input onclick="" type="text" id="uname" name="uname" pattern="[가-힣a-zA-Z\s]+" placeholder=" 이름" ></div>
 
-            <div class="dage"><input onclick="" type="text" id="uage" name="uage" pattern="[0-9]+" minlength="8" maxlength="8" placeholder=" 생년월일 8자리" ></div>
+            <div class="dage ok"><input onclick="" type="text" id="uage" name="uage" pattern="[0-9]+" minlength="8" maxlength="8" placeholder=" 생년월일 8자리" ></div>
         
-            <div class="dgen"><input type="radio" id="m" name="ugen" ><label class="le" for="m">남자</label><input type="radio" id="w" name="ugen" ><label class="cen" for="w">여자</label><input type="radio" id="n" name="ugen" ><label class="ri" for="n">선택안함</label></div>
+            <div class="dgen ok"><input type="radio" id="m" name="ugen" value="male"><label class="le" for="m">남자</label><input type="radio" id="w" name="ugen" value="female"><label class="cen" for="w">여자</label><input type="radio" id="n" name="ugen" value="none"><label class="ri" for="n">선택안함</label></div>
 
             <div class="dnation">
                 <select id="nation" name="nation">
@@ -152,7 +160,12 @@
                 </select>
             </div>
 
-            <div class="dtel"><input onclick="" class="tel" type="tel" id="utel" name="utel" placeholder=" 휴대전화번호" pattern="(010)[0-9]{4}[0-9]{4}"></div>
+            <div class="dtel ok"><input onclick="" class="tel" type="tel" id="utel" name="utel" placeholder=" 휴대전화번호" pattern="(010)[0-9]{4}[0-9]{4}"></div>
+            <ul id="error2">
+                <small><li id="lioktxt" class='liname'>이름: 필수 정보입니다.</li></small>
+                <small><li id="lioktxt" class='liage'>생년월일: 필수 정보입니다.</li></small>
+                <small><li id="lioktxt" class='litel'>휴대전화번호: 필수 정보입니다.</li></small>
+            </ul>
             
             <button type="submit" id="end">인증요청</button>
         </form>
@@ -165,27 +178,12 @@
 
         function checkForm() {
             var check = false;
-            var formValue = document.formJoin.uid.value;
-            console.log(formValue);
-            if (formValue != "") {
-                check = ture;
-            } else {
-                document.getElementById("requiredinput").innerHTML = 
-                "<small><li>아이디: 필수 정보입니다.</li><li>비밀번호: 필수 정보입니다.</li></small>";
-            }
-            var ugenvalue = document.formJoin.ugen.value;
-            if (ugenvalue != "on") {
-                var divColor = document.getElementsByTagName("div")[7];
-                console.log(divColor);
-                divColor.style.border = "2px solid red";
-                var labelColor = document.getElementsByTagName("label");
-                for (let i = 0; i < labelColor.length; i++) {
-                    labelColor[i].style.border = "2px solid red";
-                    console.log(labelColor[i]);
-                    labelColor[i].style.color = "red";
-                }
-                
-            }
+            $("div.ok").each(function(index, value){
+                console.log("dsadasd: ", $(value).children("input").val());
+                if ($(value).children("input").val() == "") {
+                    $(".formClass input").blur();
+                } 
+            });
             return check;
         }
 
@@ -206,29 +204,51 @@
                 $(i).parent().not(".demail").addClass("bdRed");
             }
         });
-        let didok = 0;
-        let dpawok = 0;
+
         $(".formClass input").blur(function(e){
             let i = e.target;
             let iClass = $(i).parent().attr("class");
+            // let iClass = document.getElementsByTagName("div")[0].classList;
             if (i.value == "") {
                 $(i).parent().removeClass("bdRe1");
                 $(i).parent().removeClass("bdRe2");
                 $(i).parent().removeClass("bdRe3");
                 $(i).parent().removeClass("bdGreen");
                 $(i).parent().not(".demail").addClass("bdRed");
+                
                 if (iClass.split(" ")[0] == "did") {
-                    if (didok == 0) {
-                        $(".formClass").children("ul").append("<small><li class='liid'>아이디: 필수 정보입니다.</li></small>");
-                        didok++;
-                    }
+                    $(".formClass ul").find(".liid").show();
+                    $(".formClass ul#error1").filter(function(i, o){
+                        // if (o.innerText.indexOf("아이디:") < 0) {
+                            // $(".formClass").children("ul#error1").append("<small><li class='liid'>아이디: 필수 정보입니다.</li></small>");
+                        // }
+                    });
+                } else if (iClass.split(" ")[0] == "dpaw") {
+                    $(".formClass ul#error1").filter(function(i, o){
+                        if (o.innerText.indexOf("비밀번호:") < 0) {
+                            // $(".formClass").children("ul#error1").append("<small><li class='lipaw'>비밀번호: 필수 정보입니다.</li></small>");
+                        }
+                    });
+                } else if (iClass.split(" ")[0] == "dname") {
+                    $(".formClass ul#error2").filter(function(i, o){
+                        if (o.innerText.indexOf("이름:") < 0) {
+                            // $(".formClass").children("ul#error2").append("<small><li class='liname'>이름: 필수 정보입니다.</li></small>");
+                        }
+                    });
+                } else if (iClass.split(" ")[0] == "dage") {
+                    $(".formClass ul#error2").filter(function(i, o){
+                        if (o.innerText.indexOf("생년월일:") < 0) {
+                            // $(".formClass").children("ul#error2").append("<small><li class='liage'>생년월일: 필수 정보입니다.</li></small>");
+                        }
+                    });
+                } else if (iClass.split(" ")[0] == "dtel") {
+                    $(".formClass ul#error2").filter(function(i, o){
+                        if (o.innerText.indexOf("휴대전화번호:") < 0) {
+                            // $(".formClass").children("ul#error2").append("<small><li class='litel'>휴대전화번호: 필수 정보입니다.</li></small>");
+                        }
+                    });
                 }
-                if (iClass.split(" ")[0] == "dpaw") {
-                    if (dpawok == 0) {
-                        $(".formClass").children("ul").append("<small><li class='lipaw'>비밀번호: 필수 정보입니다.</li></small>");
-                        dpawok++;
-                    }
-                }
+
             } else {
                 if (iClass.split(" ")[0] == "did" || iClass.split(" ")[0] == "dname") {
                     $(i).parent().removeClass("bdGreen");
@@ -236,23 +256,32 @@
                     $(i).parent().addClass("bdRe1");
                     if (iClass.split(" ")[0] == "did") {
                         $(".formClass li.liid").remove();
-                    } else {}
+                    } else if (iClass.split(" ")[0] == "dname") {
+                        $(".formClass li.liname").remove();
+                    }
                 } else if (iClass.split(" ")[0] == "demail" || iClass.split(" ")[0] == "dtel") {
                     $(i).parent().removeClass("bdGreen");
                     $(i).parent().removeClass("bdRed");
                     $(i).parent().not(".demail").addClass("bdRe2");
+                    if (iClass.split(" ")[0] == "dtel") {
+                        $(".formClass li.litel").remove();
+                    }
                 } else if (iClass.split(" ")[0] == "dpaw" || iClass.split(" ")[0] == "dage") {
                     $(i).parent().removeClass("bdGreen");
                     $(i).parent().removeClass("bdRed");
                     $(i).parent().addClass("bdRe3");
                     if (iClass.split(" ")[0] == "dpaw") {
                         $(".formClass li.lipaw").remove();
-                    } else {}
+                    } else if (iClass.split(" ")[0] == "dage") {
+                        $(".formClass li.liage").remove();
+                    }
                 }
             }
+            // console.log(iClass);
+            // console.log((iClass.indexOf("bd") > 0));
+            // phColor();
 
         });
-
 
 
 
