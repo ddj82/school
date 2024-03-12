@@ -218,26 +218,30 @@ public class Ex {
 //        for (int i = 0; i < c.size(); i++) {
 //            answer += c.get(i);
 //        }
-        boolean[] flag = {true, false, true, false, false};
-        int[] arr = {3, 2, 4, 1, 3};
-        List<Integer> a = new ArrayList<>();
-        for (int i = 0; i < flag.length; i++) {
-            if (flag[i]) {
-                for (int j = 1; j <= arr[i] * 2; j++) {
-                    a.add(arr[i]);
-                }
-                System.out.println("추가 후 " + a);
-            } else {
-                System.out.println(arr[i]);
-                for (int k = 1; k <= arr[i]; k++) {
-                    a.remove(a.get(a.size() - 1));
-                }
-                System.out.println("제거 후 " + a);
-            }
-        }
-        System.out.println(a);
-        System.out.println(a.size());
-        System.out.println(a.size() - 1);
+//        boolean[] flag = {true, false, true, false, false};
+//        int[] arr = {3, 2, 4, 1, 3};
+//        List<Integer> a = new ArrayList<>();
+//        for (int i = 0; i < flag.length; i++) {
+//            if (flag[i]) {
+//                for (int j = 1; j <= arr[i] * 2; j++) {
+//                    a.add(arr[i]);
+//                }
+//                System.out.println("추가 후 " + a);
+//            } else {
+//                System.out.println(arr[i]);
+//                for (int k = 1; k <= arr[i]; k++) {
+//                    a.remove(a.get(a.size() - 1));
+//                }
+//                System.out.println("제거 후 " + a);
+//            }
+//        }
+//        System.out.println(a);
+//        System.out.println(a.size());
+//        System.out.println(a.size() - 1);
+
+        String a = "18446744073709551615";
+        String b = "287346502836570928366";
+
 
     }
 }
