@@ -69,23 +69,84 @@ public class aaa {
 //        		}
 //        	}
 //        }
-		int i = 1, j = 13, k = 1;
-        int answer = 0;
-        String[] a = new String[(j - i) + 1];
-        for (int z = 0; z < a.length; z++) {
-            a[z] = "" + i;
-            i++;
-            System.out.println(a[z]);
-        }
-        for (int n = 0; n < a.length; n++) {
-        	if (a[n].indexOf(("" + k)) >= 0) {
-        		answer++;
-        		if (a[n].equals((k + "" + k))) {
-        			answer++;
-        		}
-        	}
-        }
-        System.out.println(answer);
+//		int i = 1, j = 13, k = 1;
+//        int answer = 0;
+//        String[] a = new String[(j - i) + 1];
+//        for (int z = 0; z < a.length; z++) {
+//            a[z] = "" + i;
+//            i++;
+//            System.out.println(a[z]);
+//        }
+//        for (int n = 0; n < a.length; n++) {
+//        	if (a[n].indexOf(("" + k)) >= 0) {
+//        		answer++;
+//        		if (a[n].equals((k + "" + k))) {
+//        			answer++;
+//        		}
+//        	}
+//        }
+//        System.out.println(answer);
+//		String my_string = "aAb1B2cC34oOp";
+//		char[] c = my_string.toCharArray();
+//		char a = '1';
+//		int b = 5;
+//		System.out.println(Character.isDigit(a));
+//		
+//        String str = "";
+//        char[] c = my_string.toCharArray();
+//        for (int i = 0; i < c.length; i++) {
+//            if (Character.isDigit(c[i])) {
+//                str += c[i];
+//                answer += Integer.parseInt(str);
+//                str = "";
+//            }
+//        }
+		
+//		for (int i = 1; i <= a.length; i++) {
+//			b[i] = i;
+//		}
+		
+		int[] a = {30, 10, 23, 6, 100};
+		
+		int[] b = new int[a.length];
+		int max = a[0];
+		int maxidx = 0;
+		int min = a[0];
+		int minidx = 0;
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] > max) {
+				max = a[i];
+				maxidx = i;
+			}
+			if (a[i] < min) {
+				min = a[i];
+				minidx = i;
+			}
+		}
+		System.out.println(max);
+		System.out.println(maxidx);
+		System.out.println(min);
+		System.out.println(minidx);
+		
+		for (int i = 0; i < b.length; i++) {
+			b[i] = 2;
+		}
+		b[maxidx] = a.length;
+		b[minidx] = 1;
+		int c = 2; 
+		int q = 0;
+		// int[] a = {30, 10, 23, 6, 100};
+		for (int i = 0; i < a.length; i++) {
+			if (i != minidx && i != maxidx) {
+				q = a[i];
+				if (q < a[i + 1]) {
+					b[i + 1]++;
+				}
+			}
+		}
+		for (int i = 0; i < b.length; i++) {
+			System.out.println("b["+i+"]: " + b[i]);
+		}
 	}
 
 }
