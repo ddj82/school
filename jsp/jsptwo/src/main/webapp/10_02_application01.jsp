@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ page trimDirectiveWhitespaces="true" %>
-<% application.setAttribute("fruit", "오렌지"); %>
+<%-- <% application.setAttribute("fruit", "오렌지"); %> --%>
 <html>
 <head>
 <meta charset="UTF-8">

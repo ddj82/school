@@ -106,47 +106,75 @@ public class aaa {
 //			b[i] = i;
 //		}
 		
-		int[] a = {30, 10, 23, 6, 100};
-		
-		int[] b = new int[a.length];
-		int max = a[0];
-		int maxidx = 0;
-		int min = a[0];
-		int minidx = 0;
-		for (int i = 0; i < a.length; i++) {
-			if (a[i] > max) {
-				max = a[i];
-				maxidx = i;
-			}
-			if (a[i] < min) {
-				min = a[i];
-				minidx = i;
-			}
-		}
-		System.out.println(max);
-		System.out.println(maxidx);
-		System.out.println(min);
-		System.out.println(minidx);
-		
-		for (int i = 0; i < b.length; i++) {
-			b[i] = 2;
-		}
-		b[maxidx] = a.length;
-		b[minidx] = 1;
-		int c = 2; 
-		int q = 0;
-		// int[] a = {30, 10, 23, 6, 100};
-		for (int i = 0; i < a.length; i++) {
-			if (i != minidx && i != maxidx) {
-				q = a[i];
-				if (q < a[i + 1]) {
-					b[i + 1]++;
-				}
-			}
-		}
-		for (int i = 0; i < b.length; i++) {
-			System.out.println("b["+i+"]: " + b[i]);
-		}
+//		int[] a = {30, 10, 23, 6, 100};
+//		
+//		int[] b = new int[a.length];
+//		int max = a[0];
+//		int maxidx = 0;
+//		int min = a[0];
+//		int minidx = 0;
+//		for (int i = 0; i < a.length; i++) {
+//			if (a[i] > max) {
+//				max = a[i];
+//				maxidx = i;
+//			}
+//			if (a[i] < min) {
+//				min = a[i];
+//				minidx = i;
+//			}
+//		}
+//		System.out.println(max);
+//		System.out.println(maxidx);
+//		System.out.println(min);
+//		System.out.println(minidx);
+//		
+//		for (int i = 0; i < b.length; i++) {
+//			b[i] = 2;
+//		}
+//		b[maxidx] = a.length;
+//		b[minidx] = 1;
+//		int c = 2; 
+//		int q = 0;
+//		// int[] a = {30, 10, 23, 6, 100};
+//		for (int i = 0; i < a.length; i++) {
+//			if (i != minidx && i != maxidx) {
+//				q = a[i];
+//				if (q < a[i + 1]) {
+//					b[i + 1]++;
+//				}
+//			}
+//		}
+//		for (int i = 0; i < b.length; i++) {
+//			System.out.println("b["+i+"]: " + b[i]);
+//		}
+//		int[] arr = {1, 2, 1, 4, 5, 2, 9};
+//		int[] arr = {1, 2, 1, 2, 1, 10, 2, 1};
+//		System.out.println(arr.length);
+//		String s = "";
+//		for (int i = 0; i < arr.length; i++) {
+//			if (i == arr.length - 1) {
+//				s += arr[i];
+//			} else {
+//				s += arr[i] + ",";
+//			}
+//		}
+//		System.out.println(s);
+//		System.out.println("첫번째 2 인덱스: " + s.indexOf("2") + ", 마지막 2 인덱스: " + s.lastIndexOf("2"));
+		int answer = 0;
+		String s = "10 Z 20 Z 1";
+		String[] s1 = s.split(" ");
+		int a = 0;
+        for (int i = 0; i < s1.length; i++) {
+        	System.out.println("s1[" + i + "] = " + s1[i]);
+            if (!(s1[i].equals("Z"))) {
+                a = Integer.parseInt(s1[i]);
+                System.out.println("a = " + a);
+                answer += a;
+            } else {
+                answer -= a;
+            }
+            System.out.println(answer);
+        }
 	}
 
 }

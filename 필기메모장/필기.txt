@@ -6693,23 +6693,60 @@ application : 웹서버가 구동이 되는 순간(어플리캐이션이 실행�
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+//자습때 52,53,54, 55, 56일차 html필기 옮기기
+//
+//65
+//필기
+//
+
+
+
+jsp 에러페이지의 우선순위와 에러페이지 지정 형태
+
+에러페이지를 여러 방법으로 지정할 경우의 우선순위
+1. page내의 try~catch문으로 지정한 설정
+2. page디렉티브의 errorPage속성에 지정한 에러페이지
+(에러의 세부 내용을 살펴보길 원한다면 에러페이지로 지정된 곳에 isErrorPage속성을 설정 해주어야 한다.)
+3. web.xml파일의 error-page설정 중 exception-type설정으로 지정한 페이지
+4. web.xml파일의 error-page설정 중 error-code설정으로 지정한 페이지
+5. 설정한 에러페이지가 없으면 브라우저의 기본 에러페이지
+
+
+에러페이지 작성 시 요령
+1. 404, 500등의 에러는 web.xml파일에 설정
+2. 전용 에러페이지가 필요한 경우 page디렉티브로 설정
+3. exception타입에 대한 (NullPointException, 등) 설정은 try문, exception객체, web.xml파일, 등으로 설정
+
+
+
+
+web.xml파일에 작성 하는 방법
+
+  <error-page>
+  	<exception-type>패키지경로포함.익셉션클래스명까지기술(공백절대안됨)</exception-type>
+  	<location>(contextpath가있어요라는의미의슬래시=>)/error/에러파일명</location>
+  </error-page>
+  <error-page>
+  	<error-code>코드숫자값</error-code>
+  	<location>(contextpage가있어요라는의미의슬래시=>)/error/에러파일명</location>
+  </error-page>
+
+  코드 조각 자동 포함 기능 설정
+  jsp-property-group : jsp의 프로퍼티를 포함
+  url-pattern : 프로퍼티를 적용할 jsp파일의 url패턴을 지정
+  include-prelude : url-pattern태그에 지정한 경로안의 모든 jsp파일의 맨 처음 부분에 해당 파일을 삽입함.
+  include-coda : url-pattern태그에 지정한 경로안의 모든 jsp파일의 맨 마지막 부분에 해당 파일을 삽입함.
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+<<파일을 전송하기 위한 조건>>
+0. **가장 먼저 파일을 업로드하기 위한 라이브러리를 추가해야 한다.
+1. input 태그의 type="file"인 속성을 사용해야한다.
+2. form태그에 반드시 method속성의 값이 post여야만 한다.
+3. form태그에 반드시 enctype="multipart/form-data" 속성을 기술해주어야 한다.
 
 
 

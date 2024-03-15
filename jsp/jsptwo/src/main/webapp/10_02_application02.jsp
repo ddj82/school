@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<%
+// 	에러 코드표 참조 사이트: https://developer.mozilla.org/ko/docs/Web/HTTP/Status
+	response.sendError(500, "요청 페이지를 찾을 수 없습니다");
+	application.log("로그기록", new Exception());
+	%>
 </body>
 </html>

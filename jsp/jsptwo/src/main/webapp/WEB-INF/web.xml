@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>jsptwo</display-name>
+  
+<!--   <error-page> -->
+<!--   	<exception-type>패키지경로포함.익셉션클래스명까지기술(공백절대안됨)</exception-type> -->
+<!--   	<location>(contextpath가있어요라는의미의슬래시=>)/error/에러파일명</location> -->
+<!--   </error-page> -->
+<!--   <error-page> -->
+<!--   	<error-code>코드숫자값</error-code> -->
+<!--   	<location>(contextpage가있어요라는의미의슬래시=>)/error/에러파일명</location> -->
+<!--   </error-page> -->
+
+<!--   <error-page> -->
+<!--   	<error-code>404</error-code> -->
+<!--   	<location>/error/error404.jsp</location> -->
+<!--   </error-page> -->
+  
+<!--   <error-page> -->
+<!--   	<error-code>500</error-code> -->
+<!--   	<location>/error/error500.jsp</location> -->
+<!--   </error-page> -->
+  
+<!--   <error-page> -->
+<!--   	<exception-type>java.lang.NullPointerException</exception-type> -->
+<!--   	<location>/error/errorNullPointer.jsp</location> -->
+<!--   </error-page> -->
+
+  <error-page>
+  	<exception-type>java.lang.Exception</exception-type>
+  	<location>/error/viewErrorMessage.jsp</location>
+  </error-page>
+  
+<!--   코드 조각 자동 포함 기능 설정 -->
+<!--   jsp-property-group : jsp의 프로퍼티를 포함 -->
+<!--   url-pattern : 프로퍼티를 적용할 jsp파일의 url패턴을 지정 -->
+<!--   include-prelude : url-pattern태그에 지정한 경로안의 모든 jsp파일의 맨 처음 부분에 해당 파일을 삽입함. -->
+<!--   include-coda : url-pattern태그에 지정한 경로안의 모든 jsp파일의 맨 마지막 부분에 해당 파일을 삽입함. -->
+
+<!-- 	<jsp-config> -->
+<!-- 		<jsp-property-group> -->
+<!-- 			<url-pattern>/view/*</url-pattern> -->
+<!-- 			<include-prelude>/common/variable.jsp</include-prelude> -->
+<!-- 			<include-coda>/common/footer.jsp</include-coda> -->
+<!-- 		</jsp-property-group> -->
+<!-- 	</jsp-config> -->
+  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
