@@ -7857,7 +7857,7 @@ jsp의 기본스크립트 태그, jap:액션태그, 등으로 처리할 수 없�
 => jsp 기본 스크립트에서 설정한 변수나 객체는 끌어올 수 없다.
 => jsp 기본 스크립트 안에서는 사용할 수 없다.
 => 끌어올 수 있는 객체나 변수의 범위 : 
-- jsp 기본 스크립트 안에서 request나 pageContext, 등과 같은 jsp내장객체를 통해 설정한 Attribute값
+- jsp 기본 스크립트 안에서 request나 pageContext, 등과 같은 jsp내장객체를 통해 설정한 Attribute값 (setAttribute값)
 - jsp:액션태그로 만든 객체나 변수
 - jstl태그로 만든 객체나 변수
 
@@ -7932,34 +7932,50 @@ request.getParameterNames() : 인자값에 매칭되어 있는 name속성값을 
 
 
 
+<!-- EL은 에러를 잘 내지않는다. 선언되지 않은 변수는 표현하지 않는다. -->
+
+
+/* request.getLocale() => 요청객체의 브라우저에 설정된 언어를 가져오세요(지역을 가져오세요) */
+
+
+EL의 좋은점 getter메소드를 호출할때 get과 실행소괄호()를 떼고 부를수 있다.
+예):
+<%
+Thermometer thermometer = new Thermometer();
+request.setAttribute("t", thermometer);
+%>
+정보: ${t.info}
+테스트: ${t.str}
+|
+|
+public class Thermometer {
+	public String getStr() {return "getStr테스트";}
+	public String getInfo() {return "온도계 변환기 1.1";}
+}
+
+EL의 좋은점 static메소드는 따로 객체생성을 하지 않고도 부를수 있다.
+
+
+
+**********jstl에서는****core태그****choose(if-else)*******forEach*****out*****
+******EL******기억하기********
 
 
 
 
 
+<<세션, 쿠키 : 웹서버와 클라이언트간의 상태를 지속적으로 유지하는 방법>>
 
+- 세션 : 웹서버에 저장됨
+=> 보안성이 높으며, 웹서버 메모리 용량내에 저장가능함.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- 쿠키 : 클라이언트에 저장됨
+=> 암호화가 되지 않아 보안성이 낮다
+=> 웹서버는 웹브라우저가 전송한 쿠키를 사용해 필요한 데이터를 읽어올 수 있다.
+=> 유효기간 미 설정시 웹브라우저에 저장(웹브라우저 닫을때 삭제)
+=> 유요기간 설정시 사용자의 PC에 저장됨(유효기간이 지나면 자동으로 삭제)
+=> 쿠키는 그 크기가 하나에 4KB 이하로 제한이 되어 있으며, 총 300개까지 정보를 저장할 수 있다.
+     따라서, 최대로 저장 가능한 쿠키의 용량은 1200KB 즉 1.2MB이다.
 
 
 
