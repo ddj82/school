@@ -239,9 +239,44 @@ public class Ex {
 //        System.out.println(a.size());
 //        System.out.println(a.size() - 1);
 
-        String a = "18446744073709551615";
-        String b = "287346502836570928366";
+        String[] strArr = {"a","bc","d","efg","hi"};
 
-
+        int cnt = 0;
+        List<Integer> a1 = new ArrayList<>();
+        Map<Integer,Integer> b = new HashMap<>();
+        for (int i = 0; i < strArr.length; i++) {
+            a1.add(strArr[i].length());
+        }
+//        System.out.println(a1);
+        Set<Integer> set = new HashSet<>(a1);
+        List<Integer> a = new ArrayList<>(set);
+        System.out.println(Arrays.toString(Arrays.stream(strArr).toArray(String[]::new)));
+        System.out.println(a); //[1, 2, 3]
+        for (int i = 0; i < a.size(); i++) {
+            for (int j = 0; j < strArr.length; j++) {
+                if (a.get(i) == strArr[j].length()) {
+                    cnt++;
+                }
+            }
+            b.put(a.get(i), cnt);
+            cnt = 0;
+        }
+//        System.out.println(a);
+        System.out.println(b);
+        int answer = b.get(a.get(0));
+//        int key = a.get(0);
+        for (int i = 0; i < b.size(); i++) {
+            if (answer < b.get(a.get(i))) {
+//                key = a.get(i);
+                answer = b.get(a.get(i));
+            }
+//            else if (answer == b.get(a.get(i))) {
+//                if (key < a.get(i)) {
+//                    key = a.get(i);
+//                    answer = b.get(a.get(i));
+//                }
+//            }
+        }
+        System.out.println(answer);
     }
 }
