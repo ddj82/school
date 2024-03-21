@@ -175,6 +175,8 @@ public class aaa {
             }
             System.out.println(answer);
         }
+        String sql = "SELECT ID \"uid\", PASSWD \"upw\", NAME \"unm\" FROM MEMBER;";
+        System.out.println(sql);
 	}
 
 }

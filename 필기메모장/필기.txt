@@ -7574,7 +7574,7 @@ jsp에서 제공하는 내장객체에는 null값이 없음 (request에는 기�
 
 
 
-파일을 생성 또는 추가하는 우선 순위
+<<파일을 생성 또는 추가하는 우선 순위>>
 1. lib 파일들 (.jar) : src/main/webapp/WEB-INF/lib 폴더 한에 추가
 2. class 파일들 (.java) : src/main/java => 패키지 필요한 경우는 해당 패키지까지 추가
 3. html, jsp, css, js 파일들
@@ -7792,6 +7792,14 @@ web.xml파일에 작성 하는 방법
 **(다른 객체와는 다르게 Parameter의 영역을 가지고 있다.)
 3. session : 브라우저가 꺼질 때까지 살아있으면서 자원을 설정하거나 읽어 들일 수 있는 객체
 4. application : 웹서버가 구동이 되는 순간(어플리캐이션이 실행되는 순간) 생성되면서 웹서버가 종료되는 순간(어플리케이션이 종료되는 순간)까지 살아있는 객체면서 어플리케이션의 전반적인 정보를 읽어오거나 설정할 수 있는 객체
+
+
+
+<<파일을 생성 또는 추가하는 우선 순위>>
+1. lib 파일들 (.jar) : src/main/webapp/WEB-INF/lib 폴더 한에 추가
+2. class 파일들 (.java) : src/main/java => 패키지 필요한 경우는 해당 패키지까지 추가
+3. html, jsp, css, js 파일들
+4. web.xml에 필요한 코드들 추가
 
 
 
@@ -8027,6 +8035,13 @@ jsp는 필터를 만들때 기본이 어노테이션 기반으로 만들어지�
 어플리케이션으로 명시적인 필터를 구현하라면 web.xml파일에 직접 Filter태그를 이용하여 필터 설정을 해주어야만 한다.
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//68
+//필기
+//
+
+
 
 filterName = "Filter01"
 urlPatterns = {"이 주소"}
@@ -8072,10 +8087,14 @@ dofilter메소드에서
 PrintWriter writer = response.getWriter(); 
 // PrintWriter객체에 response.getWriter()를 주면 body에 써라는 의미
 
+destroy메소드는 웹서버가 종료될때, 필터가 삭제될때 실행됨
 
 
 필터는 어노테이션기반이 있고 web.xml기반이 있는데 
 어노테이션기반이 우선순위가 더 높다.
+
+web.xml기반 필터는 객체 필터
+어노테이션기반 필터는 소스코드적 필터
 
 
 필터객체 생성 => <filter>
@@ -8108,41 +8127,80 @@ request.getRemoteAddr() =>  IPv6를 발급 (IPv4(127.0.0.1))
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//69
+//필기
+//
+
+
+많이 보게될  RequestDispatcher 기억하기
+리퀘스트객체를 담아 보낼수있음
+
+
+
+API란 (Application Programming Interface)
+: 어플리케이션 소프트웨어의 개발 및 통합에 사용되는 정의 및 프로토콜(규칙) 세트
+: 쉽게 말하면 API는 프로그램들이 서로 상호작용하는 것을 도와주는 매개체임. (인터페이스의 집합체)
+
+
+
+	<jsp:useBean id="addrVO" class="com.dto.AddrVO"/>
+	<jsp:setProperty property="*" name="addrVO"/>
+	<!-- 해당 addrVO객체의 멤버필드명과 input요소네임값이 같으면 *로 모든 멤버필드의 setter메소드를 파라미터를 매개변수로 호출함 -->
+	<!-- jsp:setProperty는 빈문자열값을 받게되면 값이 설정되지 않음. -->
+
+===========================
+https://mvnrepository.com/		|
+https://mvnrepository.com/		|
+https://mvnrepository.com/		|
+https://mvnrepository.com/		|
+https://mvnrepository.com/		|
+자료다운				|
+===========================
+
+
+오라클과 연결하기
+C:\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib
 
 
 
 
 
 
+. 드라이버 설치
+(소스코드에 기술)
+Class.forName('패키지경로포함.클래스명까지기술');
+=> Class.forName("oracle.jdbc.driver.OracleDriver");
+=> (ojdbc6.jar)자르파일 압축해제 후 oracle안에 jdbc안에 driver안에 OracleDriver.Class파일
+=> OracleDriver.Class파일 = 오라클에 접속 할 수 있는 클래스파일
+
+
+. Connection 객체 얻어오기 (필요한 사항(문자열값으로): url, username, password)
+데이터베이스의 접속, 데이터베이스와 연결하는 통로를 열어두는 기능
+**username = "오라클의 사용자 계정명" => "test 또는 TEST"
+**password = "1111"
+**url => 형식 : jdbc:데이터베이스종류:[오라클인경우는드라이버버전까지:]@호스트명:포트번호:전역데이터베이스명(SID);
+(오라클서버가 설치되어 있는 url)
+=> "jdbc:oracle:thin:@localhost:1521:xe"
+=> "jdbc:oracle:thin:@127.0.0.1:1521:xe"
+
+
+
+Class.forName("oracle.jdbc.driver.OracleDriver");
+
+java.sql.Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","test","1111");
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<<JDBC(Java DataBase Connection)>>
+자바와 데이터베이스를 연동하는 기술.
+**오라클 연동에 관련 된 인터페이스들은 java.sql패키지 안에 들어있다.
+java.sql.Connection : 데이터베이스의 계정과 비번, url정보를 담고 있는 객체
+java.sql.Statement : 데이터베이스의 SQL명령을 담을 수 있는 객체
+java.sql.PreparedStatement : 데이터베이스의 SQL명령을 담을 수 있는 객체
+java.sql.ResultSet : SELECT 명령을 실행 후 가져오는 데이터의 결과 집합(레코드들의 묶음 => 인스턴스들)을 가리키고 있는 오라클의 커서와 동일한 기능을 가진 객체
 
 
 
