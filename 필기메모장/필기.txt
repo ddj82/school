@@ -8204,6 +8204,151 @@ java.sql.ResultSet : SELECT 명령을 실행 후 가져오는 데이터의 결�
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//70
+//필기
+//
+
+
+
+
+<<DBCP(DataBase Connection Pool) :>>
+자바와 데이터베이스를 연결하는 기술 중 하나. 객체를 요청할 때 생성하는 것이 아니라 먼저 일정량의 연결객체를 만들어 놓고 요철이 들어오는 즉시 객체를 보내고, 사용이 완료되면 자동으로 다시 받는 기능을 가진 기술임.
+
+1. webapp/WEB-INF/lib 폴더 안에 ojdbc6.jar파일을 추가한다.
+2. webapp/META-INF 폴더 안에 context.xml파일을 생성한다.
+
+<Context>
+    <Resource name="jdbc/설정할dbcp객체명" auth="Container" type="javax.sql.DataSource" username="사용자계정명" password="비밀번호" driverClassName="데이터베이스 드라이버 클래스 경로(패키지포함.클래스명까지)" factory="웹서버의 DBCP클래스 경로(패키지포함.클래스명까지)" url="해당 드라이버의 경로값" maxActive="500" maxIdle="100" />
+</Context>
+
+**DBCP2버전으로 업그레이드 되면서 속성이 maxActive가 아닌 maxTotal로 변경됨.
+
+
+
+<<예시 :>>
+
+<Context>
+    <Resource name="jdbc/OracleDB" auth="Container" type="javax.sql.DataSource" username="test" password="1111" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" url="jdbc:oracle:thin:@localhost:1521:XE" (maxActive="500" 또는 maxTotal="500") maxIdle="100" />
+</Context>
+
+<Context>
+    <Resource name="jdbc/OracleDB" auth="Container" type="javax.sql.DataSource" username="test" password="1111" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" url="jdbc:oracle:thin:@localhost:1521:XE" maxTotal="500" maxIdle="100" />
+</Context>
+
+
+
+- Resource name="jdbc/OracleDB" : 
+공유할 리소스 이름 정의, name이 키 이므로 이것을 이용해서 자원을 얻어갈 수 있다.
+
+- auth="Container" : 
+클라이언트에서 리소스를 얻어갈 때 인증을 톰캣 컨테이너에서 관리하겠다는 의미임.
+
+- type="javax.sql.DataSource" : 
+데이터 타입 지정 (고정값). 얻어갈때 DataSource.getConnection()메소드를 통해 얻어갈 수 있다.
+
+데이터베이스 정보 기술 ㄱ 
+- username="test" 
+- password="1111" 
+- driverClassName="oracle.jdbc.driver.OracleDriver" 
+- url="jdbc:oracle:thin:@localhost:1521:XE"
+
+- factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" :
+DBCP API를 사용하여 DBCP로 DataSource를 얻어갈 수 있도록 객체를 생성하는 부분이다.
+
+- maxActive="500" 또는 maxTotal="500" : (디폴트-8)
+동시에 제공할 수 있는 최대 connection개수를 말한다.
+
+- maxIdle="100" :
+현재 서비스되고 있는 connection객체를 제외한 connectionpool에 여유로 남길 수 있는 최대 connection개수를 지정하는 부분이다.
+
+
+
+
+	<!-- <error-page> -->
+	<!-- <exception-type>패키지경로포함.익셉션클래스명까지기술(공백절대안됨)</exception-type> -->
+	<!-- <location>(contextpath가있어요라는의미의슬래시=>)/error/에러파일명</location> -->
+	<!-- </error-page> -->
+	<!-- <error-page> -->
+	<!-- <error-code>코드숫자값</error-code> -->
+	<!-- <location>(contextpage가있어요라는의미의슬래시=>)/error/에러파일명</location> -->
+	<!-- </error-page> -->
+
+
+	<!-- 코드 조각 자동 포함 기능 설정 -->
+	<!-- jsp-property-group : jsp의 프로퍼티를 포함 -->
+	<!-- url-pattern : 프로퍼티를 적용할 jsp파일의 url패턴을 지정 -->
+	<!-- include-prelude : url-pattern태그에 지정한 경로안의 모든 jsp파일의 맨 처음 부분에 해당 파일을 
+		삽입함. -->
+	<!-- include-coda : url-pattern태그에 지정한 경로안의 모든 jsp파일의 맨 마지막 부분에 해당 파일을 삽입함. -->
+
+
+
+
+<<header.jsp 예제>>
+
+// HTTP 1.0.
+response.setHeader("Pragma", "no-cache"); 
+/* 캐시를 담아놓는 속성, 캐시지움 */
+
+
+// Proxy : Client와 Server 사이에 위치하여 요청을 중계하는 역할을 하는 서버
+response.setHeader("Expires", "0"); 
+/* 쌓이는 데이터 유효기간 지정 속성, 만료처리 */
+
+
+// HTTP 1.1.
+response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate"); 
+/* 전반적인 캐시의 내용을 관리하는 속성, 저장안함 캐시지움 유효성다시체크 */
+
+
+
+
+-----------------------------------------------------------------------------------------------------------
+url url url url url url url url url url url url url url url url url url url url url url url url url url url url url url 
+-----------------------------------------------------------------------------------------------------------
+
+유알엘패턴 / 컨텍스트패스가 있습니다
+
+a태그, form태그의 액션속성, 자바스크립트에 태그(location.href='')의 / 컨텍스트패스를 없애라
+
+-----------------------------------------------------------------------------------------------------------
+url url url url url url url url url url url url url url url url url url url url url url url url url url url url url url
+-----------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
