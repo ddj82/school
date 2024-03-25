@@ -40,6 +40,9 @@
 		}
 	} catch (Exception e) {
 		e.printStackTrace();
+		out.println("<script>");
+		out.println("location.href='bad.jsp'");
+		out.println("</script>");
 	} finally {
 		try {
 			ps.close();

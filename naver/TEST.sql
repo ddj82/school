@@ -12,3 +12,4 @@ PRIMARY KEY(ID)
 );
 
 INSERT INTO NAVERMEM VALUES('admin', '12345678', '', '±Ëµø¡ÿ', '19970110', 'male', '01050645726');
+

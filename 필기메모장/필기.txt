@@ -7946,7 +7946,7 @@ request.getParameterNames() : 인자값에 매칭되어 있는 name속성값을 
 /* request.getLocale() => 요청객체의 브라우저에 설정된 언어를 가져오세요(지역을 가져오세요) */
 
 
-EL의 좋은점 getter메소드를 호출할때 get과 실행소괄호()를 떼고 부를수 있다.
+- EL의 좋은점 getter메소드를 호출할때 get과 실행소괄호()를 떼고 부를수 있다.
 예):
 <%
 Thermometer thermometer = new Thermometer();
@@ -7961,7 +7961,7 @@ public class Thermometer {
 	public String getInfo() {return "온도계 변환기 1.1";}
 }
 
-EL의 좋은점 static메소드는 따로 객체생성을 하지 않고도 부를수 있다.
+- EL의 좋은점 static메소드는 따로 객체생성을 하지 않고도 부를수 있다.
 
 
 
@@ -8320,25 +8320,140 @@ url url url url url url url url url url url url url url url url url url url url 
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//71
+//필기
+//
+
+
+
+서블릿(Servlet)이란
+
+- 클라이언트의 요청을 처리하고, 그 결과를 반환하는 Servlet 클래스의 구현 규칙을 지킨 자바 웹 프로그래밍 기술
+- 클라이언트의 요청에 대해 동적으로 작동하는 웹 어플리케이션 컴포넌트이다.
+- html을 사용하여 요청에 응답한다.
+- MVC 패턴에서 Controller로 이용된다.
+- HTTP 프로토콜 서비스를 지원하는 javax.servlet.http.HttpServlet 클래스를 상속받는다.
+- 서블릿을 자바로 구현 된 CGI라고 함
+**CGI(= Common Gateway Interface) 란 : 서버와 애플리케이션 간에 데이터를 주고 받는 방식
+
+=================================================================================
+
+어노케이션이란
+- @를 이용한 주석, 자바코드에 주석을 달아 특별한 의미를 부여한 코드
+(클래스, 메소드, 변수 등 모든 요소에 선언이 가능)
+- 메타데이터(실제데이터가 아닌 Data를 위한 데이터) 라고도 불리고 JDK5부터 등장
+- 코드에 정보를 추가하는 정형화된 방법.
+
+=================================================================================
+
+<<web.xml로 서블릿 설정하기>>
+
+<servlet>
+	<servlet-name>서블릿명</servlet-name>
+	<servlet-class>경로포함.클래스명</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>사용할 서블릿명</servlet-name>
+	<url-pattern>서블릿으로 처리할 url</url-pattern>
+</servlet-mapping>
+
+
+
+<<어노테이션으로 서블릿 설정하기>>
+@WebServlet(urlPatterns - "/url패턴")
+
+url매핑 규칙
+1. /foo/bar/*	servlet1
+2. /baz/*		servlet2
+3. /catlog		servlet3
+4. *.jsp		servlet4
+
+요청경로
+1. /foo/bar/index.html	1번패턴 일치 - 요청처리 서블릿: servlet1
+2. /foo/bar/index.jsp	1번패턴 일치 - 요청처리 서블릿: servlet1
+3. /baz			2번패턴 일치 - 요청처리 서블릿: servlet2
+4. /baz/index.html		2번패턴 일치 - 요청처리 서블릿: servlet2
+5. /catlog			3번패턴 일치 - 요청처리 서블릿: servlet3
+6. /catlog	/index.jsp		4번패턴 일치 - 요청처리 서블릿: servlet4
+7. /index.jsp		4번패턴 일치 - 요청처리 서블릿: servlet4
 
 
 
 
 
 
+DAO(Data Access Object) : 데이터베이스에 접근하기 위한 SQL명령문을 담고 있는 객체
+
+DTO(= VO) : Data Transfer Object(데이터를 전송하는 객체) = Value Object(데이터를 저장하는 객체)
 
 
 
 
+서블릿객체는 url패턴으로 요청이 처음 들어왔을때 객체가 생성됨
+
+서블릿은 하나의 url패턴에 하나의 서블릿만 연결 가능.
+
+서블릿은 동일한 url패턴으로 여러개의 서블릿 생성이 불가능. 에러남
+
+
+
+<servlet>
+<servlet-name>now</servlet-name>
+<servlet-class>com.controller.NowServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>now</servlet-name>
+<url-pattern>/NowPage</url-pattern>
+</servlet-mapping>
 
 
 
 
+많이 보게될  RequestDispatcher 기억하기
+리퀘스트객체를 담아 보낼수있음
 
 
 
 
+1. ojdbc6 라이브러리 추가
+2. jstl-1.2 라이브러리 추가
+3. dbcp 라이브러리 추가
 
+
+
+-----------------------------------------------------------------------------------------------------------
+url url url url url url url url url url url url url url url url url url url url url url url url url url url url url url 
+-----------------------------------------------------------------------------------------------------------
+
+유알엘패턴 / 컨텍스트패스가 있습니다
+
+a태그, form태그의 액션속성, 자바스크립트에 태그(location.href='')의 / 컨텍스트패스를 없애라
+
+-----------------------------------------------------------------------------------------------------------
+url url url url url url url url url url url url url url url url url url url url url url url url url url url url url url
+-----------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------
+a태그의 href속성
+form태그의 action속성
+javascript의 location.href로 설정하는 url
+response.sendRedirect로 설정하는 url
+ajax에서 설정하는 url값
+
+=> /의 의미 : contextPath를 삭제하라는 의미
+=> ./의 의미 : 나와 동일한 위치라는 의미
+------------------------------------------------------------
+
+------------------------------------------------------------
+서블릿이나 필터에 처리하는 url패턴형식
+RequestDispatcher로 설정하는 url패턴형식
+
+=> /의 의미 : 앞에 contextPath까지 존재한다는 의미
+------------------------------------------------------------
 
 
 
