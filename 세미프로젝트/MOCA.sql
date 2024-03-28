@@ -45,3 +45,5 @@ R_FILE VARCHAR2(50)
 
 SELECT MAX(R_NO) FROM MC_ROOMS;
 INSERT INTO MC_ROOMS VALUES (1, '김건모방', 6, '솰라솰라 방설명', '방사진.jpg');
+
+
