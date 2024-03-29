@@ -4,22 +4,136 @@
 <title>제목부분</title>
 <meta charset="utf-8">
 <style>
-    p {
+    p#log {
         text-align: right;
         margin-right: 20px;
     }
+
+    button.admin {
+        display: none;
+    }
+    p#demo2 {
+        display: none;
+    }
+
+    div.ddiv {
+        display: none;
+    }
 </style>
+<script src="../jq/jquery/jquery-3.6.4.js"></script>
 </head>
 <body>
-    <p>
-        <span>${id }님, 환영합니다. <a href="logout">로그아웃</a> <a href="updateUsers.mc">내 정보수정</a></span>
-        <span><a href="loginForm.html">로그인</a></span>
+    <p id="log">
+        [관리자계정] <a href="logout">로그아웃</a>
     </p>
     <a href="">소식</a>&nbsp;
 	<a href="">이용안내</a>&nbsp;
 	<a href="">방정보</a>&nbsp;
 	<a href="">예약하기</a>&nbsp;
 	<a href="">오시는길</a>
-    <br><br>
+    <br><br><br><br>
+    
+    <button type="button" id="adminUsers" class="admin">회원 관리</button>
+    <button type="button" id="adminRoom" class="admin">방 관리</button>
+    <button type="button" id="adminNotice" class="admin">소식 관리</button>
+
+    <br><br><br>
+
+    <p id="demo"></p>
+
+
+    <div id="div0" class="ddiv"><a href="memberListAction.mc">회원리스트 조회</a><br></div>    <!-- 0 -->
+    <div id="div1" class="ddiv"><a href="nowcheck.mc">실시간예약현황 리스트</a><br></div>      <!-- 1 -->
+    <div id="div2" class="ddiv"><a href="mocaList.mc">방 관리</a><br></div>                   <!-- 2 -->
+    <div id="div3" class="ddiv"><a href="boardList.mc">공지 관리</a><br></div>                <!-- 3 -->
+
+    <br><br><br><br><br>
+
+    <p id="demo2">
+        <button type="button" id="main" class="admin">메인으로</button>
+    </p>
 </body>
+<script>
+    $(function(){
+        $(".admin").show();
+    });
+    (function(){
+        document.getElementById("adminUsers").addEventListener("click", function(e){
+            document.getElementById("demo").innerHTML = document.getElementById("div0").innerHTML;
+            if ($("#adminUsers").is(":visible")) {
+                $("#adminUsers").hide();
+            }
+            if ($("#adminRoom").is(":hidden")) {
+                $("#adminRoom").show();
+            }
+            if ($("#adminNotice").is(":hidden")) {
+                $("#adminNotice").show();
+            }
+
+            if ($("#demo2").is(":hidden")) {
+                $("#demo2").show();
+            }
+            if ($("#main").is(":hidden")) {
+                $("#main").show();
+            }
+        });
+
+        document.getElementById("adminRoom").addEventListener("click", function(e){
+            document.getElementById("demo").innerHTML = document.getElementById("div1").innerHTML;
+            document.getElementById("demo").innerHTML += document.getElementById("div2").innerHTML;
+
+            if ($("#adminRoom").is(":visible")) {
+                $("#adminRoom").hide();
+            }
+            if ($("#adminUsers").is(":hidden")) {
+                $("#adminUsers").show();
+            }
+            if ($("#adminNotice").is(":hidden")) {
+                $("#adminNotice").show();
+            }
+
+            if ($("#demo2").is(":hidden")) {
+                $("#demo2").show();
+            }
+            if ($("#main").is(":hidden")) {
+                $("#main").show();
+            }
+        });
+
+        document.getElementById("adminNotice").addEventListener("click", function(e){
+            document.getElementById("demo").innerHTML = document.getElementById("div3").innerHTML;
+            if ($("#adminNotice").is(":visible")) {
+                $("#adminNotice").hide();
+            }
+            if ($("#adminUsers").is(":hidden")) {
+                $("#adminUsers").show();
+            }
+            if ($("#adminRoom").is(":hidden")) {
+                $("#adminRoom").show();
+            }
+
+            if ($("#demo2").is(":hidden")) {
+                $("#demo2").show();
+            }
+            if ($("#main").is(":hidden")) {
+                $("#main").show();
+            }
+        });
+
+        document.getElementById("main").addEventListener("click", function(e){
+            $(".admin").filter(function(i, o){
+                let btn = o;
+                if (o.id != "main") {
+                    if ($(btn).is(":hidden")) {
+                        $(btn).show();
+                    }
+                }
+            });
+            if (!(document.getElementById("demo").innerHTML == "")) {
+                document.getElementById("demo").innerHTML = "";
+            }
+            $("#main").hide();
+        });
+    })();
+</script>
 </html>

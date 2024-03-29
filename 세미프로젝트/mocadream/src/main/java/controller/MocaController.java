@@ -21,28 +21,36 @@ import vo.ActionForward;
 
 @WebServlet("*.mc")
 public class MocaController extends javax.servlet.http.HttpServlet {
-	
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String RequestURI = request.getRequestURI();	
+		String RequestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = RequestURI.substring(contextPath.length());
-		
+
 		ActionForward forward = null;
 		Action action = null;
-		
+
 		if (command.equals("/addroom.mc")) {
 			forward = new ActionForward();
 			forward.setPath("/room/qna_room_insert.jsp");
-			
-		} else if (command.equals("/insertRoom.mc")){
+
+		} else if (command.equals("/mocaList.mc")) {
+			action = new MocaListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/insertRoom.mc")) {
 			action = new RoomInsertAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} 	else if (command.equals("/nowcheck.mc")) {
+		} else if (command.equals("/nowcheck.mc")) {
 			action = new NowCheckAction();
 			try {
 				forward = action.execute(request, response);
@@ -57,49 +65,101 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 				e.printStackTrace();
 			}
 		} else if (command.equals("/memberWarningAction.mc")) {
-			action = new MemberWarningAction();	
+			action = new MemberWarningAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/memberReleaseAction.mc")) { 
+		} else if (command.equals("/memberReleaseAction.mc")) {
 			action = new MemberReleaseAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/mocaModifyForm.mc")) {
+			action = new MocaModifyFormAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/mocaModifyPro.mc")) {
+			action = new MocaModifyProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/mocaDeleteForm.mc")) {
+			String nowPage = request.getParameter("page");
+			request.setAttribute("page", nowPage);
+			int r_no = Integer.parseInt(request.getParameter("r_no"));
+			request.setAttribute("r_no", r_no);
+			forward = new ActionForward();
+			forward.setPath("/room/moca_delete.jsp");
+		} else if (command.equals("/mocaDeletePro.mc")) {
+			action = new MocaDeleteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardList.mc")) {
+			action = new BoardListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardWriteForm.mc")) {
+			forward = new ActionForward();
+			forward.setPath("/board/qna_board_write.jsp");
+
+		} else if (command.equals("/boardWritePro.mc")) {
+			action = new BoardWriteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardDetail.mc")) {
+			action = new BoardDetailAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardModifyForm.mc")) { // 보드 뷰jsp에서 수정누름
+			action = new BoardModifyFormAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardModifyPro.mc")) {
+			action = new BoardModifyProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardDeleteForm.mc")) {
+			String nowPage = request.getParameter("page");
+			request.setAttribute("page", nowPage);
+			int nt_no = Integer.parseInt(request.getParameter("nt_no"));
+			request.setAttribute("nt_no", nt_no);
+			forward = new ActionForward();
+			forward.setPath("/board/qna_board_delete.jsp");
+		} else if (command.equals("/boardDeletePro.mc")) {
+			action = new BoardDeleteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-//		else if (command.equals("/boardModifyForm.bo")) {
-//			action = new BoardModifyFormAction();
-//			try {
-//				forward = action.execute(request, response);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} else if (command.equals("/boardModifyPro.bo")) {
-//			action = new BoardModifyProAction();
-//			try {
-//				forward = action.execute(request, response);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} else if (command.equals("/boardDeleteForm.bo")) {
-//			String nowPage = request.getParameter("page");
-//			request.setAttribute("page", nowPage);
-//			int board_num = Integer.parseInt(request.getParameter("board_num"));
-//			request.setAttribute("board_num", board_num);
-//			forward = new ActionForward();
-//			forward.setPath("/board/qna_board_delete.jsp");
-//		} else if (command.equals("/boardDeletePro.bo")) {
-//			action = new BoardDeleteProAction();
-//			try {
-//				forward = action.execute(request, response);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} 
 //		else {
 //			// 파일 다운로드 하기
 //			try {
@@ -165,26 +225,28 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 //				e.getMessage();
 //			}
 //		}
-		
+
 		if (forward != null) {
-			
+
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
 			} else {
 				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
 				dispatcher.forward(request, response);
 			}
-			
-		}
-		
-	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doProcess(request,response);
-	}  	
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doProcess(request,response);
-	}   
-	
+		}
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
+
 }

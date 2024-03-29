@@ -23,8 +23,8 @@ import vo.Mc_order;
 		}
 		
 		NowOrderListService nowOrderListService = new NowOrderListService();
-		int nowListCount = nowOrderListService.getNowListCount(); //총 리스트 수를 받아옴. //9
-		nowOrderList = nowOrderListService.getNowOrderList(page, limit); //리스트를 받아옴. //
+		int nowListCount = nowOrderListService.getNowListCount(); //총 리스트 수를 받아옴.
+		nowOrderList = nowOrderListService.getNowOrderList(page, limit); //리스트를 받아옴.
 		
 		//총 페이지 수.
    		int maxPage = (int)((double)nowListCount / limit + 0.95); //0.95를 더해서 올림 처리.

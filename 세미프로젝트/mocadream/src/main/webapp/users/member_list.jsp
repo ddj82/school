@@ -3,9 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-response.setContentType("text/html;charset=UTF-8");
-%>
+<% response.setContentType("text/html;charset=UTF-8"); %>
 
 
 <!DOCTYPE html>
@@ -14,24 +12,34 @@ response.setContentType("text/html;charset=UTF-8");
 <meta charset="UTF-8">
 <title>회원관리 시스템 관리자모드(회원 목록 보기)</title>
 <style>
-#memberListArea {
-	width: 700px;
-	border: 1px solid gray;
-	margin: auto;
-}
-
-table {
-	width: 500px;
-	margin: auto;
-	text-align: center;
-}
-
-td {
-	border: 1px solid gray;
-}
+	#memberListArea {
+		width: 700px;
+		border: 1px solid gray;
+		margin: auto;
+	}
+	
+	table {
+		width: 500px;
+		margin: auto;
+		text-align: center;
+	}
+	
+	td {
+		border: 1px solid gray;
+	}
 </style>
 </head>
 <body>
+	<p>
+		<c:choose>
+		<c:when test="${id ne null }">
+			${id }님, 환영합니다. <a href="logout" id="log">로그아웃</a>
+		</c:when>
+		<c:otherwise>
+			<a href="loginForm.html" id="log">로그인</a>
+		</c:otherwise>
+		</c:choose>
+	</p>
 	<section id="memberListArea">
 		<table>
 			<tr>
@@ -61,31 +69,6 @@ td {
 							<td>${member.war}</td>
 						</c:when>
 					</c:choose>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${member.id ne 'admin'}"> --%>
-<%-- 							<td>${member.pw}</td> --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${member.id ne 'admin'}"> --%>
-<%-- 							<td>${member.name}</td> --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${member.id ne 'admin'}"> --%>
-<%-- 							<td>${member.tel}</td> --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${member.id ne 'admin'}"> --%>
-<%-- 							<td>${member.email}</td> --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${member.id ne 'admin'}"> --%>
-<%-- 							<td>${member.war}</td> --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
 					<c:choose>
 						<c:when test="${member.id ne 'admin'}">
 							<td>
@@ -115,5 +98,7 @@ td {
 			</c:forEach>
 		</table>
 	</section>
+	<br><br><br><br>
+	<a href="main.jsp">메인으로</a>&nbsp;
 </body>
 </html>

@@ -10,6 +10,10 @@ INSERT INTO MC_ORDER VALUES (3, '°í±¸¸¶¶ó¶¼', 'lee', TO_DATE('24/03/28 15:00', '
 INSERT INTO MC_ORDER VALUES (4, '¹Ù´Ò¶ó¶ó¶¼', 'bang', TO_DATE('24/03/28 13:00', 'YY/MM/DD HH24:MI') , '1', '15', '16', '');
 
 INSERT INTO MC_ORDER VALUES (2, '³ìÂ÷¶ó¶¼', 'kim', TO_DATE('24/04/17 10:30', 'YY/MM/DD HH24:MI'), '2', '12', '14', '');
+INSERT INTO MC_ORDER VALUES (4, '¹Ù´Ò¶ó¶ó¶¼', 'urim', TO_DATE('24/05/18 13:00', 'YY/MM/DD HH24:MI') , '1', '15', '16', '');
+INSERT INTO MC_ORDER VALUES (1, 'ÃÊÄÚ¶ó¶¼', 'urim', TO_DATE('24/05/25 15:30', 'YY/MM/DD HH24:MI'), '1', '15', '16', '');
+INSERT INTO MC_ORDER VALUES (3, '°í±¸¸¶¶ó¶¼', 'urim', TO_DATE('24/05/28 15:00', 'YY/MM/DD HH24:MI') , '3', '15', '18', '');
+
 
 --°ú°Å¿¹¾àµ¥ÀÌÅÍ ´õ¹Ì
 INSERT INTO MC_ORDER VALUES (1, 'ÃÊÄÚ¶ó¶¼', 'urim', TO_DATE('24/03/27 15:30', 'YY/MM/DD HH24:MI'), '1', '15', '16', '');
@@ -42,3 +46,6 @@ INSERT INTO MC_USERS (ID, PW, NAME, TEL, EMAIL, ADDR) VALUES ('ccc', '1111', '¹æ
 INSERT INTO MC_USERS (ID, PW, NAME, TEL, EMAIL, ADDR) VALUES ('ddd', '1111', 'Á¤¾¾', '44', 'a', 'a');
 INSERT INTO MC_USERS (ID, PW, NAME, TEL, EMAIL, ADDR) VALUES ('eee', '1111', 'º¯¾¾', '55', 'a', 'a');
 INSERT INTO MC_USERS (ID, PW, NAME, TEL, EMAIL, ADDR) VALUES ('fff', '1111', 'Á¦¾¾', '66', 'a', 'a');
+
+SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY R_NO DESC) AS RNUM, R_NO, R_NAME, R_MAX, R_DESC, R_FILE FROM MC_ROOMS) WHERE RNUM BETWEEN 1 AND 10;
+SELECT ROW_NUMBER() OVER (ORDER BY R_NO DESC) AS RNUM, R_NO, R_NAME, R_MAX, R_DESC, R_FILE FROM MC_ROOMS;
