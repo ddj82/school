@@ -121,15 +121,65 @@ util - 데이터베이스 연결 같은 기능 클래스패키지
 
 
 
-
-
-
-
-
 서블릿 실행, 변수확인 : /mocadream/room/insertRoom.mc
 /mocadream
 /room/insertRoom.mc
 테스트중이라 null로 받았는데 이게 보이면 성공이여 확인해봐
+
+
+
+
+
+
+
+
+/*
+user_OrderForm.jsp
+예약하기에서 방이름 선택하는 셀렉트태그의 값과 
+예약일자 선택하는 인풋요소의 값이 존재하면 (그니까 선택되면, 선택되기전까진 값이 없으니까)
+해당 방이름, 선택일자 보냄 (val()함수로 쉽게 가능)
+
+받은 값들로 MC_ORDER테이블에 검색
+SELECT R_NO, R_CAL, R_STATIME, R_ENDTIME - 1 FROM MC_ORDER WHERE R_NAME = 받은방이름 AND R_CAL > SYSDATE AND R_CAL = 받은 선택일;
+
+(**사용 할 값은 R_STATIME, R_ENDTIME - 1)
+
+그러면 선택한 날과 같은 날에 예약된 선택한 방의 입실시간과 종료시간을 얻을수있음
+해당 여러줄 데이터에서 한줄당 입실시간,종료시간 만 int형리스트에 담아
+(예: 해당 날짜에 3번방 예약이 (statime)12 (endtime)14, (statime)15 (endtime)17라면 
+가져온 값은 12-13, 15-16 일거니까 리스트에 12,13,15,16을 담음)
+
+그 인트리스트를 가져와서 해당 리스트에 있는 숫자와 벨류가 같은 옵션을 디스플레이 논처리
+(해당 리스트 요소를 문자열처리 해줌
+만약 요소가 1자리면(9 하나지만) 앞에 "0"을 문자열결합, 아니면 그대로, 그 다음 문자열결합으로 ":00")
+<option>09:00</option>
+<option>10:00</option>
+<option>11:00</option>
+<option>12:00</option> => display: "none";
+<option>13:00</option> => display: "none";
+<option>14:00</option>
+<option>15:00</option> => display: "none";
+<option>16:00</option> => display: "none";
+<option>17:00</option>
+<option>18:00</option>
+<option>19:00</option>
+<option>20:00</option>
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
