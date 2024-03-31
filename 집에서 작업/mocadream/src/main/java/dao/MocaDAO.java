@@ -236,8 +236,37 @@ public class MocaDAO {
 		}
 		return mc_rooms;
 	}
+	
+	public ArrayList<Integer> selectYesTime(String rname, Date rcal) {
+		String sql = "SELECT R_TIME, R_STATIME, R_ENDTIME - 1 FROM MC_ORDER WHERE R_NAME = ? AND R_CAL = ?;";
+		ArrayList<Integer> noTimeList = new ArrayList<Integer>();
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				if (rs.getInt(1) == 1) {
+					noTimeList.add(rs.getInt(2));
+				} else if (rs.getInt(1) == 2) {
+					noTimeList.add(rs.getInt(2));
+					noTimeList.add(rs.getInt(3));
+				} else {
+					noTimeList.add(rs.getInt(2));
+					noTimeList.add(rs.getInt(3) - 1);
+					noTimeList.add(rs.getInt(3));
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println("selectYesTime 에러: " + e);
+		} finally {
+			close(rs);
+			close(ps);
+		}
+		return noTimeList;
+	}
 
-	// 회원 예약하기2 메소드
+	// 회원 예약하기3 메소드
 	public int insertOrder(Mc_order order) {
 		String sql = "INSERT INTO MC_ORDER VALUES ( ?, ?, ?, ?, ?, ?, ?, '미사용')";
 		int insertCount = 0;

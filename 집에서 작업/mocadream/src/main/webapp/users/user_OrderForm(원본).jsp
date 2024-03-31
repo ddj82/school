@@ -70,14 +70,6 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 			</c:otherwise>
 		</c:choose>
 	</p>
-	
-	<%
-// 	selectRoomsList메소드 실행
-// 	mc_rooms는 "SELECT * FROM MC_ROOMS ORDER BY R_NO" 로 모든 방정보 가져옴
-// 	ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_rooms");
-	out.print("");
-	%>
-	
 <!-- 	<form name="orderform" action="userOrderAction.mc" method="post"> -->
 	<form name="orderform" action="ex.jsp" method="post">
 		<section id="orderformArea">
@@ -89,7 +81,7 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 				<tr>
 					<td><label for="r_name">방 이름 : </label></td>
 					<td>
-					<select name="r_name" id="rname" class="input">
+					<select name="r_name" id="selRname" class="input" onchange="changeOp()">
 						<% for (int i = 0; i < mc_rooms.size(); i++) { %>
 							<option value="<%=mc_rooms.get(i).getR_name()%>"><%=mc_rooms.get(i).getR_name()%></option>
 						<% } %>
@@ -103,10 +95,6 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 				<tr>
 					<td><label for="r_cal">예약 날짜 : </label></td>
 					<td><input type="date" name="r_cal" class="input" id="r_cal" /></td>
-				</tr>
-				<tr>
-					<td><label for="yestime"></label></td>
-					<td><button type="button" name="yestime" class="input" onclick="sYesTime()">예약가능 시간 검색</button></td>
 				</tr>
 				<tr>
 					<td><label for="r_statime">예약 시간 : </label></td>
@@ -148,26 +136,5 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 	</form>
 	<br><br>
 	<a href="main.jsp">메인으로</a>&nbsp;
-	
-<script>
-	function sYesTime() {
-		let rname = document.getElementById("rname").value;
-		let rcal = document.getElementById("r_cal").value;
-		if (rname != "" && rcal != "") {
-			console.log("r_name : " + rname);
-			console.log("r_cal : " + rcal);
-// 			서블릿실행추가
-			location.href = "selectYesTime.mc?r_name=" + rname + "&r_cal=" + rcal;
-		} else if (rname == "") {
-			alert("방을 선택해 주세요");
-		} else if (rcal == "") {
-			alert("날짜를 선택해 주세요");
-		} else {
-			alert("방이나 날짜를 선택해 주세요");
-		}
-// 		<select name="r_name" id="selRname" class="input" onchange="changeOp()">
-// 		<input type="date" name="r_cal" class="input" id="r_cal" />
-	}
-</script>
 </body>
 </html>

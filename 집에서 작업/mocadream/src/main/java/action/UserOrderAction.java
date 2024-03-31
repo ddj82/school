@@ -23,7 +23,9 @@ public class UserOrderAction implements Action {
 
 		RoomListService roomListService = new RoomListService();
 		ArrayList<Mc_rooms> mc_rooms = roomListService.getRoomsList();
-		request.setAttribute("mc_rooms", mc_rooms);
+		request.setAttribute("mc_rooms", mc_rooms); 
+		// selectRoomsList메소드 실행
+		// mc_rooms는 "SELECT * FROM MC_ROOMS ORDER BY R_NO" 로 모든 방정보 가져옴
 		String[] roomname = new String[mc_rooms.size()];
 
 		for (int i = 0; i < mc_rooms.size(); i++) {
@@ -104,7 +106,20 @@ public class UserOrderAction implements Action {
 			break;
 		}
 		mc_order.setR_endtime(usetime + time);
+		
+		
+		// insertOrder메소드 실행 전 변수들 확인
+//		java.util.Date utilDate = mc_order.getR_cal();
+//		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+//		System.out.println("r_no : " + mc_order.getR_no());
+//		System.out.println("r_name : " + mc_order.getR_name());
+//		System.out.println("r_uname : " + mc_order.getR_uname());
+//		System.out.println("r_cal : " + sqlDate);
+//		System.out.println("r_time : " + mc_order.getR_statime());
+//		System.out.println("r_statime : " + mc_order.getR_statime());
+//		System.out.println("r_endtime : " + mc_order.getR_endtime());
 
+		
 		UserOrderService userOrderService = new UserOrderService();
 		joinResult = userOrderService.userOrder(mc_order);
 

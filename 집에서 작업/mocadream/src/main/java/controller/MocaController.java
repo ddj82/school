@@ -231,6 +231,13 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/selectYesTime.mc")) {
+//			action = new UserDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 //		else {
 //			// 파일 다운로드 하기
