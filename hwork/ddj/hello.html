@@ -19,10 +19,96 @@
     div.ddiv {
         display: none;
     }
+
+    select#selectT option {
+    	/* display: none; */
+    }
+
+    select#selectUseT option {
+    	display: none;
+    }
 </style>
 <script src="../jq/jquery/jquery-3.6.4.js"></script>
+<script>
+    function optUseTshow() {
+        main:
+        for (let i = z.selectedIndex + 1; i < z.children.length; i++) {
+            if (z.children[i].style.display == "inline-block") {
+            	z2 = z.options[i].value;
+                if (parseInt(z2) == (parseInt(z1) + 1)) {
+					for (let j = i + 1; j < z.children.length; j++) {
+						if (z.children[j].style.display == "inline-block") {
+							z3 = z.options[j].value;
+		                	if (parseInt(z3) == (parseInt(z2) + 1)) {
+		                		//1,2,3시간 이용 보이게
+		                		break main;
+		                	} else {
+			                	//1,2시간 이용 보이게
+			                	let a = document.getElementById("selectUseT").children[2];
+			                	a.style.display = 'none';
+		                		break main;
+		                	}
+						}
+					}
+                } else {
+                	//1시간 이용만 보이게
+                	let a = document.getElementById("selectUseT").children[1];
+                	a.style.display = 'none';
+                	a = document.getElementById("selectUseT").children[2];
+                	a.style.display = 'none';
+                	break;
+                }
+            }
+        }
+
+        // let z = document.getElementById('selectT');
+        // let z3;
+        // for (let i = 0; i < z.children.length; i++) {
+        //     if (z.children[i].style.display == "inline-block") {
+        //         break;
+        //     }
+        // }
+        // let z1 = z.options[z.selectedIndex].value;
+        console.log(z.selectedIndex);
+        console.log(z1);
+        console.log(parseInt(z1));
+
+        console.log(z.options[z.selectedIndex].nextElementSibling.value);
+        console.log(parseInt(z.options[z.selectedIndex].nextElementSibling.value));
+        console.log(parseInt(z.options[z.selectedIndex].nextElementSibling.value) == parseInt(z1) + 1);
+	}
+</script>
 </head>
 <body>
+    <select name="r_statime" class="input" id="selectT">
+        <option>09:00</option>
+        <option>10:00</option>
+        <option>11:00</option>
+        <option>12:00</option>
+        <option>13:00</option>
+        <option>14:00</option>
+        <option>15:00</option>
+        <option>16:00</option>
+        <option>17:00</option>
+        <option>18:00</option>
+        <option>19:00</option>
+        <option>20:00</option>
+    </select>
+    <button type="button" name="usetime" class="input" onclick="optUseTshow()">이용가능 시간 검색</button>
+    <select name="r_time" class="input" id="selectUseT">
+        <option>1시간 이용</option>
+        <option>2시간 이용</option>
+        <option>3시간 이용</option>
+    </select>
+    <script>
+        
+        // for (let i = 0; i < document.getElementById("selectT").children.length; i++) {
+        //     let a = document.getElementById("selectT").children[i];
+        //     console.log(a.value);
+        // }
+    </script>
+
+
     <p id="log">
         [관리자계정] <a href="logout">로그아웃</a>
     </p>
@@ -52,6 +138,9 @@
     <p id="demo2">
         <button type="button" id="main" class="admin">메인으로</button>
     </p>
+    
+
+
 </body>
 <script>
     $(function(){

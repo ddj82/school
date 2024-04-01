@@ -32,10 +32,44 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 		ActionForward forward = null;
 		Action action = null;
 
-		if (command.equals("/addroom.mc")) {
+		if (command.equals("/memberLogin.mc")) {
 			forward = new ActionForward();
-			forward.setPath("/room/qna_room_insert.jsp");
+			forward.setRedirect(true);
+			forward.setPath("./loginForm.html");
 
+		} else if (command.equals("/memberJoin.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./joinForm.jsp");
+
+		} else if (command.equals("/memberJoinAction.mc")) {
+			action = new MemberJoinAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/myPageModifyProAction.mc")) {
+			action = new MyPageModifyProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/memberDeleteAction.mc")) {
+			action = new MemberDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/loginMypage.mc")) {
+			action = new SelectMypageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("/mocaList.mc")) {
 			action = new MocaListAction();
 			try {
@@ -43,6 +77,10 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/addroom.mc")) {
+			forward = new ActionForward();
+			forward.setPath("/room/qna_room_insert.jsp");
+
 		} else if (command.equals("/insertRoom.mc")) {
 			action = new RoomInsertAction();
 			try {
@@ -99,6 +137,7 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			request.setAttribute("r_no", r_no);
 			forward = new ActionForward();
 			forward.setPath("/room/moca_delete.jsp");
+
 		} else if (command.equals("/mocaDeletePro.mc")) {
 			action = new MocaDeleteProAction();
 			try {
@@ -154,6 +193,46 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			forward.setPath("/board/qna_board_delete.jsp");
 		} else if (command.equals("/boardDeletePro.mc")) {
 			action = new BoardDeleteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/roomListAction.mc")) {
+			action = new RoomListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+				e.getMessage();
+			}
+		} else if (command.equals("/userOrderAction.mc")) {
+			action = new UserOrderAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/userOrder_list.mc")) {
+			forward = new ActionForward();
+			forward.setPath("/users/user_Order_list.jsp");
+
+		} else if (command.equals("/myOrderList.mc")) {
+			action = new UserOrderListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/orderDelete.mc")) {
+			action = new UserOrderDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/selectYesTime.mc")) {
+			action = new SelectYesTimeAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

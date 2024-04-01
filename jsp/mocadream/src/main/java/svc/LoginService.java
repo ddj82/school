@@ -13,7 +13,7 @@ public class LoginService {
 		MocaDAO loginDAO = MocaDAO.getInstance();
 		Connection con = getConnection();
 		loginDAO.setConnection(con);
-		Mc_users loginMember = loginDAO.selectLoginMember(id, pw);
+		Mc_users loginMember = loginDAO.loginMember(id, pw);
 		close(con);
 		return loginMember;
 	}

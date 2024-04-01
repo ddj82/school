@@ -12,7 +12,16 @@ public class MemberListService {
 		Connection con = getConnection();
 		MocaDAO memberDAO = MocaDAO.getInstance();
 		memberDAO.setConnection(con);
-		ArrayList<Mc_users> memberList = memberDAO.searchList();
+		ArrayList<Mc_users> memberList = memberDAO.searchMemberList();
+		close(con);
+		return memberList;
+	}
+
+	public ArrayList<Mc_users> getMemberList(String search) {
+		Connection con = getConnection();
+		MocaDAO memberDAO = MocaDAO.getInstance();
+		memberDAO.setConnection(con);
+		ArrayList<Mc_users> memberList = memberDAO.searchMemberList(search);
 		close(con);
 		return memberList;
 	}

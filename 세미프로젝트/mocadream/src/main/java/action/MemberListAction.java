@@ -10,10 +10,11 @@ import vo.ActionForward;
 import vo.Mc_users;
 
 public class MemberListAction implements Action {
-	
+
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
+		String search = request.getParameter("search");
 		ActionForward forward = null;
 
 		if (id == null) {
@@ -22,18 +23,23 @@ public class MemberListAction implements Action {
 			forward.setPath("./memberLogin.mc");
 		} else if (!id.equals("admin")) {
 			PrintWriter out = response.getWriter();
-			System.out.println("흐름확인1");
 			out.println("<script>");
 			out.println("alert('관리자가 아닙니다.');");
 			out.println("location.href='./memberLogin.mc");
 			out.println("</script>");
-			System.out.println("흐름확인2");
 		} else {
 			forward = new ActionForward();
 			MemberListService memberListService = new MemberListService();
-			ArrayList<Mc_users> memberList = memberListService.getMemberList();
+			ArrayList<Mc_users> memberList;
+
+			if (search == null) {
+				memberList = memberListService.getMemberList();
+			} else {
+				memberList = memberListService.getMemberList(search);
+			}
 			request.setAttribute("memberList", memberList);
 			forward.setPath("/users/member_list.jsp");
+
 		}
 
 		return forward;

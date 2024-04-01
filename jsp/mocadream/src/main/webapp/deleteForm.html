@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#loginFomArea {
+	margin: auto;
+	width: 400px;
+	height: 200px;
+	border: 2px double purple;
+	border-radius: 10px;
+	text-align: center;
+}
+
+fieldset {
+	text-align: center;
+	border: none;
+}
+
+#selectButton {
+	margin-top: 10px;
+}
+
+table {
+	width: 300px;
+	margin: auto;
+}
+
+.td_left {
+	width: 180px
+}
+
+.td_right {
+	width: 200px
+}
+</style>
+<script>
+document.getElementById('selectButton').addEventListener('click', function() {
+    // 세션 스토리지와 로컬 스토리지의 모든 데이터를 지우기
+    sessionStorage.clear();
+    localStorage.clear();
+
+    // 캐시 비우기
+    caches.keys().then(function(cacheNames) {
+        cacheNames.forEach(function(cacheName) {
+            caches.delete(cacheName);
+        });
+    });
+
+    // 회원탈퇴 후 홈페이지로 이동 또는 로그인 페이지로 이동 등의 처리
+    window.location.href = 'index.html';
+});
+</script>
+</head>
+<body>
+	<section id="deleteFormArea">
+		<h1>로그인</h1>
+		<form action="index.jsp" method="POST">
+			<fieldset>
+				<table>
+					<tr>
+						<td class="td_left"><label for="id">회원탈퇴를 하시겠습니까 ?</label></td>
+					</tr>
+				</table>
+				<input type="submit" value="네" id="selectButton" formaction="memberDeleteAction.mc">
+				<input type="submit" value="아니요" id="selectButton" >
+			</fieldset>
+		</form>
+	</section>
+</body>
+</html>

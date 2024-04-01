@@ -1,6 +1,6 @@
 package action;
 
-import java.io.File;
+import java.io.*;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +19,7 @@ public class RoomInsertAction implements Action {
 		String saveFolder = "/roomUpload";
 		int fileSize = 5 * 1024 * 1024;
 		realFolder = "C:/jspwork/mocadream/src/main/webapp" + saveFolder;
+//		realFolder = "C:/Users/KDJ/IdeaProjects/eclipsejava/mocadream/src/main/webapp" + saveFolder;
 		File f = new File(realFolder);
 		
 		if (!f.exists()) {
@@ -33,8 +34,6 @@ public class RoomInsertAction implements Action {
 		mc_rooms.setR_desc(multi.getParameter("R_DESC"));
 		mc_rooms.setR_file(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));
 		
-		System.out.println(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));
-		
 		RoomInsertService roomInsertService = new RoomInsertService();
 		boolean isInsertSuccess = roomInsertService.registRoom(mc_rooms);
 
@@ -46,11 +45,9 @@ public class RoomInsertAction implements Action {
 			out.println("history.back();");
 			out.println("</script>");
 		} else {
-			forward = null; //테스트중
-			
-//			forward = new ActionForward();
+			forward = new ActionForward();
 //			forward.setRedirect(true);
-//			forward.setPath("boardList.bo");
+			forward.setPath("mocaList.mc");
 		}
 
 		return forward;

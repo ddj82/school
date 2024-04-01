@@ -33,13 +33,13 @@ public class MemberWarningAction implements Action {
 
 			if (deleteResult) {
 				out.println("<script>");
-				out.println("alert('회원을 제제했습니다.');");
+				out.println("alert('해당 회원을 경고처리 하였습니다.\\n(경고 3회 누적시, 자동으로 정지처리 됩니다.)');");
 				out.println("location.href='./memberListAction.mc';");
 				out.println("</script>");
 			} else {
 				response.setContentType("text/html;charset=UTF-8");
 				out.println("<script>");
-				out.println("alert('회원제제 실패.');");
+				out.println("alert('경고 처리 실패.');");
 				out.println("location.href='./memberLogin.mc';");
 				out.println("</script>");
 			}

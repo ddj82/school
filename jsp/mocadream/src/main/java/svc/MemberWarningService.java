@@ -7,17 +7,16 @@ import dao.MocaDAO;
 public class MemberWarningService {
 
 	public boolean warningMember(String Id) {
-		// TODO Auto-generated method stub
 		boolean warningResult = false;
 		Connection con = getConnection();
 		MocaDAO memberDAO = MocaDAO.getInstance();
 		memberDAO.setConnection(con);
 		int warningCount = memberDAO.warning(Id);
-		if(warningCount > 0){
+
+		if (warningCount > 0) {
 			commit(con);
 			warningResult = true;
-		}
-		else{
+		} else {
 			rollback(con);
 		}
 		close(con);

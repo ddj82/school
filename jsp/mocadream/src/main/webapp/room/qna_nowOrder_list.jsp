@@ -4,6 +4,7 @@
 <%@ page import="vo.PageInfo" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	ArrayList<Mc_order> nowOrderList = (ArrayList<Mc_order>) request.getAttribute("nowOrderList");
     PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
@@ -55,9 +56,24 @@
 		width: 500px;
 		text-align: center;
 	}
+	
+    p {
+        text-align: right;
+        margin-right: 20px;
+    }
 </style>
 </head>
 <body>
+	<p>
+		<c:choose>
+			<c:when test="${id ne null }">
+				[관리자계정]&nbsp; <a href="logout">로그아웃</a>
+			</c:when>
+			<c:otherwise>
+				<a href="loginForm.html">로그인</a>
+			</c:otherwise>
+		</c:choose>
+	</p>
 	<section id="listForm">
 		<h2>실시간 예약 리스트</h2><br>
 		<table>
@@ -109,6 +125,7 @@
 <% } else { %>
 	<section id="emptyArea">예약 된 룸이 없습니다.</section>
 <% } %>
-
+	<br><br>
+	<a href="main.jsp">메인으로</a>&nbsp;
 </body>
 </html>

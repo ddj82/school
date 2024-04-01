@@ -30,14 +30,15 @@
 		<c:choose>
 			<c:when test="${id ne null }">
 				<% if (session.getAttribute("id").equals("admin")) { %>
-					[관리자계정] <a href="logout" id="log">로그아웃</a>
+					[관리자계정]&nbsp; <a href="logout">로그아웃</a>
 				<% } else { %>
-					${id }님, 환영합니다. <a href="logout" id="log">로그아웃</a>
-					<a href="updateUsers.mc">내 정보수정</a>
+					${id }님, 환영합니다. <a href="logout">로그아웃</a>
+					<a href="loginMypage.mc">내 정보수정</a>
 				<% } %>
 			</c:when>
 			<c:otherwise>
-				<a href="loginForm.html" id="log">로그인</a>
+				<a href="loginForm.html">로그인</a>
+				<a href="joinForm.jsp">/ 회원가입</a>
 			</c:otherwise>
 		</c:choose>
 	</p>
@@ -45,10 +46,9 @@
 	<c:choose>
 		<c:when test="${id ne null }">
 			<% if (session.getAttribute("id").equals("admin")) { %>
-				<a href="">소식</a>&nbsp;
+				<a href="boardList.mc">소식</a>&nbsp;
 				<a href="">이용안내</a>&nbsp;
 				<a href="">방정보</a>&nbsp;
-				<a href="">예약하기</a>&nbsp;
 				<a href="">오시는길</a>&nbsp;&nbsp; <br><br><br>
 				
 				<script>
@@ -71,15 +71,16 @@
 			    <p id="demo2"><button type="button" id="main" class="admin">메인으로</button></p>		
 			    		
 			<% } else { %>
-				<a href="">소식</a>&nbsp;
+				<a href="boardList.mc">소식</a>&nbsp;
 				<a href="">이용안내</a>&nbsp;
 				<a href="">방정보</a>&nbsp;
-				<a href="">예약하기</a>&nbsp;
+				<a href="roomListAction.mc">예약하기</a>&nbsp;
+				<a href="myOrderList.mc">예약 내역 확인</a>&nbsp;
 				<a href="">오시는길</a>&nbsp;&nbsp; <br><br><br>
 			<% } %>
 		</c:when>
 		<c:otherwise>
-			<a href="">소식</a>&nbsp;
+			<a href="boardList.mc">소식</a>&nbsp;
 			<a href="">이용안내</a>&nbsp;
 			<a href="">방정보</a>&nbsp;
 			<a href="">오시는길</a> <br><br><br>
