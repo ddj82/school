@@ -3,6 +3,11 @@
 <%@ page import="vo.Mc_rooms"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+response.setHeader("Pragma","no-cache");
+response.setHeader("Expires","0");
+response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
+%>
+<%
 ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_rooms");
 %>
 <!DOCTYPE html>
@@ -11,12 +16,6 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 <meta charset="UTF-8">
 <title>MOCA DREAM 예약하기 페이지</title>
 <style>
-	#orderform {
-		width: 400px;
-		margin: auto;
-		border: 1px solid gray;
-	}
-	
 	.input {
 		width: 400px;
 		height: 30px;
@@ -31,13 +30,6 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 		width: 30px border
 	}
 	
-	input[type=checkbox] {
-		width: 20px;
-		height: 20px;
-		margin: 0 5px 0 0;
-		vertical-align: bottom;
-	}
-	
     p#log {
         text-align: right;
         margin-right: 20px;
@@ -48,6 +40,10 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
     }
     
     select#selectUseT option {
+    	display: none;
+    }
+    
+    option#none {
     	display: none;
     }
 </style>
@@ -173,7 +169,7 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTimeList");
 %>
 	
-	<form name="orderform" action="userOrderAction.mc" method="post">
+	<form name="orderform" action="userOrderAction.mc" method="post" id="orderform">
 		<section id="orderformArea">
 			<table>
 				<tr>
@@ -192,7 +188,7 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 				</tr>
 				<tr>
 					<td><label for="r_uname">예약자 이름 : </label></td>
-					<td><input type="text" name="r_uname" class="input" id="r_uname" /></td>
+					<td><input type="text" name="r_uname" class="input" id="r_uname" value="${id }" readonly></td>
 				</tr>
 				<tr>
 					<td><label for="r_cal">예약 날짜 : </label></td>
@@ -206,6 +202,7 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 					<td><label for="r_statime">예약 시간 : </label></td>
 					<td>
 					<select name="r_statime" class="input" id="selectT">
+						<option id="none">시간을 선택해주세요.</option>
 						<option>09:00</option>
 						<option>10:00</option>
 						<option>11:00</option>
@@ -255,17 +252,10 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 						<option>3시간 이용</option>
 					</select>
 					</td>
-					<%
-// 					if () {
-// 						out.println("<script>");
-// 						out.println("optUseTshow();");
-// 						out.println("</script>");
-// 					}
-					%>
 				</tr>
 				<tr>
 					<td colspan="2">
-					<input type="submit" id="order" value="예약 신청">&nbsp;&nbsp;
+					<input type="submit" id="order" value="예약 신청" onclick="orderbtn()">&nbsp;&nbsp;
 					<input type="reset" id="reset" value="다시 예약하기">
 					</td>
 				</tr>
@@ -274,5 +264,13 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 	</form>
 	<br><br>
 	<a href="main.jsp">메인으로</a>&nbsp;
+<script>
+	document.getElementById("order").addEventListener("click", function(e){
+	    if (orderform.selectT.value == '시간을 선택해주세요.') {
+	        e.preventDefault();
+	        alert("시간을 선택해주세요.");
+	    }
+	});
+</script>
 </body>
 </html>

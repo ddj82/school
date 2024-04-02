@@ -42,6 +42,26 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			forward.setRedirect(false);
 			forward.setPath("./joinForm.jsp");
 
+		} else if (command.equals("/idFindForm.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./idFindForm.jsp");
+
+		} else if (command.equals("/idFindResult.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./idFindResult.jsp");
+
+		} else if (command.equals("/pwFindForm.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./pwFindForm.jsp");
+
+		} else if (command.equals("/pwFindResult.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./pwFindResult.jsp");
+
 		} else if (command.equals("/memberJoinAction.mc")) {
 			action = new MemberJoinAction();
 			try {
@@ -49,6 +69,22 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/memberFindIdAction.mc")) {
+			action = new MemberIdFindAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (command.equals("/memberPwFindAction.mc")) {
+			action = new MemberPwFindAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else if (command.equals("/myPageModifyProAction.mc")) {
 			action = new MyPageModifyProAction();
 			try {

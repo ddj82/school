@@ -20,7 +20,6 @@ import vo.Mc_users;
 public class SelectYesTimeAction implements Action {
 
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("SelectYesTimeAction에 execute잘실행");
 		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);

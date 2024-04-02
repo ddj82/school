@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import svc.MemberListService;
 import vo.ActionForward;
 import vo.Mc_users;
+import vo.PageInfo;
 
 public class MemberListAction implements Action {
 
@@ -28,16 +29,45 @@ public class MemberListAction implements Action {
 			out.println("location.href='./memberLogin.mc");
 			out.println("</script>");
 		} else {
-			forward = new ActionForward();
+
+			ArrayList<Mc_users> memberList = new ArrayList<Mc_users>();
+			int page = 1;
+			int limit = 10;
+
+			if (request.getParameter("page") == null || request.getParameter("page").equals(""))
+				page = 1;
+			else
+				page = Integer.parseInt(request.getParameter("page"));
+
 			MemberListService memberListService = new MemberListService();
-			ArrayList<Mc_users> memberList;
+			int listCount = memberListService.getListCount();
 
 			if (search == null) {
-				memberList = memberListService.getMemberList();
+				memberList = memberListService.getMemberList(page, limit);
 			} else {
-				memberList = memberListService.getMemberList(search);
+				memberList = memberListService.getMemberList(page, limit, search);
 			}
+
+			int maxPage = (int) ((double) listCount / limit + 0.95);
+
+			int startPage = (((int) ((double) page / 10 + 0.9)) - 1) * 10 + 1;
+
+			int endPage = startPage + 10 - 1;
+
+			if (endPage > maxPage)
+				endPage = maxPage;
+
+			PageInfo pageInfo = new PageInfo();
+			pageInfo.setEndPage(endPage);
+			pageInfo.setListCount(listCount);
+			pageInfo.setMaxPage(maxPage);
+			pageInfo.setPage(page);
+			pageInfo.setStartPage(startPage);
+
+			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("memberList", memberList);
+
+			forward = new ActionForward();
 			forward.setPath("/users/member_list.jsp");
 
 		}

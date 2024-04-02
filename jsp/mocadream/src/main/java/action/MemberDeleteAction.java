@@ -19,7 +19,7 @@ public class MemberDeleteAction implements Action {
 
 		ActionForward forward = new ActionForward();
 		request.setAttribute("myPage", myPage);
-		forward.setPath("/delete_commit.html");
+		forward.setPath("/users/delete_commit.html");
 
 		return forward;
 

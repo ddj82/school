@@ -5,6 +5,11 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+response.setHeader("Pragma","no-cache");
+response.setHeader("Expires","0");
+response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
+%>
+<%
 Mc_notice article = (Mc_notice) request.getAttribute("article");
 %>
 <%

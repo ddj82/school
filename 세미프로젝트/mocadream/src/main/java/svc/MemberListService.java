@@ -8,20 +8,35 @@ import vo.Mc_users;
 
 public class MemberListService {
 
-	public ArrayList<Mc_users> getMemberList() {
+	public int getListCount() throws Exception {
+
+		int listCount = 0;
 		Connection con = getConnection();
-		MocaDAO memberDAO = MocaDAO.getInstance();
-		memberDAO.setConnection(con);
-		ArrayList<Mc_users> memberList = memberDAO.searchMemberList();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		listCount = mocaDAO.selectMemberListCount();
+		close(con);
+		return listCount;
+	}
+
+	public ArrayList<Mc_users> getMemberList(int page, int limit) throws Exception {
+
+		ArrayList<Mc_users> memberList = null;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		memberList = mocaDAO.selectMemberList(page, limit);
 		close(con);
 		return memberList;
 	}
 
-	public ArrayList<Mc_users> getMemberList(String search) {
+	public ArrayList<Mc_users> getMemberList(int page, int limit, String search) throws Exception {
+
+		ArrayList<Mc_users> memberList = null;
 		Connection con = getConnection();
-		MocaDAO memberDAO = MocaDAO.getInstance();
-		memberDAO.setConnection(con);
-		ArrayList<Mc_users> memberList = memberDAO.searchMemberList(search);
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		memberList = mocaDAO.selectMemberList(page, limit, search);
 		close(con);
 		return memberList;
 	}

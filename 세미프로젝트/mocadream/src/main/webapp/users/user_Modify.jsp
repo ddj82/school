@@ -2,6 +2,11 @@
 <%@ page import="vo.Mc_users"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+response.setHeader("Pragma","no-cache");
+response.setHeader("Expires","0");
+response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
+%>
+<%
 Mc_users article = (Mc_users) request.getAttribute("myPage");
 %>
 <!DOCTYPE html>
@@ -114,7 +119,7 @@ Mc_users article = (Mc_users) request.getAttribute("myPage");
 			<table>
 				<tr>
 					<td class="td_left"><label for="delete">회원탈퇴</label></td>
-					<td class="td_right"><input name="delete" type="submit" id="delete" value="회원탈퇴" formaction="deleteForm.html"></td>
+					<td class="td_right"><input name="delete" type="submit" id="delete" value="회원탈퇴" formaction="./deleteForm.html"></td>
 				</tr>
 			</table>
 		</form>

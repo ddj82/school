@@ -77,35 +77,44 @@
         console.log(parseInt(z.options[z.selectedIndex].nextElementSibling.value));
         console.log(parseInt(z.options[z.selectedIndex].nextElementSibling.value) == parseInt(z1) + 1);
 	}
+
+
+
 </script>
 </head>
 <body>
-    <select name="r_statime" class="input" id="selectT">
-        <option>09:00</option>
-        <option>10:00</option>
-        <option>11:00</option>
-        <option>12:00</option>
-        <option>13:00</option>
-        <option>14:00</option>
-        <option>15:00</option>
-        <option>16:00</option>
-        <option>17:00</option>
-        <option>18:00</option>
-        <option>19:00</option>
-        <option>20:00</option>
-    </select>
-    <button type="button" name="usetime" class="input" onclick="optUseTshow()">이용가능 시간 검색</button>
-    <select name="r_time" class="input" id="selectUseT">
-        <option>1시간 이용</option>
-        <option>2시간 이용</option>
-        <option>3시간 이용</option>
-    </select>
+    <form action="aaa.html" id="orderform">
+        <select name="r_statime" class="input" id="selectT">
+            <option>시간을 선택해주세요.</option>
+            <option>09:00</option>
+            <option>10:00</option>
+            <option>11:00</option>
+            <option>12:00</option>
+            <option>13:00</option>
+            <option>14:00</option>
+            <option>15:00</option>
+            <option>16:00</option>
+            <option>17:00</option>
+            <option>18:00</option>
+            <option>19:00</option>
+            <option>20:00</option>
+        </select>
+        <button type="button" name="usetime" class="input" onclick="optUseTshow()">이용가능 시간 검색</button>
+        <select name="r_time" class="input" id="selectUseT">
+            <option>1시간 이용</option>
+            <option>2시간 이용</option>
+            <option>3시간 이용</option>
+        </select>
+        <br><br>
+        <input type="submit" id="order" value="예약 신청">
+    </form>
     <script>
-        
-        // for (let i = 0; i < document.getElementById("selectT").children.length; i++) {
-        //     let a = document.getElementById("selectT").children[i];
-        //     console.log(a.value);
-        // }
+        document.getElementById("order").addEventListener("click", function(e){
+            if (orderform.selectT.value == '시간을 선택해주세요.') {
+                e.preventDefault();
+                alert("시간을 선택해주세요.");
+            }
+        });
     </script>
 
 

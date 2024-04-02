@@ -104,6 +104,8 @@ public class UserOrderAction implements Action {
 			mc_order.setR_statime(20);
 			usetime = 20;
 			break;
+		default :
+			
 		}
 		mc_order.setR_endtime(usetime + time);
 		

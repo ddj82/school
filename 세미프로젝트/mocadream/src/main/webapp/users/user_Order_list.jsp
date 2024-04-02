@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="vo.Mc_order"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+response.setHeader("Pragma","no-cache");
+response.setHeader("Expires","0");
+response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
+%>
 <%
 Mc_order mc_order = (Mc_order) request.getAttribute("mc_order");
 %>
@@ -59,10 +66,14 @@ Mc_order mc_order = (Mc_order) request.getAttribute("mc_order");
 				<td>예약자 이름 :</td>
 				<td><%=mc_order.getR_uname()%></td>
 			</tr>
-			<tr>
-				<td>예약 일자 :</td>
-				<td><%=mc_order.getR_cal()%></td>
-			</tr>
+		 <%        
+		    SimpleDateFormat ddd = new SimpleDateFormat("yyyy-MM-dd");     
+		    String orderD = ddd.format(mc_order.getR_cal()); 
+		 %>
+		   <tr>
+		      <td>예약 일자 : </td>
+		      <td><%=orderD%></td>
+		   </tr>
 			<tr>
 				<td>예약 시간 :</td>
 				<td><%=mc_order.getR_time()%></td>

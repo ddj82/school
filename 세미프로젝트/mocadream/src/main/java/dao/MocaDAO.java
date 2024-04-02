@@ -2,8 +2,10 @@ package dao;
 
 import static util.JdbcUtil.*;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
+import java.util.List;
+
 import javax.sql.DataSource;
 import vo.*;
 
@@ -78,6 +80,52 @@ public class MocaDAO {
 			e.printStackTrace();
 		}
 		return idchk;
+	}
+
+	// 회원 아이디 찾기
+	public List<String> findIdMember(Mc_users member) {
+		List<String> idList = new ArrayList<>();
+		String sql = "SELECT ID FROM MC_USERS WHERE NAME = ? AND EMAIL = ?";
+
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, member.getName());
+			ps.setString(2, member.getEmail());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				idList.add(rs.getString("ID"));
+			}
+		} catch (SQLException ex) {
+			System.out.println("findMember 에러: " + ex);
+		} finally {
+			close(ps);
+		}
+
+		return idList;
+	}
+
+	// 회원 비밀번호 찾기
+	public Mc_users findPwMember(Mc_users member) {
+		String sql = "SELECT PW FROM MC_USERS WHERE ID = ? AND NAME = ? AND EMAIL = ?";
+		Mc_users user_pw = new Mc_users(); // 객체 생성
+
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, member.getId());
+			ps.setString(2, member.getName());
+			ps.setString(3, member.getEmail());
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				user_pw.setPw(rs.getString("PW")); // 비밀번호 설정
+			}
+		} catch (SQLException ex) {
+			System.out.println("findMember 에러: " + ex);
+		} finally {
+			close(ps);
+		}
+
+		return user_pw; // 비밀번호를 포함한 객체 반환
 	}
 
 	// 로그인 메소드
@@ -238,7 +286,7 @@ public class MocaDAO {
 
 	// 회원 예약하기2 (예약가능시간 검색) 메소드
 	public ArrayList<Integer> selectYesTime(String rname, Date rcal) {
-		String sql = "SELECT R_TIME, R_STATIME, R_ENDTIME - 1 FROM MC_ORDER WHERE R_NAME = ? AND R_CAL = ?";
+		String sql = "SELECT R_TIME, R_STATIME, R_ENDTIME - 1 FROM MC_ORDER WHERE R_NAME = ? AND R_CAL = ? AND R_USED != '취소'";
 		ArrayList<Integer> noTimeList = new ArrayList<Integer>();
 		try {
 			ps = con.prepareStatement(sql);
@@ -374,7 +422,7 @@ public class MocaDAO {
 	// 회원 예약취소 메소드
 	public int deleteOrder(String deleteId, String r_no, String r_cal, String r_statime) {
 		PreparedStatement ps = null;
-		String sql = "DELETE FROM MC_ORDER WHERE R_UNAME = ? AND R_NO = ? AND TO_CHAR(R_CAL , 'YYYY-MM-DD') = ? AND R_STATIME = ? ";
+		String sql = "UPDATE MC_ORDER SET R_USED = '취소' WHERE R_UNAME = ? AND R_NO = ? AND TO_CHAR(R_CAL , 'YYYY-MM-DD') = ? AND R_STATIME = ?";
 		int deleteCount = 0;
 
 		try {
@@ -397,159 +445,178 @@ public class MocaDAO {
 
 	}
 
-	// 관리자 회원정보리스트 메소드
-	public ArrayList<Mc_users> searchMemberList() {
-		ArrayList<Mc_users> memberList = new ArrayList<Mc_users>();
-		String sql = "SELECT * FROM MC_USERS";
-		Mc_users mb = null;
+	// 관리자 회원정보리스트 (페이징) 메소드
+	public int selectMemberListCount() {
+
+		int listCount = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		try {
-			st = con.createStatement();
-			rs = st.executeQuery(sql);
-			while (rs.next()) {
-				mb = new Mc_users();
-				mb.setId(rs.getString("ID"));
-				mb.setPw(rs.getString("PW"));
-				mb.setName(rs.getString("NAME"));
-				mb.setTel(rs.getString("TEL"));
-				mb.setEmail(rs.getString("EMAIL"));
-				mb.setAddr(rs.getString("ADDR"));
-				mb.setWar(rs.getInt("WAR"));
-				mb.setState(rs.getInt("STATE"));
-				memberList.add(mb);
+			ps = con.prepareStatement("SELECT COUNT(*) FROM MC_USERS");
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				listCount = rs.getInt(1);
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			System.out.println("데이터를 가져오는 도중 에러가 발생했습니다.");
+		} catch (Exception ex) {
+			System.out.println("getListCount 에러: " + ex);
 		} finally {
-			try {
-				if (rs != null)
-					close(rs);
-				if (st != null)
-					close(st);
-			} catch (Exception e) {
-				System.out.println("객체를 닫는 도중 에러가 발생했습니다.");
-				e.getMessage();
+			close(rs);
+			close(ps);
+		}
+
+		return listCount;
+	}
+
+	// 관리자 회원정보리스트 메소드
+	public ArrayList<Mc_users> selectMemberList(int page, int limit) {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM " + "(SELECT ROWNUM RNUM, A.* FROM (SELECT * FROM MC_USERS ORDER BY ID DESC ) A ) "
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		ArrayList<Mc_users> memberList = new ArrayList<Mc_users>();
+		int startrow = (page - 1) * 10 + 1;
+		int endrow = (page - 1) * 10 + 10;
+
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, startrow);
+			ps.setInt(2, endrow);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Mc_users mc_users = new Mc_users();
+				mc_users.setId(rs.getString("ID"));
+				mc_users.setPw(rs.getString("PW"));
+				mc_users.setName(rs.getString("NAME"));
+				mc_users.setTel(rs.getString("TEL"));
+				mc_users.setEmail(rs.getString("EMAIL"));
+				mc_users.setAddr(rs.getString("ADDR"));
+				mc_users.setWar(rs.getInt("WAR"));
+				mc_users.setState(rs.getInt("STATE"));
+				memberList.add(mc_users);
 			}
+
+		} catch (Exception ex) {
+			System.out.println("getBoardList 에러 : " + ex);
+		} finally {
+			close(rs);
+			close(ps);
 		}
 		return memberList;
 	}
 
 	// 관리자 회원정보리스트 검색기능 메소드
-	public ArrayList<Mc_users> searchMemberList(String search) {
+	public ArrayList<Mc_users> selectMemberList(int page, int limit, String search) {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		ArrayList<Mc_users> memberList = new ArrayList<Mc_users>();
-		String sql;
-		Mc_users mb = null;
-		// if else로 search가 제재나 석방이면 sql문에서 state를 각각 검색하도록 설정
+		int startrow = (page - 1) * 10 + 1; // 읽기 시작할 row 번호..
+		int endrow = (page - 1) * 10 + 10;
+		String sql = null;
 
 		if (search.equals("정지")) {
-			sql = "SELECT * FROM MC_USERS WHERE STATE = 2";
+			sql = "SELECT * FROM "
+					+ "(SELECT ROWNUM RNUM, A.* FROM (SELECT * FROM MC_USERS WHERE STATE = 2 ORDER BY ID DESC ) A ) "
+					+ "WHERE RNUM BETWEEN ? AND ?";
 
 			try {
 				ps = con.prepareStatement(sql);
+				ps.setInt(1, startrow);
+				ps.setInt(2, endrow);
 				rs = ps.executeQuery();
+
 				while (rs.next()) {
-					mb = new Mc_users();
-					mb.setId(rs.getString("ID"));
-					mb.setPw(rs.getString("PW"));
-					mb.setName(rs.getString("NAME"));
-					mb.setTel(rs.getString("TEL"));
-					mb.setEmail(rs.getString("EMAIL"));
-					mb.setAddr(rs.getString("ADDR"));
-					mb.setWar(rs.getInt("WAR"));
-					mb.setState(rs.getInt("STATE"));
-					memberList.add(mb);
+					Mc_users mc_users = new Mc_users();
+					mc_users.setId(rs.getString("ID"));
+					mc_users.setPw(rs.getString("PW"));
+					mc_users.setName(rs.getString("NAME"));
+					mc_users.setTel(rs.getString("TEL"));
+					mc_users.setEmail(rs.getString("EMAIL"));
+					mc_users.setAddr(rs.getString("ADDR"));
+					mc_users.setWar(rs.getInt("WAR"));
+					mc_users.setState(rs.getInt("STATE"));
+					memberList.add(mc_users);
 				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				System.out.println("데이터를 가져오는 도중 에러가 발생했습니다.");
+
+			} catch (Exception ex) {
+				System.out.println("getBoardList 에러 : " + ex);
 			} finally {
-				try {
-					if (rs != null)
-						close(rs);
-					if (st != null)
-						close(st);
-				} catch (Exception e) {
-					System.out.println("객체를 닫는 도중 에러가 발생했습니다.");
-					e.getMessage();
-				}
+				close(rs);
+				close(ps);
 			}
 
 		} else if (search.equals("탈퇴")) {
-
-			sql = "SELECT * FROM MC_USERS WHERE STATE = 3";
+			sql = "SELECT * FROM "
+					+ "(SELECT ROWNUM RNUM, A.* FROM (SELECT * FROM MC_USERS WHERE STATE = 0 ORDER BY ID DESC ) A ) "
+					+ "WHERE RNUM BETWEEN ? AND ?";
 
 			try {
 				ps = con.prepareStatement(sql);
+				ps.setInt(1, startrow);
+				ps.setInt(2, endrow);
 				rs = ps.executeQuery();
+
 				while (rs.next()) {
-					mb = new Mc_users();
-					mb.setId(rs.getString("ID"));
-					mb.setPw(rs.getString("PW"));
-					mb.setName(rs.getString("NAME"));
-					mb.setTel(rs.getString("TEL"));
-					mb.setEmail(rs.getString("EMAIL"));
-					mb.setAddr(rs.getString("ADDR"));
-					mb.setWar(rs.getInt("WAR"));
-					mb.setState(rs.getInt("STATE"));
-					memberList.add(mb);
+					Mc_users mc_users = new Mc_users();
+					mc_users.setId(rs.getString("ID"));
+					mc_users.setPw(rs.getString("PW"));
+					mc_users.setName(rs.getString("NAME"));
+					mc_users.setTel(rs.getString("TEL"));
+					mc_users.setEmail(rs.getString("EMAIL"));
+					mc_users.setAddr(rs.getString("ADDR"));
+					mc_users.setWar(rs.getInt("WAR"));
+					mc_users.setState(rs.getInt("STATE"));
+					memberList.add(mc_users);
 				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				System.out.println("데이터를 가져오는 도중 에러가 발생했습니다.");
+
+			} catch (Exception ex) {
+				System.out.println("getBoardList 에러 : " + ex);
 			} finally {
-				try {
-					if (rs != null)
-						close(rs);
-					if (st != null)
-						close(st);
-				} catch (Exception e) {
-					System.out.println("객체를 닫는 도중 에러가 발생했습니다.");
-					e.getMessage();
-				}
+				close(rs);
+				close(ps);
 			}
+
 		} else {
 
-			sql = "SELECT * FROM MC_USERS " + "WHERE UPPER(ID) LIKE UPPER(?) OR UPPER(PW) LIKE UPPER(?) OR UPPER(NAME) "
-					+ "LIKE UPPER(?) OR UPPER(TEL) LIKE UPPER(?) OR UPPER(ADDR) LIKE UPPER(?)";
+			sql = "SELECT * FROM "
+					+ "(SELECT ROWNUM RNUM, A.* FROM ( SELECT * FROM MC_USERS WHERE UPPER(ID) LIKE UPPER(?) OR UPPER(PW) LIKE UPPER(?) OR UPPER(NAME) LIKE UPPER(?) OR UPPER(TEL) LIKE UPPER(?) OR UPPER(ADDR) LIKE UPPER(?) ORDER BY ID DESC ) A ) "
+					+ "WHERE RNUM BETWEEN ? AND ?";
+
 			try {
 				ps = con.prepareStatement(sql);
-
 				ps.setString(1, "%" + search + "%");
 				ps.setString(2, "%" + search + "%");
 				ps.setString(3, "%" + search + "%");
 				ps.setString(4, "%" + search + "%");
 				ps.setString(5, "%" + search + "%");
-
+				ps.setInt(6, startrow);
+				ps.setInt(7, endrow);
 				rs = ps.executeQuery();
+
 				while (rs.next()) {
-					mb = new Mc_users();
-					mb.setId(rs.getString("ID"));
-					mb.setPw(rs.getString("PW"));
-					mb.setName(rs.getString("NAME"));
-					mb.setTel(rs.getString("TEL"));
-					mb.setEmail(rs.getString("EMAIL"));
-					mb.setAddr(rs.getString("ADDR"));
-					mb.setWar(rs.getInt("WAR"));
-					mb.setState(rs.getInt("STATE"));
-					memberList.add(mb);
+					Mc_users mc_users = new Mc_users();
+					mc_users.setId(rs.getString("ID"));
+					mc_users.setPw(rs.getString("PW"));
+					mc_users.setName(rs.getString("NAME"));
+					mc_users.setTel(rs.getString("TEL"));
+					mc_users.setEmail(rs.getString("EMAIL"));
+					mc_users.setAddr(rs.getString("ADDR"));
+					mc_users.setWar(rs.getInt("WAR"));
+					mc_users.setState(rs.getInt("STATE"));
+					memberList.add(mc_users);
 				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				System.out.println("데이터를 가져오는 도중 에러가 발생했습니다.");
+
+			} catch (Exception ex) {
+				System.out.println("getBoardList 에러 : " + ex);
 			} finally {
-				try {
-					if (rs != null)
-						close(rs);
-					if (st != null)
-						close(st);
-				} catch (Exception e) {
-					System.out.println("객체를 닫는 도중 에러가 발생했습니다.");
-					e.getMessage();
-				}
+				close(rs);
+				close(ps);
 			}
 		}
-
 		return memberList;
 	}
 
@@ -711,7 +778,7 @@ public class MocaDAO {
 		return nowOrderList;
 	}
 
-	// 관리자 방관리1 메소드
+	// 관리자 방관리1(페이징) 메소드
 	public int selectRoomListCount() {
 		int listCount = 0;
 		PreparedStatement ps = null;
@@ -773,7 +840,7 @@ public class MocaDAO {
 		return roomList;
 	}
 
-	// 관리자 방수정(수정할 방검색) 메소드
+	// 관리자 방수정1(수정할 방검색) 메소드
 	public Mc_rooms selectRoom(int r_no) {
 
 		PreparedStatement ps = null;
@@ -803,7 +870,7 @@ public class MocaDAO {
 		return mc_rooms;
 	}
 
-	// 관리자 방수정(수정할 방검색 후) 메소드
+	// 관리자 방수정2(수정할 방검색 후) 메소드
 	public int updateRoom(Mc_rooms room) {
 
 		int updateCount = 0;
@@ -828,6 +895,31 @@ public class MocaDAO {
 
 		return updateCount;
 
+	}
+
+	// 관리자 방수정3(기존 사진 파일 제거) 메소드
+	public String deleteFile(int r_no) {
+
+		String fm = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement("SELECT R_FILE FROM MC_ROOMS WHERE R_NO = ?");
+			ps.setInt(1, r_no);
+			rs = ps.executeQuery();
+
+			if (rs.next())
+				fm = rs.getString("R_FILE");
+
+		} catch (Exception e) {
+			System.out.println("파일 삭제 에러 : " + e);
+		} finally {
+			close(rs);
+			close(ps);
+		}
+
+		return fm;
 	}
 
 	// 관리자 방추가 메소드
@@ -888,7 +980,7 @@ public class MocaDAO {
 
 	}
 
-	// 관리자 공지목록1 메소드
+	// 관리자 공지목록1(페이징) 메소드
 	public int selectNoticeListCount() {
 
 		int listCount = 0;
@@ -957,7 +1049,7 @@ public class MocaDAO {
 		String sql = "SELECT * FROM (SELECT ROWNUM RNUM, A.* FROM (SELECT * FROM MC_NOTICE WHERE NT_TITLE LIKE ? ORDER BY NT_NO DESC) A ) WHERE RNUM BETWEEN ? AND ?";
 
 		ArrayList<Mc_notice> articleList = new ArrayList<Mc_notice>();
-		int startrow = (page - 1) * 10 + 1; 
+		int startrow = (page - 1) * 10 + 1;
 		int endrow = (page - 1) * 10 + 10;
 
 		try {

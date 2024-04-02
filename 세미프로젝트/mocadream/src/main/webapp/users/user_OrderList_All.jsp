@@ -6,6 +6,11 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+response.setHeader("Pragma","no-cache");
+response.setHeader("Expires","0");
+response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
+%>
+<%
 ArrayList<Mc_order> mc_OrderList = (ArrayList<Mc_order>) request.getAttribute("mc_OrderList");
 PageInfo pageInfo = (PageInfo) request.getAttribute("pageInfo");
 int listCount = pageInfo.getListCount();
@@ -132,7 +137,8 @@ int endPage = pageInfo.getEndPage();
 					String orderD2 = "" + mc_OrderList.get(i).getR_cal();
 				%>
 				<td>
-				<a href="orderDelete.mc?r_no=<%=mc_OrderList.get(i).getR_no()%>&r_cal=<%=orderD2%>&r_statime=<%=mc_OrderList.get(i).getR_statime()%>">취소</a>
+				<a href="orderDelete.mc?r_no=<%=mc_OrderList.get(i).getR_no()%>&r_cal=<%=orderD2%>&r_statime=<%=mc_OrderList.get(i).getR_statime()%>&r_used=<%=mc_OrderList.get(i).getR_used()%>">
+				취소</a>
 				</td>
 				<% } %>
 			</tr>
