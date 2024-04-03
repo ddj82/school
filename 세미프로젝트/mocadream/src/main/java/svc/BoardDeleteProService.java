@@ -10,32 +10,35 @@ import dao.MocaDAO;
 public class BoardDeleteProService {
 
 	public boolean isArticleWriter(int nt_no) throws Exception {
-
+		// TODO Auto-generated method stub
+		
 		boolean isArticleWriter = false;
 		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);
-		isArticleWriter = mocaDAO.isNoticeBoardWriter(nt_no);
+		isArticleWriter = mocaDAO.isArticleBoardWriter(nt_no);
 		close(con);
 		return isArticleWriter;
-
+		
 	}
 
-	public boolean removeArticle(int nt_no) throws Exception {
-
+	public boolean removeArticle(int nt_no) throws Exception{
+		// TODO Auto-generated method stub
+		
 		boolean isRemoveSuccess = false;
 		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);
-		int deleteCount = mocaDAO.deleteNotice(nt_no);
-
-		if (deleteCount > 0) {
+		int deleteCount = mocaDAO.deleteArticle(nt_no);
+		
+		if(deleteCount > 0){
 			commit(con);
-			isRemoveSuccess = true;
-		} else {
+			isRemoveSuccess=true;
+		}
+		else{
 			rollback(con);
 		}
-
+		
 		close(con);
 		return isRemoveSuccess;
 	}

@@ -1,0 +1,29 @@
+admin 시작
+mocaList.mc 서블릿 -> MocaListAction.java 실행 (MocaListService) 들렀다 dao(쿼리문)긁어 옴
+
+/room/moca_list.jsp 실행, 리스트 출력
+
+1. 수정
+
+mocaModifyForm.mc 서블릿 링크 탑승 
+mocaModifyFormAction.java 로 이동
+MocaDetailService -> dao 방문, no=? 에 일치하는 데이터 긁
+
+room/moca_modify.jsp 이동
+데이터 입력 후 mocaModifyPro.mc 서블릿탑승
+mocaModifyProAtion.java으로 이동
+
+처리후 mocaList.mc 서블릿 통해 
+/room/moca_list.jsp 돌아오기
+
+2. 삭제 
+
+mocaDeleteForm.mc 서블릿 링크 탑승 
+room/moca_delete.jsp 로 이동, 데이터 확인, 
+확인버튼 누를시 
+mocaDeleteAction.java 로 이동 
+dao-> 데이터 삭제
+
+처리후 mocaList.mc 서블릿 통해 
+/room/moca_list.jsp 돌아오기
+

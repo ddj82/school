@@ -1,0 +1,63 @@
+회원 검색기능에서 비밀번호는 제외
+
+MocaDAO의
+
+public int selectMemberListCount(String search) 메소드에서
+
+String sql 의 OR UPPER(PW) LIKE UPPER(?) 삭제
+ps.setString(5, "%" + search + "%"); 삭제
+
+**************************************************
+
+public ArrayList<Mc_users> selectMemberList(int page, int limit, String search)
+
+메소드 에서도 동일하게
+
+else 부분에서
+
+String sql 의 OR UPPER(PW) LIKE UPPER(?) 삭제
+ps.setString(5, "%" + search + "%"); 삭제
+
+ps.setInt(6, startrow);
+ps.setInt(7, endrow);
+을
+
+ps.setInt(5, startrow);
+ps.setInt(6, endrow);
+으로 변경
+
+**************************************************
+**************************************************
+
+회원 리스트 보기에서 예약 내역 확인 기능추가
+해당 화면에서 예약취소 기능 추가.
+
+member_list.jsp 전부 복붙
+
+**************************************************
+
+MocaController.java에
+if (command.equals("/myOrderList.mc"))
+부분 변경
+
+else if (command.equals("/myOrderList.mc")) {
+
+			String userId = request.getParameter("id");
+			request.setAttribute("userId", userId);
+
+			action = new UserOrderListAction();
+
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+**************************************************
+
+UserOrderListAction.java 변경
+
+user_OrderList_All.jsp 변경
+
+**************************************************

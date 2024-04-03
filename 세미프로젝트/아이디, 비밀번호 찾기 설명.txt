@@ -1,0 +1,63 @@
+joinForm시작
+
+
+사용파일 
+-src/main/java
+
+--action
+---MemberIdFindAction
+---MemberPwFindAction
+
+--controller
+---MemberFrontController
+/idFindForm.mc
+/idFindResult.mc
+/pwFindForm.mc
+/pwFindResult.mc
+memberFindIdAction.mc
+memberFindPwAction.mc
+패스 if문 추가 
+
+
+--dao
+---MocaDAO
+----추가 메소드
+-----List<String> findIdMember
+-----Mc_users findPwMember
+
+
+--svc
+---MemberIdFindService
+---MemberPwFindService
+
+--util
+---JdbcUtil.java
+
+--vo
+---ActionForward
+
+
+
+-webapp
+idFindForm.jsp
+idFindResult.jsp
+pwFindForm.jsp
+pwFindResult.jsp
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+아이디 찾기 
+idFindForm.jsp에서 시작 name과 email값을 입력받아서 MemberIdFindAction으로 이동
+name과 email은 unique값이 아니기때문에 같은 이름과 이메일로 가입한 아이디가 여러개 일 수 있음 
+그러므로 배열을 사용하여 아이디값을 담아서 출력한다.
+출력 페이지에서 값이 여러개면 여러 줄로 출력하고 overflow를 이용해서 스크롤 바 활성화 및 
+비밀번호 앞자리 2개 **로 감춤
+
+비밀번호 찾기 
+pwFindForm.jsp에서 시작 id와 name과 email값을 입력받아서 MemberPwFindAction으로 이동
+id와 name과 email은 조건쿼리문을 and로 걸어서  같은 아이디와이름, 이메일로 에 해당하는 계정의 비밀번호를 출력
+
+MemberPwFindAction의 마지막 else문에서 받아온 pw 값을 String 자료형으로 한번 바꾼후 setAttribute에 저장한 다음
+Result페이지에서 출력함 

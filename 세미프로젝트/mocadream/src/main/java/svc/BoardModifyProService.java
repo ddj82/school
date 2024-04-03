@@ -8,35 +8,38 @@ import dao.MocaDAO;
 public class BoardModifyProService {
 
 	public boolean isArticleWriter(int nt_no) throws Exception {
-
+		// TODO Auto-generated method stub
+		
 		boolean isArticleWriter = false;
 		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);
-		isArticleWriter = mocaDAO.isNoticeBoardWriter(nt_no); // true물고옴
+		isArticleWriter = mocaDAO.isArticleBoardWriter(nt_no); //true물고옴
 		close(con);
 		return isArticleWriter;
-
+		
 	}
 
 	public boolean modifyArticle(Mc_notice article) throws Exception {
-
+		// TODO Auto-generated method stub
+		
 		boolean isModifySuccess = false;
 		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);
-		int updateCount = mocaDAO.updateNotice(article);
-
-		if (updateCount > 0) {
+		int updateCount = mocaDAO.updateArticle(article);
+		
+		if(updateCount > 0){
 			commit(con);
-			isModifySuccess = true;
-		} else {
+			isModifySuccess=true;
+		}
+		else{
 			rollback(con);
 		}
-
+		
 		close(con);
 		return isModifySuccess;
-
+		
 	}
 
 }

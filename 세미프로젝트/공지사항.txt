@@ -1,0 +1,17 @@
+admin.jsp시작 => 소식 => controller패키지에 BoardFrontController.java서블릿의  "boardList.mc" => 페이지 정보가지고 DAO의selectArticleList(page,limit)메소드 실행 => DAO정보 리턴 => vo패키지의 PageInfo.java의 setter메소드 호출
+=> request객체의setAttribute 페이지 정보랑 DAO정보 => webapp의 보드 폴더의 qna_board_list.jsp (/board/qna_board_list.jsp)
+=>이렇게 공지사항 목록이 뜬다.
+
+admin.jsp시작 => 소식 관리 => adminnotice.jsp => controller패키지에 BoardFrontController.java서블릿의  "boardList.mc"
+위 경로랑 동일
+
+공지글쓰기 == 관리자만 가능 => webapp의 보드 폴더의 qna_board_list.jsp (/board/qna_board_list.jsp) =>  공지사항 글쓰기 =>
+controller패키지에 BoardFrontController.java서블릿의  "boardWriteForm.mc" => webapp의 보드 폴더의 qna_board_write.jsp (/board/qna_board_write.jsp) => controller패키지에 BoardFrontController.java서블릿의 boardWriterPro.mc => vo패키지 Mc_notice setter메소드 호출(입력한파라미터 값들을 물고) => DAO의insertArticle(입력한 값들) 성공하면 => db에등록 
+
+공지내용보기 == 모두가능 => webapp의 보드 폴더의 qna_board_list.jsp (/board/qna_board_list.jsp) => 원하는 공지 클릭하면 controller패키지에 BoardFrontController.java서블릿의 boardDetail.mc 현재 페이지에 대한 정보와 공지글 번호가지고 =>
+DAO의selectArticle(공지 번호 가지고) => DAO정보 리턴 => webapp의 보드 폴더의 qna_board_view.jsp (/board/qna_board_view.jsp)
+
+공지 글 수정 == 관리자만 가능 => webapp의 보드 폴더의 qna_board_view.jsp (/board/qna_board_view.jsp) => controller패키지에 BoardFrontController.java서블릿의 boardModifyForm.mc => webapp의 보드폴더의qna_board_modify.jsp/board/qna_board_modify.jsp => 서블릿boardModifyPro.mc
+
+공지 글 삭제 == 관리자만 가능 => webapp의 보드 폴더의 qna_board_view.jsp (/board/qna_board_view.jsp) => controller패키지에 BoardFrontController.java서블릿의 boardDeleteForm.mc => webapp폴더 /board/qna_board_delete.jsp => 서블릿boardDeletePro.mc
+

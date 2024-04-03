@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,13 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${id ne null }">
-${id }님, 환영합니다. <a href="logout">로그아웃</a> <a href="updateUsers.mc">내 정보수정</a>
-		</c:when>
-		<c:otherwise>
-			<a href="loginForm.html">로그인</a>
-		</c:otherwise>
-	</c:choose>
+<a href="boardWriteForm.mc">공지사항 글쓰기</a>
+<a href="boardList.mc">글 목록 보기</a>
 </body>
 </html>

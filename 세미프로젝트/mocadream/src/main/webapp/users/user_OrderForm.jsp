@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ page import="java.util.*"%>
+<%@ page import="java.util.*, java.text.SimpleDateFormat"%>
 <%@ page import="vo.Mc_rooms"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -48,6 +48,7 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
     }
 </style>
 <script>
+	var actionCount = 0;
 	function sYesTime() {
 		let rname = document.getElementById("rname").value;
 		let rcal = document.getElementById("r_cal").value;
@@ -159,7 +160,7 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 				<% } %>
 			</c:when>
 			<c:otherwise>
-				<a href="loginForm.html">로그인</a>
+				<a href="loginForm.jsp">로그인</a>
 				<a href="joinForm.jsp">/ 회원가입</a>
 			</c:otherwise>
 		</c:choose>
@@ -190,9 +191,15 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 					<td><label for="r_uname">예약자 이름 : </label></td>
 					<td><input type="text" name="r_uname" class="input" id="r_uname" value="${id }" readonly></td>
 				</tr>
+				<%      
+				SimpleDateFormat ddd = new SimpleDateFormat("yyyy-MM-dd");
+				Date now = new Date();
+				String now1 = ddd.format(now);
+				%>
+								
 				<tr>
 					<td><label for="r_cal">예약 날짜 : </label></td>
-					<td><input type="date" name="r_cal" class="input" id="r_cal" /></td>
+					<td><input type="date" name="r_cal" class="input" id="r_cal" min="<%= now1%>"></td>
 				</tr>
 				<tr>
 					<td><label for="yestime"></label></td>
@@ -236,6 +243,10 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 							out.println("optNoTimeHide(" + noTimeList.get(i) + ");");
 							out.println("</script>");
 						}
+						out.println("<script>");
+						out.println("actionCount++;");
+						out.println("</script>");
+						
 					}
 					%>
 				</tr>
@@ -255,7 +266,7 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 				</tr>
 				<tr>
 					<td colspan="2">
-					<input type="submit" id="order" value="예약 신청" onclick="orderbtn()">&nbsp;&nbsp;
+					<input type="submit" id="order" value="예약 신청">&nbsp;&nbsp;
 					<input type="reset" id="reset" value="다시 예약하기">
 					</td>
 				</tr>
@@ -269,6 +280,11 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 	    if (orderform.selectT.value == '시간을 선택해주세요.') {
 	        e.preventDefault();
 	        alert("시간을 선택해주세요.");
+	    }
+	    
+	    if (actionCount < 1) {
+	        e.preventDefault();
+	        alert("예약가능 시간을 검색해주세요.");
 	    }
 	});
 </script>

@@ -11,8 +11,8 @@ public class JdbcUtil {
 			Context itx = new InitialContext();
 			DataSource ds = (DataSource) itx.lookup("java:comp/env/jdbc/MocaDB");
 			conn = ds.getConnection();
-//			conn.setAutoCommit(false);
-		} catch (Exception e) {
+			conn.setAutoCommit(false);
+		}catch(Exception e) {
 			System.out.println("데이터베이스 연결 오류");
 			System.out.println(e.getMessage());
 		}
@@ -20,7 +20,7 @@ public class JdbcUtil {
 	}
 	
 	public static void close(Connection conn) {
-		if (conn != null) {
+		if(conn != null) {
 			try {
 				conn.close();
 			} catch (SQLException e) {
@@ -30,7 +30,7 @@ public class JdbcUtil {
 	}
 
 	public static void close(Statement st) {
-		if (st != null) {
+		if(st != null) {
 			try {
 				st.close();
 			} catch (SQLException e) {
@@ -40,7 +40,7 @@ public class JdbcUtil {
 	}
 
 	public static void close(ResultSet rs) {
-		if (rs != null) {
+		if(rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
@@ -50,7 +50,7 @@ public class JdbcUtil {
 	}
 
 	public static void commit(Connection conn) {
-		if (conn != null) {
+		if(conn != null) {
 			try {
 				conn.commit();
 			} catch (SQLException e) {
@@ -61,7 +61,7 @@ public class JdbcUtil {
 	
 
 	public static void rollback(Connection conn) {
-		if (conn != null) {
+		if(conn != null) {
 			try {
 				conn.rollback();
 			} catch (SQLException e) {

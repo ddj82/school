@@ -1,0 +1,28 @@
+member_list.jsp 업데이트
+(전체 복붙)
+
+**************************************************
+
+MemberListAction.java도 전체 업데이트
+(전체 복붙)
+
+**************************************************
+
+MemberListService.java도 전체 업데이트
+(전체 복붙)
+
+**************************************************
+
+MocaDAO 메소드 변경
+
+public int selectMemberListCount()
+메소드 변경
+
+public int selectMemberListCount(String search)
+신규생성
+
+public ArrayList<Mc_users> selectMemberList(int page, int limit)
+메소드 변경
+
+public ArrayList<Mc_users> selectMemberList(int page, int limit, String search)
+메소드 변경

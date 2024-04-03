@@ -20,6 +20,11 @@ public class BoardWriteProAction implements Action {
 		ActionForward forward = null;
 		Mc_notice mc_notice = null;
 
+//		ServletContext context = request.getServletContext();
+//		realFolder = context.getRealPath(saveFolder);
+
+		
+
 		mc_notice = new Mc_notice();
 		mc_notice.setNt_title(request.getParameter("nt_title"));
 		mc_notice.setNt_content(request.getParameter("nt_content"));

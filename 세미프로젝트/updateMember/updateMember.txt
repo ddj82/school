@@ -1,0 +1,24 @@
+// 회원 내정보 수정 메소드
+	public int updateMember(Mc_users member) {
+//		boolean isSuccess = false;
+		PreparedStatement ps = null;
+		int count=0;
+		String sql = "UPDATE MC_USERS SET NAME = ?, TEL = ?, EMAIL = ?, ADDR = ? WHERE ID = ?";
+
+		try {
+			ps = con.prepareStatement(sql);
+
+			ps.setString(1, member.getName());
+			ps.setString(2, member.getTel());
+			ps.setString(3, member.getEmail());
+			ps.setString(4, member.getAddr());
+			ps.setString(5, member.getId());
+			count = ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(ps);
+		}
+
+		return count;
+	}

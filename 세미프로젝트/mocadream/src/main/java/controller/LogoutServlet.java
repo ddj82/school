@@ -22,7 +22,7 @@ public class LogoutServlet extends HttpServlet {
 		response.setHeader("Expires","0");
 		response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 		
-		response.sendRedirect("main.jsp");
+		response.sendRedirect("../main.jsp");
 	
 	}
 }

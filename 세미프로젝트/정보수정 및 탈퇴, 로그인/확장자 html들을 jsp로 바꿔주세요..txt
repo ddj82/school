@@ -1,0 +1,23 @@
+기존의 있는 loginForm.html, deleteForm.html, delete_commit.html을
+jsp로 바꿔서 경로도 바꿔주셔야 합니다.(
+
+main.jsp에서 40번줄에
+<a href="loginForm.jsp">로그인</a>으로 변경
+
+navbar.jsp의 93번줄에
+<a href="loginForm.jsp">로그인</a>으로 변경
+
+memberDeleteAction.java에서
+22번줄 명령어를 
+forward.setPath("/users/delete_commit.jsp"); 로 변경
+
+dao에 이것 추가해주세요.
+else if (command.equals("/deleteForm.mc")) {
+			action = new SelectYesTimeAction();
+			try {
+				forward = new ActionForward();
+				forward.setPath("/users/deleteForm.jsp");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}

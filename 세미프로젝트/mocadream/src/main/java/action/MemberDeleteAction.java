@@ -19,7 +19,13 @@ public class MemberDeleteAction implements Action {
 
 		ActionForward forward = new ActionForward();
 		request.setAttribute("myPage", myPage);
-		forward.setPath("/users/delete_commit.html");
+		forward.setPath("/users/delete_commit.jsp");
+		
+		session = request.getSession(false);
+		session.invalidate();
+		response.setHeader("Pragma","no-cache");
+		response.setHeader("Expires","0");
+		response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 
 		return forward;
 

@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-response.setHeader("Pragma","no-cache");
-response.setHeader("Expires","0");
-response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +37,7 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 				<% } %>
 			</c:when>
 			<c:otherwise>
-				<a href="loginForm.html">로그인</a>
+				<a href="loginForm.jsp">로그인</a>
 				<a href="joinForm.jsp">/ 회원가입</a>
 			</c:otherwise>
 		</c:choose>
@@ -69,7 +64,7 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 				<p id="demo"></p>
 				<br>
 			    <div id="div0" class="ddiv"><a href="memberListAction.mc">회원리스트 조회</a><br></div>
-			    <div id="div1" class="ddiv"><a href="nowcheck.mc">실시간예약현황 리스트</a><br></div>
+			    <div id="div1" class="ddiv"><a href="admin/orderMenu.jsp">예약 리스트</a><br></div>
 			    <div id="div2" class="ddiv"><a href="mocaList.mc">방 관리</a><br></div>
 			    <div id="div3" class="ddiv"><a href="boardList.mc">공지 관리</a><br></div>				
 				<br><br>
@@ -88,6 +83,7 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 			<a href="boardList.mc">소식</a>&nbsp;
 			<a href="">이용안내</a>&nbsp;
 			<a href="">방정보</a>&nbsp;
+			<a href="roomListAction.mc">예약하기</a>&nbsp;
 			<a href="">오시는길</a> <br><br><br>
 		</c:otherwise>
 	</c:choose>
@@ -168,13 +164,6 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 	    }
 	    $("#main").hide();
 	});
-	
-	function checkSession() {
-		if (sessionStorage.getItem("id") == null) {
-			window.location = "main.jsp";
-		}
-	}
-	setInterval(checkSession(), 100);
 </script>
 </body>
 </html>

@@ -1,0 +1,86 @@
+// 관리자 공지목록1 메소드
+		public int selectNoticeListCount(String search) {
+
+			int listCount = 0;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+
+			try {
+				ps = con.prepareStatement("SELECT COUNT(*) FROM MC_NOTICE WHERE NT_TITLE LIKE ?");
+					ps.setString(1, search + "%");
+				rs = ps.executeQuery();
+
+				if (rs.next()) {
+					listCount = rs.getInt(1);
+				}
+			} catch (Exception ex) {
+				System.out.println("getListCount 에러: " + ex);
+			} finally {
+				close(rs);
+				close(ps);
+			}
+
+			return listCount;
+		}
+
+// 관리자 이전 글 내용 보기
+		public Mc_notice selectprevNotice(int nt_no) {
+
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			Mc_notice mc_notice = null;
+
+			try {
+				ps = con.prepareStatement("SELECT * FROM (SELECT * FROM MC_NOTICE WHERE NT_NO < ? ORDER BY NT_NO DESC) WHERE ROWNUM = 1");
+				ps.setInt(1, nt_no);
+				rs = ps.executeQuery();
+
+				if (rs.next()) {
+					mc_notice = new Mc_notice();
+					mc_notice.setNt_no(rs.getInt("NT_NO"));
+					mc_notice.setNt_title(rs.getString("NT_TITLE"));
+					mc_notice.setNt_content(rs.getString("NT_CONTENT"));
+					mc_notice.setNt_writer(rs.getString("NT_WRITER"));
+					mc_notice.setNt_date(rs.getDate("NT_DATE"));
+				}
+			} catch (Exception ex) {
+				System.out.println("getDetail 에러 : " + ex);
+			} finally {
+				close(rs);
+				close(ps);
+			}
+
+			return mc_notice;
+
+		}
+
+// 관리자 공지내용보기 다음글 버튼 메소드
+				public Mc_notice selectnextNotice(int nt_no) {
+
+					PreparedStatement ps = null;
+					ResultSet rs = null;
+					Mc_notice mc_notice = null;
+
+					try {
+						ps = con.prepareStatement("SELECT * FROM (SELECT * FROM MC_NOTICE WHERE NT_NO > ? ORDER BY NT_NO ASC) WHERE ROWNUM = 1");
+						ps.setInt(1, nt_no);
+						rs = ps.executeQuery();
+
+						if (rs.next()) {
+							mc_notice = new Mc_notice();
+							mc_notice.setNt_no(rs.getInt("NT_NO"));
+							mc_notice.setNt_title(rs.getString("NT_TITLE"));
+							mc_notice.setNt_content(rs.getString("NT_CONTENT"));
+							mc_notice.setNt_writer(rs.getString("NT_WRITER"));
+							mc_notice.setNt_date(rs.getDate("NT_DATE"));
+						}
+					} catch (Exception ex) {
+						System.out.println("getDetail 에러 : " + ex);
+					} finally {
+						close(rs);
+						close(ps);
+					}
+
+					return mc_notice;
+
+				}

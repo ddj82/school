@@ -8634,7 +8634,7 @@ conf -> server.xml -> 메모장으로 열기 ->   <Service name="Catalina">의 C
 
 
 
-
+./users/deleteForm.html?delId<%=mcuser.getId()%>
 
 
 

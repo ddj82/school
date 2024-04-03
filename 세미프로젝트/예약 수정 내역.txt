@@ -1,0 +1,155 @@
+UserDeleteAction.java 파일 -> UserOrderDeleteAction.java 로 이름 변경
+UserOrderDeleteAction.java 파일에 deleteId 를 urim에서 (String)session.getAttribute("id"); 로 변경
+
+
+=================================================================================================================================
+
+UserOrderListService.java 변경내용(전체 복붙하기)
+
+package svc;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import dao.MocaDAO;
+import static util.JdbcUtil.close;
+import static util.JdbcUtil.getConnection;
+
+import vo.Mc_order;
+
+public class UserOrderListService {
+
+	public int userOdertListCount(String orderId) throws Exception {
+
+		int listCount = 0;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		listCount = mocaDAO.userOdertListCount(orderId);
+		close(con);
+		return listCount;
+	}
+
+	public ArrayList<Mc_order> getUserOrderList(String orderId, int page, int limit) throws Exception {
+
+		ArrayList<Mc_order> mc_OrderList = null;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		mc_OrderList = mocaDAO.selectUserOrderList(orderId, page, limit);
+		close(con);
+		return mc_OrderList;
+
+	}
+}
+
+
+=================================================================================================================================
+
+RoomListAction.java 변경 내용(전체 복붙하기)
+
+package action;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import svc.RoomListService;
+import vo.ActionForward;
+import vo.Mc_rooms;
+
+public class RoomListAction implements Action {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		 	
+		HttpSession session=request.getSession();
+	   	String id=(String)session.getAttribute("id");
+		ActionForward forward = null;
+
+	   		if(id == null){
+	   			
+	   			PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('로그인이 필요한 메뉴입니다.');");
+				out.println("</script>");
+	   			
+	   			forward = new ActionForward();
+				forward.setRedirect(true);
+				forward.setPath("./memberLogin.me"); 
+	   		} else {
+
+		forward = new ActionForward();
+		RoomListService roomListService = new RoomListService();
+		ArrayList<Mc_rooms> mc_rooms = roomListService.getRoomsList();
+		request.setAttribute("mc_rooms", mc_rooms);
+		forward.setRedirect(false);
+		forward.setPath("/users/user_OrderForm.jsp");
+	   		}
+		return forward;
+	}
+}
+
+=================================================================================================================================
+
+
+UserOrderListAction.java파일 int maxPage = (int) ((double) listCount / limit + 0.95); 줄 전 까지 해당 내용으로 부분 수정 
+
+
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		HttpSession session = request.getSession();
+		String orderId = (String)session.getAttribute("id");
+		
+		ArrayList<Mc_order> mc_OrderList = new ArrayList<Mc_order>();
+		int page = 1;
+		int limit = 10;
+
+		if (request.getParameter("page") == null || request.getParameter("page").equals(""))
+			page = 1;
+		else
+			page = Integer.parseInt(request.getParameter("page"));
+
+		UserOrderListService userOrderListService = new UserOrderListService();
+		int listCount = userOrderListService.userOdertListCount(orderId);
+		mc_OrderList = userOrderListService.getUserOrderList(orderId, page, limit);
+
+=================================================================================================================================
+
+
+MocaDAO.java에 
+
+//회원 예약내역확인1 (있는지 확인) 메소드 if문 전까지 해당 내용으로 부분 수정
+
+
+	public int userOdertListCount(String orderId) {
+
+		int listCount = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement("SELECT COUNT(*) FROM MC_ORDER WHERE R_UNAME = ? ORDER BY R_CAL DESC");
+			ps.setString(1, orderId);
+			rs = ps.executeQuery();
+
+
+
+
+//회원 예약 내역확인 2 메소드 while문 전까지 해당 내용으로 부분 수정
+
+	public ArrayList<Mc_order> selectUserOrderList(String orderId, int page, int limit) {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Mc_order mcorder = null;
+		String sql = "SELECT * FROM (SELECT ROWNUM RNUM, A.* FROM (SELECT * FROM MC_ORDER WHERE R_UNAME = ? ORDER BY R_CAL DESC ) A ) WHERE RNUM BETWEEN ? AND ?";
+		ArrayList<Mc_order> userOrderList = new ArrayList<Mc_order>();
+		int startrow = (page - 1) * 10 + 1;
+		int endrow = (page - 1) * 10 + 10;
+
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, orderId); 
+			ps.setInt(2, startrow);
+			ps.setInt(3, endrow);
+			rs = ps.executeQuery();

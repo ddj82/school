@@ -1,0 +1,156 @@
+member_list.jsp 페이지에서
+
+66번행
+<tr>
+	<td>아이디</td>
+	<td>비밀번호</td>
+	<td>이름</td>
+	<td>연락처</td>
+	<td>이메일</td>
+	<td>경고</td>
+	<td>회원상태</td>
+	<td>제제</td>
+	<td>석방</td>
+</tr>
+
+텍스트 변경
+
+	<td>경고횟수</td>
+	<td>회원상태</td>
+	<td>경고주기</td>
+	<td>정지해제</td>
+
+**************************************************
+
+86번행
+<td><c:choose>
+	<c:when test="${member.state eq '1'}">정상 회원</c:when>
+	<c:when test="${member.state eq '2'}">제제 회원</c:when>
+	<c:when test="${member.state eq '0'}">탈퇴 회원</c:when>
+	<c:otherwise>해당 없음</c:otherwise>
+</c:choose></td>
+
+제제 회원을 정지 회원으로 수정.
+
+그 아래 a태그들
+
+<td><a href="memberWarningAction.mc?id=${member.id}"> <c:choose>
+	<c:when test="${member.state ne '2'}">제제</c:when>
+	</c:choose></a></td>
+
+<td><a href="memberReleaseAction.mc?id=${member.id}">
+	<c:choose>
+	<c:when test="${member.state eq '2'}">석방</c:when>
+	</c:choose></a></td>
+
+버튼 이름을
+
+<td><a href="memberWarningAction.mc?id=${member.id}"> <c:choose>
+	<c:when test="${member.state ne '2'}">경고주기</c:when>
+	</c:choose></a></td>
+
+<td><a href="memberReleaseAction.mc?id=${member.id}">
+	<c:choose>
+	<c:when test="${member.state eq '2'}">정지해제</c:when>
+	</c:choose></a></td>
+
+**************************************************
+
+MocaDAO의 회원 검색 기능 메소드
+public ArrayList<Mc_users> searchMemberList(String search)에서
+
+439번행 if (search.equals("제재"))를
+
+if (search.equals("정지"))로 변경
+
+**************************************************
+
+action의 MemberWarningAction.java의
+
+36번행, 42번행 alert 안 출력문
+
+'회원을 제제했습니다.'
+'회원제제 실패.'
+
+각각
+
+'해당 회원을 경고처리 하였습니다.\\n(경고 3회 누적시, 자동으로 정지처리 됩니다.)'
+'경고 처리 실패.'
+
+로 변경
+
+**************************************************
+
+action의 MemberReleaseAction.java의
+
+37번행과, 43번행 alert 안 출력문
+
+'회원을 석방했습니다.'
+'회원석방 실패.'
+
+각각
+
+'정지를 해제했습니다.'
+'정지 해제 실패.'
+
+로 변경
+
+**************************************************
+
+// 탈퇴 회원의 경고처리 버튼 삭제
+
+member_list.jsp 페이지의 경고주기 a태그 부분
+
+<td><a href="memberWarningAction.mc?id=${member.id}"> <c:choose>
+	<c:when test="${member.state ne '2'}">경고주기</c:when>
+	</c:choose>
+</a></td>
+
+부분의 ne '2'를 eq '1'로 바꿔준다.
+
+<td><a href="memberWarningAction.mc?id=${member.id}"> <c:choose>
+	<c:when test="${member.state eq '1'}">경고주기</c:when>
+	</c:choose>
+</a></td>
+
+**************************************************
+
+// 회원목록에서 admin 정보 숨김처리
+
+member_list.jsp 파일의 정보 출력 테이블인 <tr> 태그
+
+<tr>
+<td>${member.id}</td>
+<td>${member.pw}</td>
+<td>${member.name}</td>
+<td>${member.tel}</td>
+<td>${member.email}</td>
+<td>${member.war}</td>
+<td><c:choose>
+<c:when test="${member.state eq '1'}">정상 회원</c:when>
+<c:when test="${member.state eq '2'}">정지 회원</c:when>
+<c:when test="${member.state eq '0'}">탈퇴 회원</c:when>
+<c:otherwise>해당 없음</c:otherwise>
+</c:choose></td>
+<td><a href="memberWarningAction.mc?id=${member.id}"> <c:choose>
+<c:when test="${member.state eq '1'}">경고주기</c:when>
+</c:choose>
+</a></td>
+<td><a href="memberReleaseAction.mc?id=${member.id}"> <c:choose>
+<c:when test="${member.state eq '2'}">정지해제</c:when>
+</c:choose>
+</a></td>
+</tr>
+
+전체를 
+<c:choose>
+<c:when test="${member.id ne 'admin'}">
+
+위 tr 태그
+
+</c:when>
+</c:choose>
+
+로 감싸준다.
+
+**************************************************

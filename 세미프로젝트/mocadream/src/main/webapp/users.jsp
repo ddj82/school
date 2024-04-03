@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="">소식</a>&nbsp;
+<a href="">소식</a>&nbsp; 
 <a href="">이용안내</a>&nbsp;
 <a href="">방정보</a>&nbsp;
 <a href="">예약하기</a>&nbsp;

@@ -1,0 +1,338 @@
+main에서 admin으로 로그인,
+<a href="memberListAction.mc">회원리스트 조회</a>
+
+controller의 MocaController.java로 이동
+/memberListAction.mc 서블릿으로
+action 안 MocaListAction.java으로 이동
+
+해당 페이지 수정했으므로 해당 페이지 북붙 추천
+(페이징 처리하며 갈아엎음)
+
+**************************************************
+
+package action;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import svc.MemberListService;
+import vo.ActionForward;
+import vo.Mc_users;
+import vo.PageInfo;
+
+public class MemberListAction implements Action {
+
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		String search = request.getParameter("search");
+		ActionForward forward = null;
+
+		if (id == null) {
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setPath("./memberLogin.mc");
+		} else if (!id.equals("admin")) {
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('관리자가 아닙니다.');");
+			out.println("location.href='./memberLogin.mc");
+			out.println("</script>");
+		} else {
+
+			ArrayList<Mc_users> articleList = new ArrayList<Mc_users>();
+			int page = 1;
+			int limit = 10;
+
+			if (request.getParameter("page") == null || request.getParameter("page").equals(""))
+				page = 1;
+			else
+				page = Integer.parseInt(request.getParameter("page"));
+
+			MemberListService memberListService = new MemberListService();
+			int listCount = memberListService.getListCount();
+
+			if (search == null) {
+				articleList = memberListService.getArticleList(page, limit);
+			} else {
+				articleList = memberListService.getArticleList(page, limit, search);
+			}
+
+			int maxPage = (int) ((double) listCount / limit + 0.95);
+
+			int startPage = (((int) ((double) page / 10 + 0.9)) - 1) * 10 + 1;
+
+			int endPage = startPage + 10 - 1;
+
+			if (endPage > maxPage)
+				endPage = maxPage;
+
+			PageInfo pageInfo = new PageInfo();
+			pageInfo.setEndPage(endPage);
+			pageInfo.setListCount(listCount);
+			pageInfo.setMaxPage(maxPage);
+			pageInfo.setPage(page);
+			pageInfo.setStartPage(startPage);
+
+			request.setAttribute("pageInfo", pageInfo);
+			request.setAttribute("articleList", articleList);
+
+			forward = new ActionForward();
+			forward.setPath("/users/member_list.jsp");
+
+		}
+
+		return forward;
+	}
+}
+
+**************************************************
+
+Action안에서 MemberListService 객체생성 후 메소드 사용하므로
+해당 페이지 복붙 추천
+(페이징 처리하면서 갈아엎음)
+
+**************************************************
+
+package svc;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import dao.MocaDAO;
+import static util.JdbcUtil.*;
+import vo.Mc_users;
+
+public class MemberListService {
+	
+	public int getListCount() throws Exception {
+
+		int listCount = 0;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		listCount = mocaDAO.selectMemberListCount();
+		close(con);
+		return listCount;
+	}
+	
+	public ArrayList<Mc_users> getArticleList(int page, int limit) throws Exception {
+
+		ArrayList<Mc_users> articleList = null;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		articleList = mocaDAO.selectMemberList(page, limit);
+		close(con);
+		return articleList;
+	}
+	
+	public ArrayList<Mc_users> getArticleList(int page, int limit, String search) throws Exception {
+
+		ArrayList<Mc_users> articleList = null;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		articleList = mocaDAO.selectMemberList(page, limit, search);
+		close(con);
+		return articleList;
+	}
+}
+
+**************************************************
+
+MocaDAO에 새로만든 selectMemberListCount 메소드 추가
+
+**************************************************
+
+	public int selectMemberListCount() {
+
+		int listCount = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement("SELECT COUNT(*) FROM MC_USERS");
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				listCount = rs.getInt(1);
+			}
+		} catch (Exception ex) {
+			System.out.println("getListCount 에러: " + ex);
+		} finally {
+			close(rs);
+			close(ps);
+		}
+
+		return listCount;
+	}
+
+**************************************************
+
+MocaDAO에 selectMemberList 메소드 수정
+
+selectMemberList()랑
+
+selectMemberList(String search)를
+
+각각 페이징 처리된 메소드로 수정
+
+**************************************************
+
+public ArrayList<Mc_users> selectMemberList(int page, int limit) {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM " + "(SELECT ROWNUM RNUM, A.* FROM (SELECT * FROM MC_USERS ORDER BY ID DESC ) A ) "
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		ArrayList<Mc_users> articleList = new ArrayList<Mc_users>();
+		int startrow = (page - 1) * 10 + 1;
+		int endrow = (page - 1) * 10 + 10;
+
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, startrow);
+			ps.setInt(2, endrow);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Mc_users mc_users = new Mc_users();
+				mc_users.setId(rs.getString("ID"));
+				mc_users.setPw(rs.getString("PW"));
+				mc_users.setName(rs.getString("NAME"));
+				mc_users.setTel(rs.getString("TEL"));
+				mc_users.setEmail(rs.getString("EMAIL"));
+				mc_users.setAddr(rs.getString("ADDR"));
+				mc_users.setWar(rs.getInt("WAR"));
+				mc_users.setState(rs.getInt("STATE"));
+				articleList.add(mc_users);
+			}
+
+		} catch (Exception ex) {
+			System.out.println("getBoardList 에러 : " + ex);
+		} finally {
+			close(rs);
+			close(ps);
+		}
+		return articleList;
+	}
+
+**************************************************
+
+	public ArrayList<Mc_users> selectMemberList(int page, int limit, String search) {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Mc_users> articleList = new ArrayList<Mc_users>();
+		int startrow = (page - 1) * 10 + 1; // 읽기 시작할 row 번호..
+		int endrow = (page - 1) * 10 + 10;
+		String sql = null;
+
+		if (search.equals("정지")) {
+			sql = "SELECT * FROM "
+					+ "(SELECT ROWNUM RNUM, A.* FROM (SELECT * FROM MC_USERS WHERE STATE = 2 ORDER BY ID DESC ) A ) "
+					+ "WHERE RNUM BETWEEN ? AND ?";
+
+			try {
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, startrow);
+				ps.setInt(2, endrow);
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					Mc_users mc_users = new Mc_users();
+					mc_users.setId(rs.getString("ID"));
+					mc_users.setPw(rs.getString("PW"));
+					mc_users.setName(rs.getString("NAME"));
+					mc_users.setTel(rs.getString("TEL"));
+					mc_users.setEmail(rs.getString("EMAIL"));
+					mc_users.setAddr(rs.getString("ADDR"));
+					mc_users.setWar(rs.getInt("WAR"));
+					mc_users.setState(rs.getInt("STATE"));
+					articleList.add(mc_users);
+				}
+
+			} catch (Exception ex) {
+				System.out.println("getBoardList 에러 : " + ex);
+			} finally {
+				close(rs);
+				close(ps);
+			}
+
+		} else if (search.equals("탈퇴")) {
+			sql = "SELECT * FROM "
+					+ "(SELECT ROWNUM RNUM, A.* FROM (SELECT * FROM MC_USERS WHERE STATE = 0 ORDER BY ID DESC ) A ) "
+					+ "WHERE RNUM BETWEEN ? AND ?";
+
+			try {
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, startrow);
+				ps.setInt(2, endrow);
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					Mc_users mc_users = new Mc_users();
+					mc_users.setId(rs.getString("ID"));
+					mc_users.setPw(rs.getString("PW"));
+					mc_users.setName(rs.getString("NAME"));
+					mc_users.setTel(rs.getString("TEL"));
+					mc_users.setEmail(rs.getString("EMAIL"));
+					mc_users.setAddr(rs.getString("ADDR"));
+					mc_users.setWar(rs.getInt("WAR"));
+					mc_users.setState(rs.getInt("STATE"));
+					articleList.add(mc_users);
+				}
+
+			} catch (Exception ex) {
+				System.out.println("getBoardList 에러 : " + ex);
+			} finally {
+				close(rs);
+				close(ps);
+			}
+
+		} else {
+
+			sql = "SELECT * FROM "
+					+ "(SELECT ROWNUM RNUM, A.* FROM ( SELECT * FROM MC_USERS WHERE UPPER(ID) LIKE UPPER(?) OR UPPER(PW) LIKE UPPER(?) OR UPPER(NAME) LIKE UPPER(?) OR UPPER(TEL) LIKE UPPER(?) OR UPPER(ADDR) LIKE UPPER(?) ORDER BY ID DESC ) A ) "
+					+ "WHERE RNUM BETWEEN ? AND ?";
+
+			try {
+				ps = con.prepareStatement(sql);
+				ps.setString(1, "%" + search + "%");
+				ps.setString(2, "%" + search + "%");
+				ps.setString(3, "%" + search + "%");
+				ps.setString(4, "%" + search + "%");
+				ps.setString(5, "%" + search + "%");
+				ps.setInt(6, startrow);
+				ps.setInt(7, endrow);
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					Mc_users mc_users = new Mc_users();
+					mc_users.setId(rs.getString("ID"));
+					mc_users.setPw(rs.getString("PW"));
+					mc_users.setName(rs.getString("NAME"));
+					mc_users.setTel(rs.getString("TEL"));
+					mc_users.setEmail(rs.getString("EMAIL"));
+					mc_users.setAddr(rs.getString("ADDR"));
+					mc_users.setWar(rs.getInt("WAR"));
+					mc_users.setState(rs.getInt("STATE"));
+					articleList.add(mc_users);
+				}
+
+			} catch (Exception ex) {
+				System.out.println("getBoardList 에러 : " + ex);
+			} finally {
+				close(rs);
+				close(ps);
+			}
+		}
+		return articleList;
+	}
+
+**************************************************
+
+
+
