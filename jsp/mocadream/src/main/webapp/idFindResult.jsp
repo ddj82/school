@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="./css/default.css">
 <meta charset="UTF-8">
 <title>아이디 찾기 결과</title>
 <style>
@@ -14,6 +15,7 @@
   }
 
   .container {
+  	width:30%;
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
@@ -28,7 +30,7 @@
   }
 
   .id-list {
-  	border : 1px solid #007bff;
+  	border : 1px solid rgb(205, 133, 63);
   	overflow: auto;
   	height: 160px;
   }
@@ -51,10 +53,13 @@
 	padding: 8px;
 	border: none;
 	border-radius: 5px;
-	background-color: #007bff;
+	background-color: rgb(205, 133, 63);
 	color: #fff;
 	cursor: pointer;
 		margin-top:15px;
+}
+.btn1:hover{
+ background-color: rgb(139, 69, 19);
 }
 	.btn {
 	display:flex;
@@ -64,6 +69,7 @@
 </style>
 </head>
 <body>
+<div class="body-wrapper">
 <div class="container">
  <%
         // 전달받은 아이디 리스트 가져오기
@@ -75,7 +81,7 @@
     <h1>아이디 찾기 결과</h1>
     
     <p>아이디 찾기가 완료되었습니다.</p>
-    <p>가입된 아이디가 <span style="color:#007bff"><%= size %></span>개 있습니다.</p>
+    <p>가입된 아이디가 <span style="color:rgb(139, 69, 19)"><%= size %></span>개 있습니다.</p>
     <div class="id-list">
    
     
@@ -83,11 +89,10 @@
             for (int i = 0; i < size; i++) {
                 String id = idList.get(i);
              // 아이디의 세 번째 글자까지 '*'로 변경
-                String maskedId = id.substring(0, 2) + "***";
     %>
    
     <div class="id-box">
-        <p><%=maskedId%></p>
+        <p><%=id%></p>
     </div>
     
     <%
@@ -105,8 +110,8 @@
  	
  	<div class="btn">
  	<a href="./memberLogin.mc"><button id="returnBtn" class="btn1">로그인 페이지로<br>돌아가기</button></a>
- 		<a href="./memberLogin.mc"><button id="returnBtn" class="btn1">비밀번호 변경<br> 페이지로 가기</button></a>
 	</div>
+</div>
 </div>
 
 </body>

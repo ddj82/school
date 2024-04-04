@@ -17,6 +17,7 @@ public class RoomListAction implements Action {
 		ActionForward forward = null;
 
 		if (id == null) {
+			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('로그인이 필요한 메뉴입니다.');");
@@ -24,7 +25,7 @@ public class RoomListAction implements Action {
 
 			forward = new ActionForward();
 			forward.setRedirect(true);
-			forward.setPath("./memberLogin.me");
+			forward.setPath("./memberLogin.mc");
 		} else {
 			forward = new ActionForward();
 			RoomListService roomListService = new RoomListService();

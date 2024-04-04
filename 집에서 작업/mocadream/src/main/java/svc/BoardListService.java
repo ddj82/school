@@ -20,6 +20,18 @@ public class BoardListService {
 
 	}
 
+	public int getListCount(String search) throws Exception {
+
+		int listCount = 0;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		listCount = mocaDAO.selectNoticeListCount(search);
+		close(con);
+		return listCount;
+
+	}
+
 	public ArrayList<Mc_notice> getArticleList(int page, int limit) throws Exception {
 
 		ArrayList<Mc_notice> articleList = null;
@@ -27,6 +39,18 @@ public class BoardListService {
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);
 		articleList = mocaDAO.selectNoticeList(page, limit);
+		close(con);
+		return articleList;
+
+	}
+
+	public ArrayList<Mc_notice> getArticleList(int page, int limit, String search) throws Exception {
+
+		ArrayList<Mc_notice> articleList = null;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		articleList = mocaDAO.selectNoticeList(page, limit, search);
 		close(con);
 		return articleList;
 

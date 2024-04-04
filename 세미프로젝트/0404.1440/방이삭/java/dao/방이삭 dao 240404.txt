@@ -1,0 +1,134 @@
+// 로그인 메소드
+	public Mc_users loginMember(String id, String pw) {
+		Mc_users loginMember = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+	
+		try {
+			ps = con.prepareStatement("SELECT * FROM MC_USERS WHERE ID = ? AND PW = ? AND STATE = 1");
+			ps.setString(1, id);
+			ps.setString(2, pw);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				loginMember = new Mc_users();
+
+				loginMember.setId(rs.getString("ID"));
+				loginMember.setPw(rs.getString("PW"));
+				loginMember.setName(rs.getString("NAME"));
+				loginMember.setTel(rs.getString("TEL"));
+				loginMember.setEmail(rs.getString("EMAIL"));
+				loginMember.setAddr(rs.getString("ADDR"));
+				loginMember.setWar(rs.getInt("WAR"));
+				loginMember.setState(rs.getInt("STATE"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				close(rs);
+				close(ps);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return loginMember;
+	}
+
+	// 회원 내정보 메소드
+	public Mc_users selectMypage(String id) {
+		Mc_users myPage = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement("SELECT * FROM MC_USERS WHERE ID = ?");
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				myPage = new Mc_users();
+
+				myPage.setId(rs.getString("ID"));
+				myPage.setPw(rs.getString("PW"));
+				myPage.setName(rs.getString("NAME"));
+				myPage.setTel(rs.getString("TEL"));
+				myPage.setEmail(rs.getString("EMAIL"));
+				myPage.setAddr(rs.getString("ADDR"));
+				myPage.setWar(rs.getInt("WAR"));
+				myPage.setState(rs.getInt("STATE"));
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				close(rs);
+				close(ps);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return myPage;
+	}
+
+	// 회원 내정보 수정 메소드
+		public int updateMember(Mc_users member) {
+//			boolean isSuccess = false;
+			PreparedStatement ps = null;
+			int count=0;
+			String sql = "UPDATE MC_USERS SET PW=?, NAME = ?, TEL = ?, EMAIL = ?, ADDR = ? WHERE ID = ?";
+
+			try {
+				ps = con.prepareStatement(sql);
+			
+				ps.setString(1, member.getPw());
+				ps.setString(2, member.getName());
+				ps.setString(3, member.getTel());
+				ps.setString(4, member.getEmail());
+				ps.setString(5, member.getAddr());
+				ps.setString(6, member.getId());
+				count = ps.executeUpdate();
+				
+				if(count >0) {
+					commit(con);
+				}else {
+					rollback(con);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(ps);
+			}
+
+			return count;
+		}
+
+	// 회원 탈퇴 메소드
+	public Mc_users deleteMember(String id) {
+		String sql = "UPDATE MC_USERS SET STATE = 0 WHERE ID = ?";
+		Mc_users mb = null;
+		try {
+			mb = new Mc_users();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, id);
+
+			int rowsAffected = ps.executeUpdate();
+
+			if (rowsAffected > 0) {
+				System.out.println("회원 삭제 완료");
+				commit(con);
+			} else {
+				System.out.println("해당하는 회원이 없습니다.");
+				rollback(con);
+			}
+
+		} catch (SQLException ex) {
+			System.out.println("deleteMember 에러: ");
+			ex.printStackTrace();
+		} finally {
+			close(ps);
+		}
+
+		return mb;
+	}

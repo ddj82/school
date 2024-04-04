@@ -15,15 +15,25 @@ public class BoardListAction implements Action {
 		ArrayList<Mc_notice> articleList = new ArrayList<Mc_notice>();
 		int page = 1;
 		int limit = 10;
-
+		int listCount = 0;
+		String search = request.getParameter("search");
 		if (request.getParameter("page") == null || request.getParameter("page").equals(""))
 			page = 1;
 		else
 			page = Integer.parseInt(request.getParameter("page"));
 
 		BoardListService boardListService = new BoardListService();
-		int listCount = boardListService.getListCount(); // 총 리스트 수를 받아옴.
-		articleList = boardListService.getArticleList(page, limit); // 리스트를 받아옴.
+
+		if (search == null) {
+			listCount = boardListService.getListCount(); // 총 리스트 수를 받아옴.
+		} else {
+			listCount = boardListService.getListCount(search);
+		}
+
+		if (search == null)
+			articleList = boardListService.getArticleList(page, limit);
+		else
+			articleList = boardListService.getArticleList(page, limit, search);
 		// 총 페이지 수.
 		int maxPage = (int) ((double) listCount / limit + 0.95);// 1.35 //0.95를 더해서 올림 처리.
 		// 현재 페이지에 보여줄 시작 페이지 수(1, 11, 21 등...)
@@ -43,6 +53,7 @@ public class BoardListAction implements Action {
 
 		request.setAttribute("pageInfo", pageInfo);
 		request.setAttribute("articleList", articleList); // 4줄데이타
+		request.setAttribute("search", search);
 
 		ActionForward forward = new ActionForward();
 		forward.setPath("/board/qna_board_list.jsp");

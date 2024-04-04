@@ -18,6 +18,17 @@ public class MemberListService {
 		close(con);
 		return listCount;
 	}
+	
+	public int getListCount(String search) throws Exception {
+
+		int listCount = 0;
+		Connection con = getConnection();
+		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
+		listCount = mocaDAO.selectMemberListCount(search);
+		close(con);
+		return listCount;
+	}
 
 	public ArrayList<Mc_users> getMemberList(int page, int limit) throws Exception {
 

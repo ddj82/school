@@ -22,19 +22,20 @@ public class MocaModifyProService {
 
 			if (updateCount > 0) {
 				isModifySuccess = true;
-
 				File file = new File("C:/jspwork/mocadream/src/main/webapp/roomUpload/" + fm);
 
-				if (file.exists()) {
-					if (file.delete()) {
-						System.out.println("파일삭제 성공");
-					} else {
-						System.out.println("파일삭제 실패");
-					}
-				} else {
-					System.out.println("파일이 존재하지 않습니다.");
-				}
+				if (!(room.getR_file() == null || room.getR_file().equals(""))) {
 
+					if (file.exists()) {
+						if (file.delete()) {
+							System.out.println("파일삭제 성공");
+						} else {
+							System.out.println("파일삭제 실패");
+						}
+					} else {
+						System.out.println("파일이 존재하지 않습니다.");
+					}
+				}
 			} else {
 			}
 		} catch (Exception e) {

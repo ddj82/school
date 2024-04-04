@@ -8,8 +8,7 @@ import vo.ActionForward;
 
 public class BoardDeleteProAction implements Action {
 
-	public ActionForward execute(HttpServletRequest request,HttpServletResponse response) 
-			throws Exception{	 
+	public ActionForward execute(HttpServletRequest request,HttpServletResponse response) throws Exception{	 
 
 		ActionForward forward = null;
 		int nt_no=Integer.parseInt(request.getParameter("nt_no"));

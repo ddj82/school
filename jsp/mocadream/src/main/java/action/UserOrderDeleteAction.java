@@ -20,31 +20,61 @@ public class UserOrderDeleteAction implements Action {
 		String r_cal = request.getParameter("r_cal");
 		String r_statime = request.getParameter("r_statime");
 		String r_used = request.getParameter("r_used");
-
-		if (r_used.equals("취소")) {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("alert('이미 취소된 예약입니다.');");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			UserDeleteService userDeleteService = new UserDeleteService();
-			boolean deleteResult = userDeleteService.deleteOrderService(deleteId, r_no, r_cal, r_statime);
-			if (deleteResult) {
+		String r_uname = request.getParameter("r_uname");
+		
+		if (deleteId.equals("admin")) {
+			if (r_used.equals("취소")) {
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
-				out.println("alert('취소 완료.');");
+				out.println("alert('이미 취소된 예약입니다.');");
 				out.println("history.back()");
 				out.println("</script>");
 			} else {
+				UserDeleteService userDeleteService = new UserDeleteService();
+				boolean deleteResult = userDeleteService.deleteOrderService(r_uname, r_no, r_cal, r_statime);
+				if (deleteResult) {
+					response.setContentType("text/html;charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('취소 완료.');");
+					out.println("history.back()");
+					out.println("</script>");
+				} else {
+					response.setContentType("text/html;charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('취소 실패.');");
+					out.println("history.back()");
+					out.println("</script>");
+				}
+			}
+		} else {
+			if (r_used.equals("취소")) {
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
-				out.println("alert('취소 실패.');");
+				out.println("alert('이미 취소된 예약입니다.');");
 				out.println("history.back()");
 				out.println("</script>");
+			} else {
+				UserDeleteService userDeleteService = new UserDeleteService();
+				boolean deleteResult = userDeleteService.deleteOrderService(deleteId, r_no, r_cal, r_statime);
+				if (deleteResult) {
+					response.setContentType("text/html;charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('취소 완료.');");
+					out.println("history.back()");
+					out.println("</script>");
+				} else {
+					response.setContentType("text/html;charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('취소 실패.');");
+					out.println("history.back()");
+					out.println("</script>");
+				}
 			}
 		}
 

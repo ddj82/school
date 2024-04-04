@@ -17,7 +17,7 @@ public class MocaModifyFormAction implements Action {
 		
 	   	request.setAttribute("page", request.getParameter("page"));
 	   	request.setAttribute("room", room);
-   		forward.setPath("/room/moca_modify.jsp");
+   		forward.setPath("/admin/moca_modify.jsp");
    		
    		return forward;
 	   		

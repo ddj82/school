@@ -50,7 +50,7 @@ import vo.Mc_order;
 		request.setAttribute("nowOrderList", nowOrderList);
 		
 		ActionForward forward = new ActionForward();
-   		forward.setPath("/room/qna_nowOrder_list.jsp");
+   		forward.setPath("/admin/now_Order_list.jsp");
    		
    		return forward;
 	 }

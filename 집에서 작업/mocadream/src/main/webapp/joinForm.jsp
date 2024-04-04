@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="./css/default.css">
 <meta charset="UTF-8" />
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
@@ -80,18 +81,18 @@
 		padding: 8px;
 		border: none;
 		border-radius: 5px;
-		background-color: #007bff;
+		background-color: rgb(205, 133, 63);
 		color: #fff;
 		cursor: pointer;
 	}
 	
 	input[type="button"]:hover {
-		background-color: #0056b3;
+		background-color: rgb(139, 69, 19);
 	}
 	
 	a {
 		text-decoration: none;
-		color: #007bff;
+		color: rgb(139, 69, 19);
 		font-weight: bold;
 	}
 	
@@ -108,7 +109,7 @@
 		padding: 8px;
 		border: none;
 		border-radius: 5px;
-		background-color: #007bff;
+		background-color: rgb(205, 133, 63);
 		color: #fff;
 		cursor: pointer;
 	}
@@ -123,7 +124,7 @@
 		margin: auto 0;
 		border-radius: 3px;
 		border: none;
-		background-color: #007bff;
+		background-color: rgb(205, 133, 63);
 		color: #fff;
 		cursor: pointer;
 		font-size: 12px;
@@ -157,6 +158,7 @@
 </style>
 </head>
 <body>
+<div class="body-wrapper">
 <section id="joinformArea">
 	<form name="joinform" method="post" onsubmit="return validateForm()" action="memberJoinAction.mc">
 		<table>
@@ -380,5 +382,6 @@
 			}).open();
 	}
 </script>
+</div>
 </body>
 </html>

@@ -14,9 +14,9 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import action.*;
-import action.Action;
 import vo.ActionForward;
 
 @WebServlet("*.mc")
@@ -27,7 +27,8 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String RequestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
-		String command = RequestURI.substring(contextPath.length());
+//		String command = RequestURI.substring(contextPath.length());
+		String command = RequestURI.substring(RequestURI.lastIndexOf("/"));
 
 		ActionForward forward = null;
 		Action action = null;
@@ -35,13 +36,45 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 		if (command.equals("/memberLogin.mc")) {
 			forward = new ActionForward();
 			forward.setRedirect(true);
-			forward.setPath("./loginForm.html");
+			forward.setPath("./loginForm.jsp");
 
 		} else if (command.equals("/memberJoin.mc")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./joinForm.jsp");
 
+		} else if (command.equals("/idFindForm.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./idFindForm.jsp");
+
+		} else if (command.equals("/idFindResult.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./idFindResult.jsp");
+
+		} else if (command.equals("/pwFindForm.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./pwFindForm.jsp");
+
+		} else if (command.equals("/pwFindResult.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./pwFindResult.jsp");
+
+		} else if (command.equals("/pwFindResult.mc")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./pwFindResult.jsp");
+
+		} else if (command.equals("/memberPwChangeAction.mc")) {
+			action = new MemberPwChangeAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("/memberJoinAction.mc")) {
 			action = new MemberJoinAction();
 			try {
@@ -49,6 +82,22 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/memberFindIdAction.mc")) {
+			action = new MemberIdFindAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (command.equals("/memberPwFindAction.mc")) {
+			action = new MemberPwFindAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else if (command.equals("/myPageModifyProAction.mc")) {
 			action = new MyPageModifyProAction();
 			try {
@@ -79,7 +128,7 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			}
 		} else if (command.equals("/addroom.mc")) {
 			forward = new ActionForward();
-			forward.setPath("/room/qna_room_insert.jsp");
+			forward.setPath("/admin/moca_insert.jsp");
 
 		} else if (command.equals("/insertRoom.mc")) {
 			action = new RoomInsertAction();
@@ -136,7 +185,7 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			int r_no = Integer.parseInt(request.getParameter("r_no"));
 			request.setAttribute("r_no", r_no);
 			forward = new ActionForward();
-			forward.setPath("/room/moca_delete.jsp");
+			forward.setPath("/admin/moca_delete.jsp");
 
 		} else if (command.equals("/mocaDeletePro.mc")) {
 			action = new MocaDeleteProAction();
@@ -199,8 +248,8 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 				e.printStackTrace();
 			}
 		} else if (command.equals("/roomListAction.mc")) {
-			action = new RoomListAction();
 			try {
+				action = new RoomListAction();
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -218,21 +267,47 @@ public class MocaController extends javax.servlet.http.HttpServlet {
 			forward.setPath("/users/user_Order_list.jsp");
 
 		} else if (command.equals("/myOrderList.mc")) {
+			String userId = request.getParameter("id");
+			request.setAttribute("userId", userId);
+
 			action = new UserOrderListAction();
+
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else if (command.equals("/orderDelete.mc")) {
-			action = new UserDeleteAction();
+			action = new UserOrderDeleteAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else if (command.equals("/selectYesTime.mc")) {
-//			action = new UserDeleteAction();
+			action = new SelectYesTimeAction();
+			System.out.println("테스트1111");
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/dayOrderList.mc")) {
+			action = new AdminOrderListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/deleteForm.mc")) {
+			try {
+				forward = new ActionForward();
+				forward.setPath("/users/deleteForm.jsp");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/mocaDetail.mc")) {
+			action = new MocaDetailAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

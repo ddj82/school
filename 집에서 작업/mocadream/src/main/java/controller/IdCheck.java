@@ -1,9 +1,13 @@
 package controller;
 
+import static util.JdbcUtil.close;
+import static util.JdbcUtil.getConnection;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Connection;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -75,8 +79,11 @@ public class IdCheck extends HttpServlet {
 
 		Mc_users mc_users = new Mc_users();
 		mc_users.setId(id);
+		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
+		mocaDAO.setConnection(con);
 		boolean result = mocaDAO.idCheck(mc_users);
+		close(con);
 		String str;
 
 		if (result)

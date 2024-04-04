@@ -18,6 +18,10 @@ public class UserOrderListAction implements Action {
 		HttpSession session = request.getSession();
 		String orderId = (String) session.getAttribute("id");
 
+		if (orderId.equals("admin")) {
+			orderId = (String) request.getAttribute("userId");
+		}
+
 		ArrayList<Mc_order> mc_OrderList = new ArrayList<Mc_order>();
 		int page = 1;
 		int limit = 10;

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ page import="java.util.*"%>
+<%@ page import="java.util.*, java.text.SimpleDateFormat"%>
 <%@ page import="vo.Mc_rooms"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -13,6 +13,7 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="./css/default.css">
 <meta charset="UTF-8">
 <title>MOCA DREAM 예약하기 페이지</title>
 <style>
@@ -48,6 +49,11 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
     }
 </style>
 <script>
+	window.onload = function(){
+		if('${msg}' == 'ok') history.replaceState({}, null, location.pathname);
+	};
+	
+	var actionCount = 0;
 	function sYesTime() {
 		let rname = document.getElementById("rname").value;
 		let rcal = document.getElementById("r_cal").value;
@@ -108,7 +114,7 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
         	a.style.display = 'none';
         } else {
 	        main:
-	        for (let i = z.selectedIndex + 1; i < z.children.length; i++) { // z1 - 19:00, z2 - 20:00
+	        for (let i = z.selectedIndex + 1; i < z.children.length; i++) { 
 	            if (z.children[i].style.display == "inline-block") {
 	            	z2 = z.options[i].value;
 	                if (parseInt(z2) == (parseInt(z1) + 1)) {
@@ -148,23 +154,7 @@ ArrayList<Mc_rooms> mc_rooms = (ArrayList<Mc_rooms>) request.getAttribute("mc_ro
 </script>
 </head>
 <body>
-	<p id="log">
-		<c:choose>
-			<c:when test="${id ne null }">
-				<% if (session.getAttribute("id").equals("admin")) { %>
-					[관리자계정]&nbsp; <a href="logout">로그아웃</a>
-				<% } else { %>
-					${id }님, 환영합니다. <a href="logout">로그아웃</a>
-					<a href="loginMypage.mc">내 정보수정</a>
-				<% } %>
-			</c:when>
-			<c:otherwise>
-				<a href="loginForm.html">로그인</a>
-				<a href="joinForm.jsp">/ 회원가입</a>
-			</c:otherwise>
-		</c:choose>
-	</p>
-	
+<div class="body-wrapper">
 <%
 ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTimeList");
 %>
@@ -190,9 +180,15 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 					<td><label for="r_uname">예약자 이름 : </label></td>
 					<td><input type="text" name="r_uname" class="input" id="r_uname" value="${id }" readonly></td>
 				</tr>
+				<%      
+				SimpleDateFormat ddd = new SimpleDateFormat("yyyy-MM-dd");
+				Date now = new Date();
+				String now1 = ddd.format(now);
+				%>
+								
 				<tr>
 					<td><label for="r_cal">예약 날짜 : </label></td>
-					<td><input type="date" name="r_cal" class="input" id="r_cal" /></td>
+					<td><input type="date" name="r_cal" class="input" id="r_cal" min="<%= now1%>"></td>
 				</tr>
 				<tr>
 					<td><label for="yestime"></label></td>
@@ -236,6 +232,10 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 							out.println("optNoTimeHide(" + noTimeList.get(i) + ");");
 							out.println("</script>");
 						}
+						out.println("<script>");
+						out.println("actionCount++;");
+						out.println("</script>");
+						
 					}
 					%>
 				</tr>
@@ -255,22 +255,26 @@ ArrayList<Integer> noTimeList = (ArrayList<Integer>) request.getAttribute("noTim
 				</tr>
 				<tr>
 					<td colspan="2">
-					<input type="submit" id="order" value="예약 신청" onclick="orderbtn()">&nbsp;&nbsp;
+					<input type="submit" id="order" value="예약 신청">&nbsp;&nbsp;
 					<input type="reset" id="reset" value="다시 예약하기">
 					</td>
 				</tr>
 			</table>
 		</section>
 	</form>
-	<br><br>
-	<a href="main.jsp">메인으로</a>&nbsp;
 <script>
 	document.getElementById("order").addEventListener("click", function(e){
 	    if (orderform.selectT.value == '시간을 선택해주세요.') {
 	        e.preventDefault();
 	        alert("시간을 선택해주세요.");
 	    }
+	    
+	    if (actionCount < 1) {
+	        e.preventDefault();
+	        alert("예약가능 시간을 검색해주세요.");
+	    }
 	});
 </script>
+</div>
 </body>
 </html>

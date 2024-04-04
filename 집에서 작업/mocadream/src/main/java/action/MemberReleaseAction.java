@@ -34,13 +34,13 @@ public class MemberReleaseAction implements Action {
 
 			if (deleteResult) {
 				out.println("<script>");
-				out.println("alert('회원을 석방했습니다.');");
+				out.println("alert('정지를 해제했습니다.');");
 				out.println("location.href='./memberListAction.mc';");
 				out.println("</script>");
 			} else {
 				response.setContentType("text/html;charset=UTF-8");
 				out.println("<script>");
-				out.println("alert('회원석방 실패.');");
+				out.println("alert('정지 해제 실패.');");
 				out.println("location.href='./memberLogin.mc';");
 				out.println("</script>");
 			}

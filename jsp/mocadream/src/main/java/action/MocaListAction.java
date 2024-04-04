@@ -51,7 +51,7 @@ import vo.PageInfo;
 		request.setAttribute("roomList", roomList);
 		
 		ActionForward forward= new ActionForward();
-   		forward.setPath("/room/moca_list.jsp");
+   		forward.setPath("/admin/moca_list.jsp");
    		
    		return forward;
 	 }

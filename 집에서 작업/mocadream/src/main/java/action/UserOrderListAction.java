@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import svc.UserOrderListService;
 import vo.ActionForward;
@@ -13,6 +14,13 @@ import vo.PageInfo;
 public class UserOrderListAction implements Action {
 
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		HttpSession session = request.getSession();
+		String orderId = (String) session.getAttribute("id");
+
+		if (orderId.equals("admin")) {
+			orderId = (String) request.getAttribute("userId");
+		}
 
 		ArrayList<Mc_order> mc_OrderList = new ArrayList<Mc_order>();
 		int page = 1;
@@ -24,8 +32,8 @@ public class UserOrderListAction implements Action {
 			page = Integer.parseInt(request.getParameter("page"));
 
 		UserOrderListService userOrderListService = new UserOrderListService();
-		int listCount = userOrderListService.userOdertListCount();
-		mc_OrderList = userOrderListService.getUserOrderList(page, limit);
+		int listCount = userOrderListService.userOdertListCount(orderId);
+		mc_OrderList = userOrderListService.getUserOrderList(orderId, page, limit);
 
 		int maxPage = (int) ((double) listCount / limit + 0.95);
 

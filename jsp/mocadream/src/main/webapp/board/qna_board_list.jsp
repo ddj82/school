@@ -5,11 +5,6 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-response.setHeader("Pragma","no-cache");
-response.setHeader("Expires","0");
-response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
-%>
-<%
 Mc_notice article = (Mc_notice) request.getAttribute("article");
 %>
 <%
@@ -20,24 +15,27 @@ int nowPage = pageInfo.getPage();
 int maxPage = pageInfo.getMaxPage();
 int startPage = pageInfo.getStartPage();
 int endPage = pageInfo.getEndPage();
+String search = (String) request.getAttribute("search");
 %>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
+<link rel="stylesheet" href="./css/default.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>공지사항</title>
 <style>
+
 a {
 	text-decoration: none;
+	color: black;
 }
 
 body {
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: #f3f3f3;
+	background-color: floralwhite;
 }
 
 .container {
@@ -45,10 +43,10 @@ body {
 	margin: 0 auto;
 	padding: 20px;
 }
-/* Header Styles */
+/* Header 스타일 */
 header {
-	background-color: #333;
-	color: #fff;
+	background-color: #white;
+	color: #black;
 	padding: 10px 0;
 	text-align: center;
 }
@@ -56,62 +54,79 @@ header {
 header h1 {
 	margin: 0;
 }
-/* Navigation Styles */
-nav {
-	text-align: right;
-	margin-bottom: 20px;
-}
-
+/* Navigation 스타일 */
 nav a {
-	color: #fff;
+	color: #black;
 	text-decoration: none;
 	padding: 10px 20px;
-	border-radius: 5px;
-	background-color: #555;
 }
 
 nav a:hover {
 	background-color: #777;
 }
-/* Table Styles */
+
+/* Input ㅅ타일*/
+.tit {
+	width: 500px;
+	height: 32px;
+	font-size: 15px;
+	border: 0;
+	border-radius: 15px;
+	outline: none;
+	padding-left: 10px;
+	background-color: rgb(233, 233, 233);
+}
+
+mark {
+	border: 1px solid rgb(242, 231, 220);
+	border-radius: 5px 5px 5px 5px;
+	background-color: rgb(242, 231, 220);
+	color: black;
+}
+
+/* Table 스타일 */
 table {
 	width: 100%;
 	border-collapse: collapse;
 	margin-bottom: 20px;
 }
 
-th, td {
+td {
 	border: 1px solid #ddd;
 	padding: 8px;
 	text-align: left;
 }
 
-th {
-	background-color: #555;
-	color: #fff;
+/* th { */
+/* 	background-color: rgb(242, 231, 220); */
+/* 	color: #333; */
+/* } */
+#tr_top {
+	background-color: rgb(242, 231, 220);
+	color: #333;
 }
 
 tr:nth-child(even) {
 	background-color: #f2f2f2;
 }
-/* Pagination Styles */
+/* Pagination 스타일 */
 .pagination {
 	margin: 20px 0;
 	text-align: center;
 }
 
-.pagination a {
-	color: #333;
-	padding: 8px 16px;
-	text-decoration: none;
-	border: 1px solid #ddd;
-	margin: 0 4px;
-}
+/* .pagination a { */
+/* 	color: #333; */
+/* 	padding: 8px 16px; */
+/* 	text-decoration: none; */
+/* 	/* 	border: 1px solid #ddd; */ */
+/* 	margin: 0 4px; */
+/* } */
 
-.pagination a.active {
-	background-color: #555;
-	color: white;
-}
+/* .pagination a.active { */
+/* 	background-color: rgb(242, 231, 220); */
+/* 	color: white; */
+/* } */
 
 .find {
 	text-align: right;
@@ -123,13 +138,17 @@ tr:nth-child(even) {
 }
 
 #finding {
-	background-color: #555;
-	color: #fff;
+	padding: 5px 5px;
+	border: 1px solid rgb(242, 231, 220);
+	background-color: rgb(242, 231, 220);
+	color: #333333;
+	border-radius: 5px 5px 5px 5px;
+	font-weight: bold;
 }
 
-.pagination a:hover:not(.active) {
-	background-color: #ddd;
-}
+/*  .pagination a:hover:not(.active) {  */
+/*  	background-color: #ddd;  */
+/*  }  */
 /* Responsive Styles */
 @media only screen and (max-width: 600px) {
 	nav {
@@ -138,158 +157,172 @@ tr:nth-child(even) {
 	table {
 		font-size: 14px;
 	}
-}
-
-p#log {
-	text-align: right;
-	margin-right: 20px;
+	.find {
+		text-align: left;
+	}
+	.tit {
+		width: 300px;
+	}
 }
 </style>
 </head>
 <body>
-	<header>
-		<h1>공지사항</h1>
-	</header>
-	<div class="container">
-		<p id="log">
-			<c:choose>
-				<c:when test="${id ne null }">
+	<div class="body-wrapper">
+		<div class="container">
+			<section id="listForm">
+				<h2>
 					<%
-					if (session.getAttribute("id").equals("admin")) {
+					if (session.getAttribute("id") == null) {
 					%>
-					[관리자계정]&nbsp; <a href="logout">로그아웃</a>
+					공지 글 목록<br>
+					<%
+					} else if (session.getAttribute("id").equals("admin")) {
+					%>
+					공지 글 목록<br> <br> <a href="boardWriteForm.mc">공지사항 글쓰기</a>
 					<%
 					} else {
 					%>
-					${id }님, 환영합니다. <a href="logout">로그아웃</a>
-					<a href="loginMypage.mc">내 정보수정</a>
+					공지 글 목록
 					<%
 					}
 					%>
-				</c:when>
-				<c:otherwise>
-					<a href="loginForm.html">로그인</a>
-					<a href="joinForm.jsp">/ 회원가입</a>
-				</c:otherwise>
-			</c:choose>
-		</p>
-		<section id="listForm">
-			<h2>
+				</h2>
+				<form class="find" action="boardList.mc">
+					<input class="tit" name="search" type="search" id="search" placeholder="제목을 입력해주세요"> <label for="search"><input id="finding" type="submit" value="검색"></label> <a href="boardList.mc"><input id="finding" type="button" value="목록보기"></a>
+				</form>
+				<br> <br>
 				<%
-				if (session.getAttribute("id") == null) {
+				if (articleList != null && listCount > 0) {
 				%>
-				공지 글 목록<br>
+				<table>
+					<tr id="tr_top">
+						<td>번호</td>
+						<td>제목</td>
+						<td>작성자</td>
+						<td>날짜</td>
+					</tr>
+					<%
+					for (int i = 0; i < articleList.size(); i++) {
+					%>
+					<tr>
+						<td><%=articleList.get(i).getNt_no()%></td>
+						<td><a href="boardDetail.mc?nt_no=<%=articleList.get(i).getNt_no()%>&page=<%=nowPage%>"><%=articleList.get(i).getNt_title()%></a></td>
+						<td><%=articleList.get(i).getNt_writer()%></td>
+						<td><%=articleList.get(i).getNt_date()%></td>
+					</tr>
+					<%
+					}
+					%>
+				</table>
+				<div class="pagination">
+					<%
+					if (search != null) {
+						if (nowPage <= 1) {
+					%>
+					<mark>이전</mark>
+					<%
+					} else {
+					%>
+					<a href="boardList.mc?page=<%=nowPage - 1%>&search=<%=search%>"> <mark>이전</mark></a>
+					<%
+					}
+					%>
+					<%
+					for (int a = startPage; a <= endPage; a++) {
+						if (a == nowPage) {
+					%>
+					<!-- 					<a href="#" class="active"> -->
+					<%=a%>
+					<!-- 					</a> -->
+					<%
+					} else {
+					%>
+					<a href="boardList.mc?page=<%=a%>&search=<%=search%>"><%=a%></a>
+					<%
+					}
+					%>
+					<%
+					}
+					%>
+					<%
+					if (nowPage >= maxPage) {
+					%>
+					<mark>다음</mark>
+					<%
+					} else {
+					%>
+					<a href="boardList.mc?page=<%=nowPage + 1%>&search=<%=search%>"><mark>다음</mark></a>
+					<%
+					}
+					} else {
+					%>
+					<%
+					// 					
+					if (nowPage <= 1) {
+					%>
+					<mark>이전</mark>
+					<%
+					} else {
+					%>
+					<a href="boardList.mc?page=<%=nowPage - 1%>"> <mark>이전</mark></a>
+					<%
+					}
+					%>
+					<%
+					for (int a = startPage; a <= endPage; a++) {
+						if (a == nowPage) {
+					%>
+					<!-- 					<a href="#" class="active"> -->
+					<%=a%>
+					<!-- 					</a> -->
+					<%
+					} else {
+					%>
+					<a href="boardList.mc?page=<%=a%>"><%=a%> </a>
+					<%
+					}
+					%>
+					<%
+					}
+					%>
+					<%
+					if (nowPage >= maxPage) {
+					%>
+					<mark>다음</mark>
+					<%
+					} else {
+					%>
+					<a href="boardList.mc?page=<%=nowPage + 1%>"><mark>다음</mark></a>
+					<%
+					}
+					}
+					%>
+				</div>
 				<%
-				} else if (session.getAttribute("id").equals("admin")) {
+				} else if (request.getParameter("search").equals("nt_title")) {
 				%>
-				공지 글 목록 <a href="boardWriteForm.mc">공지사항 글쓰기</a>
-				<%
-				} else {
-				%>
-				공지 글 목록
-				<%
-				}
-				%>
-			</h2>
-			<form class="find" action="boardList.mc">
-				<input name="search" type="search" id="search" placeholder="제목을 입력해주세요"> 
-				<label for="search">
-					<input id="finding" type="submit" value="검색">
-				</label> 
-				<a href="boardList.mc"><input id="finding" type="button" value="목록보기"></a>
-			</form>
-			<br>
-			<br>
-			<%
-			if (articleList != null && listCount > 0) {
-			%>
-			<table>
-				<tr id="tr_top">
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>날짜</th>
-				</tr>
 				<%
 				for (int i = 0; i < articleList.size(); i++) {
 				%>
 				<tr>
 					<td><%=articleList.get(i).getNt_no()%></td>
-					<td><a
-						href="boardDetail.mc?nt_no=<%=articleList.get(i).getNt_no()%>&page=<%=nowPage%>"><%=articleList.get(i).getNt_title()%></a>
-					</td>
+					<td><a href="boardDetail.mc?nt_no=<%=articleList.get(i).getNt_no()%>&page=<%=nowPage%>"><%=articleList.get(i).getNt_title()%></a></td>
 					<td><%=articleList.get(i).getNt_writer()%></td>
 					<td><%=articleList.get(i).getNt_date()%></td>
 				</tr>
 				<%
 				}
 				%>
-			</table>
-			<div class="pagination">
-				<%
-				if (nowPage <= 1) {
-				%>
-				[이전]
 				<%
 				} else {
 				%>
-				<a href="boardList.mc?page=<%=nowPage - 1%>">[이전]</a>&nbsp;
+				<div id="emptyArea">등록된 글이 없습니다.</div>
 				<%
 				}
 				%>
-				<%
-				for (int a = startPage; a <= endPage; a++) {
-					if (a == nowPage) {
-				%>
-				<a href="#" class="active">[<%=a%>]
-				</a>
-				<%
-				} else {
-				%>
-				<a href="boardList.mc?page=<%=a%>">[<%=a%>]
-				</a>&nbsp;
-				<%
-				}
-				%>
-				<%
-				}
-				%>
-				<%
-				if (nowPage >= maxPage) {
-				%>
-				[다음]
-				<%
-				} else {
-				%>
-				<a href="boardList.mc?page=<%=nowPage + 1%>">[다음]</a>
-				<%
-				}
-				%>
-			</div>
-			<%
-			} else if (request.getParameter("search").equals("nt_title")) {
-			%>
-			<%
-			for (int i = 0; i < articleList.size(); i++) {
-			%>
-			<tr>
-				<td><%=articleList.get(i).getNt_no()%></td>
-				<td><a href="boardDetail.mc?nt_no=<%=articleList.get(i).getNt_no()%>&page=<%=nowPage%>"><%=articleList.get(i).getNt_title()%></a>
-				</td>
-				<td><%=articleList.get(i).getNt_writer()%></td>
-				<td><%=articleList.get(i).getNt_date()%></td>
-			</tr>
-			<%
-			}
-			%>
-			<%
-			} else {
-			%>
-			<div id="emptyArea">등록된 글이 없습니다.</div>
-			<%
-			}
-			%>
-		</section>
-		<br>
-		<br> <a href="main.jsp">메인으로</a>&nbsp;
+			</section>
+			<br> <br> <a href="main.jsp">메인으로</a>&nbsp;
+		</div>
 	</div>
+</body>
+</html>

@@ -18,8 +18,8 @@ public class RoomInsertAction implements Action {
 		String realFolder = "";
 		String saveFolder = "/roomUpload";
 		int fileSize = 5 * 1024 * 1024;
-//		realFolder = "C:/jspwork/mocadream/src/main/webapp" + saveFolder;
-		realFolder = "C:/Users/KDJ/IdeaProjects/eclipsejava/mocadream/src/main/webapp" + saveFolder;
+		realFolder = "C:/jspwork/mocadream/src/main/webapp" + saveFolder;
+//		realFolder = "C:/Users/KDJ/IdeaProjects/eclipsejava/mocadream/src/main/webapp" + saveFolder;
 		File f = new File(realFolder);
 		
 		if (!f.exists()) {

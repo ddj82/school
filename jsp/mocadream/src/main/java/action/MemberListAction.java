@@ -40,12 +40,19 @@ public class MemberListAction implements Action {
 				page = Integer.parseInt(request.getParameter("page"));
 
 			MemberListService memberListService = new MemberListService();
-			int listCount = memberListService.getListCount();
 
-			if (search == null) {
+			int listCount;
+
+			if (search == null)
+				search = "";
+
+			if (search.equals("")) {
+				listCount = memberListService.getListCount();
 				memberList = memberListService.getMemberList(page, limit);
 			} else {
+				listCount = memberListService.getListCount(search);
 				memberList = memberListService.getMemberList(page, limit, search);
+
 			}
 
 			int maxPage = (int) ((double) listCount / limit + 0.95);
@@ -66,9 +73,10 @@ public class MemberListAction implements Action {
 
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("memberList", memberList);
+			request.setAttribute("search", search);
 
 			forward = new ActionForward();
-			forward.setPath("/users/member_list.jsp");
+			forward.setPath("/admin/member_list.jsp");
 
 		}
 

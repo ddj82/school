@@ -13,7 +13,6 @@ public class SelectMypageAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
-		System.out.println("세션아이디 : " + id);
 		SelectMypageService selectMypageService = new SelectMypageService();
 		Mc_users myPage = selectMypageService.getMypage(id);
 

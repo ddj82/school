@@ -109,19 +109,6 @@ public class UserOrderAction implements Action {
 		}
 		mc_order.setR_endtime(usetime + time);
 		
-		
-		// insertOrder메소드 실행 전 변수들 확인
-//		java.util.Date utilDate = mc_order.getR_cal();
-//		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-//		System.out.println("r_no : " + mc_order.getR_no());
-//		System.out.println("r_name : " + mc_order.getR_name());
-//		System.out.println("r_uname : " + mc_order.getR_uname());
-//		System.out.println("r_cal : " + sqlDate);
-//		System.out.println("r_time : " + mc_order.getR_statime());
-//		System.out.println("r_statime : " + mc_order.getR_statime());
-//		System.out.println("r_endtime : " + mc_order.getR_endtime());
-
-		
 		UserOrderService userOrderService = new UserOrderService();
 		joinResult = userOrderService.userOrder(mc_order);
 

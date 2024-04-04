@@ -11,24 +11,24 @@ import vo.Mc_order;
 
 public class UserOrderListService {
 
-	public int userOdertListCount() throws Exception {
+	public int userOdertListCount(String orderId) throws Exception {
 
 		int listCount = 0;
 		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);
-		listCount = mocaDAO.userOdertListCount();
+		listCount = mocaDAO.userOdertListCount(orderId);
 		close(con);
 		return listCount;
 	}
 
-	public ArrayList<Mc_order> getUserOrderList(int page, int limit) throws Exception {
+	public ArrayList<Mc_order> getUserOrderList(String orderId, int page, int limit) throws Exception {
 
 		ArrayList<Mc_order> mc_OrderList = null;
 		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);
-		mc_OrderList = mocaDAO.selectUserOrderList(page, limit);
+		mc_OrderList = mocaDAO.selectUserOrderList(orderId, page, limit);
 		close(con);
 		return mc_OrderList;
 

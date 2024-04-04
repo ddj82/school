@@ -1,6 +1,8 @@
 package svc;
 
 import static util.JdbcUtil.*;
+
+import java.io.File;
 import java.sql.Connection;
 import vo.Mc_rooms;
 import dao.MocaDAO;
@@ -14,13 +16,27 @@ public class MocaModifyProService {
 			con = getConnection();
 			MocaDAO mocaDAO = MocaDAO.getInstance();
 			mocaDAO.setConnection(con);
+			int r_no = room.getR_no();
+			String fm = mocaDAO.deleteFile(r_no);
 			int updateCount = mocaDAO.updateRoom(room);
 
 			if (updateCount > 0) {
-//                commit(con);
 				isModifySuccess = true;
+				File file = new File("C:/jspwork/mocadream/src/main/webapp/roomUpload/" + fm);
+
+				if (!(room.getR_file() == null || room.getR_file().equals(""))) {
+
+					if (file.exists()) {
+						if (file.delete()) {
+							System.out.println("파일삭제 성공");
+						} else {
+							System.out.println("파일삭제 실패");
+						}
+					} else {
+						System.out.println("파일이 존재하지 않습니다.");
+					}
+				}
 			} else {
-//                rollback(con);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,7 +45,7 @@ public class MocaModifyProService {
 				close(con);
 			}
 		}
-		
+
 		return isModifySuccess;
 	}
 }

@@ -1,0 +1,24 @@
+저희 바디안에 들어갈 메인 div태그 클래스명 body-warpper로 통일
+
+조인폼 배경색 (유림픽)
+f9f9f9
+
+slide_prev_button 
+.slide_next_button
+
+버튼 통일화  ( a태그 -> 버튼으로 만들기)
+
+버튼 클래스명 
+
+일반버튼 == button -> 
+페이징버튼 == button-faging
+
+
+버튼 만들어진 현황
+a태그
+div(span)
+button
+
+
+버튼 색상 rgb(47 50 100) 남북통일
+

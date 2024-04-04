@@ -15,7 +15,7 @@ public class MemberDeleteService {
 		Connection con = getConnection();
 		MocaDAO mocaDAO = MocaDAO.getInstance();
 		mocaDAO.setConnection(con);
-		
+
 		myPage = mocaDAO.deleteMember(id);
 		close(con);
 		return myPage;
