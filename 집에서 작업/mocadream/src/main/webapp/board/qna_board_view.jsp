@@ -128,7 +128,7 @@ Mc_notice article3 = (Mc_notice)request.getAttribute("article3");
                 <br><br><br><br>
        		</div>
 <%
-if (article2 == null ) {%>
+if (article2 == null && article3 == null) {%>
 	<table class="tb">
 	<tr>
 	<th>이전글</th>
@@ -137,7 +137,7 @@ if (article2 == null ) {%>
 	
 	<tr>
 	<th>다음글</th>
-	<td><a href="boardDetail.mc?nt_no=<%=article3.getNt_no() %>&page=${page }"><%=article3.getNt_title()%></a></td>
+	<td></td>
 	</tr>
 	</table>
 <%} else if (article3 == null) {%>
@@ -150,6 +150,18 @@ if (article2 == null ) {%>
 	<tr>
 	<th>다음글</th>
 	<td></td>
+	</tr>
+	</table>
+<%} else if (article2 == null) {%>
+	<table class="tb">
+	<tr>
+	<th>이전글</th>
+	<td></td>
+	</tr>
+	
+	<tr>
+	<th>다음글</th>
+	<td><a href="boardDetail.mc?nt_no=<%=article3.getNt_no() %>&page=${page }"><%=article3.getNt_title()%></a></td>
 	</tr>
 	</table>
 <%} else {%>

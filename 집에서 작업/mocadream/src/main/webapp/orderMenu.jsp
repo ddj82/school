@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-response.setHeader("Pragma","no-cache");
-response.setHeader("Expires","0");
-response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +22,7 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 	
 	<h5>검색하실 날짜를 선택해 주세요.</h5>
 	
-	<form action="dayOrderList.mc" method="post">
+	<form action="dayOrderList.mc" method="get">
 		<input type="date" name="r_cal">&nbsp;
 		<button class="button-link" type="submit">예약내역 조회</button>
 	</form>

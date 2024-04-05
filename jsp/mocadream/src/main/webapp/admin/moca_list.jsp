@@ -23,10 +23,106 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 <html>
 <head>
 <link rel="stylesheet" href="./css/default.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/table.css">
 <meta charset="UTF-8" />
+
 <title>MVC 게시판</title>
+<style>
+#ListArea {
+	border-radius: 10px;
+	overflow: auto;
+}
+
+section.small {
+	width: 50%;
+	margin: 0 auto;
+}
+
+#pageList {
+	margin: auto;
+	width: 500px;
+	text-align: center;
+}
+
+#emptyArea {
+	margin: auto;
+	width: 500px;
+	text-align: center;
+}
+
+section {
+	margin-top: 20px;
+}
+
+section.title{
+	font-size:25px
+}
+
+small.warning {
+	font-size: 12px;
+	color: red;
+	padding: 0 3% 0 0;
+}
+
+div.d1 {
+	background-color: white;
+	width: 80%;
+	margin: 0 auto;
+	padding: 10px;
+}
+
+table {
+	width: 100%;
+	margin: 0 auto;
+	border-collapse: collapse;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	margin: 0 auto;
+}
+
+td {
+	padding: 2px 15px;
+	white-space: nowrap;
+	height: 50px;
+	vertical-align: middle;
+	border-top: 1px solid #dee2e6;
+}
+
+tr.tr1 {
+	background-color: #dee2e6;
+	font-size:18px;
+	color: #343a40;
+	border-top: 1px solid #dee2e6;
+}
+
+td.td1 {
+	background-color: rgb(242, 231, 220);
+	font-size:18px;
+}
+
+div.right {
+	text-align: right;
+}
+
+input {
+	width: 300px;
+	height: 25px;
+	padding: 10px;
+	background-color: rgb(250, 240, 230);
+	border-radius: 10px;
+	border: 1px solid #ccc;
+}
+
+input:focus {
+	border: 2px solid #000;
+}
+
+html {
+	font-size: 15px;
+}
+h1 {
+	font-size: 1.6em;
+}
+</style>
 </head>
 <body>
 <div class="body-wrapper">

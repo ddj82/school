@@ -1,13 +1,11 @@
-
 #ListArea {
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
 	overflow: auto;
 }
 
-section.small{
+section.small {
 	width: 50%;
-		margin: 0 auto;
+	margin: 0 auto;
 }
 
 #pageList {
@@ -26,10 +24,14 @@ section {
 	margin-top: 20px;
 }
 
+section.title{
+	font-size:25px
+}
+
 small.warning {
+	font-size: 12px;
 	color: red;
-	float: right;
-	width: 25%;
+	padding: 0 3% 0 0;
 }
 
 div.d1 {
@@ -40,7 +42,6 @@ div.d1 {
 	padding: 10px;
 }
 
-
 table {
 	width: 100%;
 	margin: 0 auto;
@@ -50,58 +51,26 @@ table {
 	margin: 0 auto;
 }
 
-td, th {
+td {
 	border: 1px solid #ddd;
 	padding: 2px 15px;
 	white-space: nowrap;
 	height: 50px;
-}
-
-th {
-	background-color: #f8f8f8;
-	font-weight: bold;
-}
-
-tr:nth-child(even) {
-	background-color: #f2f2f2;
+	vertical-align: middle;
 }
 
 tr.tr1 {
 	background-color: rgb(242, 231, 220);
+	font-size:18px;
 }
 
 td.td1 {
 	background-color: rgb(242, 231, 220);
-}
-
-button, a.button-link {
-	background-color: rgb(232, 221, 210);
-	border: none;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	margin: 4px 2px;
-	cursor: pointer;
-	border-radius: 30px;
+	font-size:18px;
 }
 
 div.right {
 	text-align: right;
-}
-
-button:hover, .button-link:hover {
-	opacity: 0.8;
-}
-
-a {
-	color: #007bff;
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
 }
 
 input {
@@ -115,22 +84,4 @@ input {
 
 input:focus {
 	border: 2px solid #000;
-}
-
-a.button {
-	color: black;
-	background-color: rgb(232, 221, 210);
-	border: none;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	margin: 4px 2px;
-	cursor: pointer;
-	border-radius: 30px;
-}
-
-a.button:hover {
-	opacity: 0.8;
 }

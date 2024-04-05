@@ -1,0 +1,134 @@
+수정 및 생성파일
+
+-action
+--MemberPwChangeAction.java (추가)
+--MemberPwFindAction.java (수정 덮어씌우세요.)
+
+-controller
+--MocaController.java(수정)
+
+
+
+-dao
+--MocaDAO(수정)
+
+-svc
+--MemberPwChangeService.java(추가)
+
+-webapp(그냥 전부 덮어쓰기해도됨)
+--idFindForm.jsp(수정 덮어 씌우세요)
+--idFindForm.jsp(수정 덮어 씌우세요)
+--joinForm(수정 덮어 씌우세요)
+--pwFindForm.jsp(수정 덮어 씌우세요)
+--pwFindResult.jsp(수정 덮어 씌우세요)
+
+
+
+
+-------------------------------------------------MocaController.java
+추가된 코드
+
+} else if (command.equals("/pwFindResult.mc")) {
+	forward = new ActionForward();
+	forward.setRedirect(false);
+	forward.setPath("./pwFindResult.jsp");
+
+}
+
+} else if (command.equals("/memberPwChangeAction.mc")) {
+	action = new MemberPwChangeAction();
+	try {
+		forward = action.execute(request, response);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+
+
+
+
+------------------------------------------------------MocaDAO
+
+
+
+
+
+(수정된 메소드)
+	// 회원가입 메소드(commit(con),rollback(con) 추가
+	public int insertMember(Mc_users member) {
+	String sql = "INSERT INTO MC_USERS (ID, PW, NAME, TEL, EMAIL, ADDR) VALUES (?, ?, ?, ?, ?, ?)";
+	int insertCount = 0;
+
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, member.getId());
+			ps.setString(2, member.getPw());
+			ps.setString(3, member.getName());
+			ps.setString(4, member.getTel());
+			ps.setString(5, member.getEmail());
+			ps.setString(6, member.getAddr());
+			insertCount = ps.executeUpdate();
+			commit(con);
+		} catch (SQLException ex) {
+			rollback(con);
+			System.out.println("joinMember 에러: " + ex);
+		} finally {
+			close(ps);
+		}
+
+		return insertCount;
+	}
+
+
+
+	// 회원 비밀번호 찾기
+	public Mc_users findPwMember(Mc_users member) {
+	String sql = "SELECT PW FROM MC_USERS WHERE ID = ? AND NAME = ? AND EMAIL = ?";
+		Mc_users user_pw = null; // 객체 생성
+		System.out.println("findPwMember도달");
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, member.getId());
+			ps.setString(2, member.getName());
+			ps.setString(3, member.getEmail());
+			rs = ps.executeQuery();
+			System.out.println(user_pw);
+			if (rs.next()) {
+				user_pw = new Mc_users();
+				user_pw.setPw(rs.getString("pw")); // 비밀번호 설정
+			}
+		} catch (SQLException ex) {
+			System.out.println("findMember 에러: " + ex);
+		} finally {
+			close(ps);
+		}
+
+		return user_pw; // 비밀번호를 포함한 객체 반환
+	}
+	
+(추가된 메소드)
+// 회원 비밀번호 변경
+public int changePw(Mc_users member) {
+	System.out.println("mocaDAO changePw 메소드까지 도달");
+	int changeCount = 0;
+	PreparedStatement ps = null;
+	String sql = "UPDATE MC_USERS SET PW = ? WHERE id = ? and name = ? and email=?";
+	
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, member.getPw());
+			ps.setString(2, member.getId());
+			ps.setString(3, member.getName());
+			ps.setString(4, member.getEmail());
+			changeCount = ps.executeUpdate();
+			System.out.println("changePw 쿼리문 처리");
+			commit(con);
+		} catch (SQLException e) {
+			rollback(con);
+			e.printStackTrace();
+		}
+
+		return changeCount;
+	}
+
+

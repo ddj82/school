@@ -299,7 +299,7 @@ tr:nth-child(even) {
 					%>
 				</div>
 				<%
-				} else if (request.getParameter("search").equals("nt_title")) {
+				} else if (!(request.getParameter("search") == null) && request.getParameter("search").equals("nt_title")) {
 				%>
 				<%
 				for (int i = 0; i < articleList.size(); i++) {
@@ -321,7 +321,6 @@ tr:nth-child(even) {
 				}
 				%>
 			</section>
-			<br> <br> <a href="main.jsp">메인으로</a>&nbsp;
 		</div>
 	</div>
 </body>

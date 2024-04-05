@@ -431,6 +431,7 @@ ul, li {
 	width: 100%;
 	height:auto;
 }
+
 </style>
 <script src="./jquery/jquery-3.6.4.js"></script>
 </head>

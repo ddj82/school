@@ -88,8 +88,6 @@ p {
 </head>
 <body>
 <div class="main_div">
-    <h1>MOCA 스터디룸에 오신것을 환영합니다</h1>
-    <p>최고의 스터디 공간대여를 제공하는 MocaDream입니다</p>
     <div class="way_moca">
     <img src="./roompic/way_how_to_use_moca.jpg" alt="MOCA Usage Instructions">
 </div>

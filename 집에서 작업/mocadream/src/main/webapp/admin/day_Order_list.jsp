@@ -6,25 +6,20 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-response.setHeader("Pragma","no-cache");
-response.setHeader("Expires","0");
-response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
-%>
-<%
-	ArrayList<Mc_order> dayOrderList = (ArrayList<Mc_order>) request.getAttribute("dayOrderList");
-    PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
-	int listCount=pageInfo.getListCount();
-	int nowPage=pageInfo.getPage();
-	int maxPage=pageInfo.getMaxPage();
-	int startPage=pageInfo.getStartPage();
-	int endPage=pageInfo.getEndPage();
+ArrayList<Mc_order> dayOrderList = (ArrayList<Mc_order>) request.getAttribute("dayOrderList");
+PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
+String rcal = (String) request.getAttribute("r_cal");
+int listCount=pageInfo.getListCount();
+int nowPage=pageInfo.getPage();
+int maxPage=pageInfo.getMaxPage();
+int startPage=pageInfo.getStartPage();
+int endPage=pageInfo.getEndPage();
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="./css/default.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/table.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/table.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -69,27 +64,26 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 		<%if (nowPage <= 1) { %>
 			[이전]
 		<%} else { %>
-			<a href="dayOrderList.mc?page=<%= nowPage-1 %>">[이전]</a>
+			<a href="dayOrderList.mc?page=<%= nowPage-1 %>&r_cal=<%=rcal %>">[이전]</a>
 		<%} %>
 
 		<%for (int a = startPage; a <= endPage; a++){
 				if (a == nowPage) {%>
 					[<%=a %>]
 				<%} else { %>
-					<a href="dayOrderList.mc?page=<%= a %>">[<%= a %>]</a>&nbsp;
+					<a href="dayOrderList.mc?page=<%= a %>&r_cal=<%=rcal %>">[<%= a %>]</a>&nbsp;
 				<%} %>
 		<%} %>
 
 		<%if (nowPage >= maxPage) { %>
 			[다음]
 		<%} else { %>
-			<a href="dayOrderList.mc?page=<%= nowPage + 1 %>">[다음]</a>
+			<a href="dayOrderList.mc?page=<%= nowPage + 1 %>&r_cal=<%=rcal %>">[다음]</a>
 		<%} %>
 	</section>
 <% } else { %>
 	<section id="emptyArea">예약 된 룸이 없습니다.</section>
 <% } %>
-	<br><br>
-	<a href="../main.jsp">메인으로</a>&nbsp;
+</div>
 </body>
 </html>
