@@ -17,10 +17,11 @@ body {
 h1,h3 {
   text-align: center;
   margin-top: 20px;
+  font-size: 25px;
 }
 
 #pwfindformArea {
-  width:30%;
+  width:300px;
   margin: 20px auto;
   background-color: #fff;
   padding: 20px;
@@ -31,10 +32,6 @@ h1,h3 {
 form {
   display: flex;
   flex-direction: column;
-}
-
-div {
-  margin: 15px 0 ;
 }
 
 div:last-child {
@@ -54,9 +51,9 @@ input[type="text"] {
 }
 
 button#findBtn {
-  width: 30%;
+  width: 100%;
   padding: 10px;
-  background-color: rgb(205, 133, 63);;
+  background-color: rgb(6, 10, 70);
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -64,34 +61,32 @@ button#findBtn {
 }
 
 button#findBtn:hover {
-  background-color: rgb(139, 69, 19);
+  background-color: rgba(6, 10, 70,0.7);
 }
 </style>
 </head>
 <body>
 <div class="body-wrapper">
 <section id="pwfindformArea">
-<h1>비밀번호 찾기</h1>
+<h1>비밀번호 찾기</h1><br>
 <form name="pwfindform" action="./memberPwFindAction.mc" method="post" >
 
-<div>
-<label for="name">아이디</label>
-<input type="text" name="id">
+<div style="margin:5px 0;">
+<!-- <label for="name">아이디</label> -->
+<input type="text" name="id" placeholder="아이디를 입력해주세요.">
 </div>
 
 
-<div>
-<label for="name">이름</label>
-<input type="text" name="name">
+<div style="margin:5px 0;">
+<!-- <label for="name">이름</label> -->
+<input type="text" name="name" placeholder="이름을 입력해주세요.">
 </div>
 
-<div>
-<label for="email">이메일주소</label>
-<input type="text" name="email">
+<div style="margin:5px 0;">
+<!-- <label for="email">이메일주소</label> -->
+<input type="text" name="email" placeholder="이메일주소를 입력해주세요.">
 </div>
-
-
-
+<br>
 <div>
 <button id="findBtn">비밀번호 찾기</button>
 </div>

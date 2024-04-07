@@ -7,12 +7,20 @@
 <title>로그인</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
 #loginFormArea {
-	width: 20%;
-	margin: 50px auto;
-	border: none;
-	background-color: #fff;
-	border-radius: 5px;
+	width: 300px;
+	margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 fieldset {
@@ -26,9 +34,10 @@ table {
 }
 
 td {
-	text-align: left;
+	text-align: center;
 	padding: 5px;
 	width: 100%;
+	font-size: 14px;
 }
 
 label {
@@ -37,7 +46,6 @@ label {
 
 input[type="text"], input[type="password"] {
 	width: 100%;
-	hegiht: 50px;
 	padding: 8px;
 	background: transparent;
 	border: none;
@@ -47,14 +55,12 @@ input[type="text"], input[type="password"] {
 }
 
 input[type="text"]:focus, input[type="password"]:focus {
-	border-bottom: solid 2px rgb(139, 69, 19);
+	border-bottom: solid 2px rgb(7, 10, 60);
 	outline: none;
 }
 
 a {
-	text-decoration: none;
-	color: rgb(139, 69, 19);
-	text-align: center;
+ 	text-decoration: none; 
 }
 
 a:hover {
@@ -62,42 +68,54 @@ a:hover {
 }
 
 #selectButton {
-	width: 90%;
-	height: 30px;
+	width: 100%;
+	padding:10px 0;
 	text-align: center;
 	border: none;
 	border-radius: 5px;
-	background-color: rgb(205, 133, 63);
+	background-color: rgb(6, 10, 70);
 	color: #fff;
 	cursor: pointer;
-	font-size: 16px;
+	font-size: 18px;
+	box-sizing: border-box;
 }
 
 h1 {
 	text-align: center;
 }
+
+input[type="submit"]:hover {
+	background-color: rgba(6,10,70,0.5);
+}
 </style>
 </head>
 <body>
 <div class="body-wrapper">
-	<h1 style="font-size: 28px">로그인</h1>
 	<section id="loginFormArea">
+	<h1 style="font-size: 25px; margin-top: 30px;">로그인</h1>
+	<br>
 		<form action="login" onsubmit="return validateForm()" method="POST">
 			<fieldset>
 				<table>
 					<tr>
-						<td><br> <br> <strong>아이디 </strong><br>
-						<input type="text" name="id" id="id" placeholder="아이디를 입력해주세요." style="font-size: 16px;" /><br></td>
+						<td>
+						<input type="text" name="id" id="id" placeholder="아이디를 입력해주세요." /><br></td>
 					</tr>
 					<tr>
-						<td><strong>비밀번호 </strong><br><input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요." /><br></td>
+						<td><input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요." /><br></td>
 					</tr>
 					<tr>
-						<td style="text-align: center;"><input type="submit" value="로그인" id="selectButton"><br> <br></td>
+						<td style="text-align: center;"><br><input type="submit" value="로그인" id="selectButton"><br> <br></td>
 					</tr>
 				</table>
-				<a style="margin:0 auto" href="idFindForm.jsp">아이디 찾기</a> 
-				<a style="margin:0 auto" href="pwFindForm.jsp">비밀번호 찾기</a>
+				<table>
+				<tr>
+					<td>
+						<a style="text-align: center; font-size: 14px; color: rgb(7 10 60); " href="idFindForm.jsp">아이디 찾기</a> | 
+						<a style="text-align: center; font-size: 14px; color: rgb(7 10 60); " href="pwFindForm.jsp">비밀번호 찾기</a>
+					</td>
+				</tr>
+				</table>
 			</fieldset>
 		</form>
 		<script>
@@ -113,7 +131,6 @@ h1 {
 					document.getElementById("id").focus();
 					isValid = false; // 해당 조건문이 실행됨 -->
 				}
-
 				return isValid;
 			}
 		</script>

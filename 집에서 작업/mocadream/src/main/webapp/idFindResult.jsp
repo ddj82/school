@@ -20,12 +20,13 @@
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
   h1 {
     text-align: center;
+    font-size:25px;
     color: #333;
   }
 
@@ -53,13 +54,13 @@
 	padding: 8px;
 	border: none;
 	border-radius: 5px;
-	background-color: rgb(205, 133, 63);
+	background-color: rgb(6, 10, 70);
 	color: #fff;
 	cursor: pointer;
-		margin-top:15px;
+	margin-top:15px;
 }
 .btn1:hover{
- background-color: rgb(139, 69, 19);
+ background-color: rgb(6, 10, 70);
 }
 	.btn {
 	display:flex;
@@ -78,10 +79,10 @@
 
         if (size > 0) {
     %>
-    <h1>아이디 찾기 결과</h1>
+    <h1 style="font-size:25px; text-align: center;">아이디 찾기 결과</h1><br>
     
-    <p>아이디 찾기가 완료되었습니다.</p>
-    <p>가입된 아이디가 <span style="color:rgb(139, 69, 19)"><%= size %></span>개 있습니다.</p>
+    <p style="font-size: 16px;">아이디 찾기가 완료되었습니다.</p>
+    <p style="font-size: 16px;">가입된 아이디가 <span style="color:rgb(139, 69, 19)"><%= size %></span>개 있습니다.</p><br>
     <div class="id-list">
    
     

@@ -35,7 +35,6 @@ body {
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: floralwhite;
 }
 
 .container {
@@ -58,11 +57,6 @@ header h1 {
 nav a {
 	color: #black;
 	text-decoration: none;
-	padding: 10px 20px;
-}
-
-nav a:hover {
-	background-color: #777;
 }
 
 /* Input ㅅ타일*/

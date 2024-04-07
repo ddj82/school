@@ -20,7 +20,7 @@ h1{
 }
 
 #pwchangeformArea {
-  width:30%;
+  width:300px;
   margin: 20px auto;
   background-color: #fff;
   padding: 20px;
@@ -33,13 +33,13 @@ form {
   flex-direction: column;
 }
 
-div {
-  margin: 15px 0;
+h1{
+font-size:25px;
 }
 
 label {
   font-weight: bold;
-  margin: 20px 0;
+  font-size:14px;
 }
 
 input[type="password"] {
@@ -52,7 +52,7 @@ input[type="password"] {
 button {
   width: 30%;
   padding: 10px;
-  background-color: rgb(205, 133, 63);
+  background-color: rgb(6, 10, 70);
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -60,7 +60,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(139, 69, 19);
+  background-color: rgba(6, 10, 70,0.7);
 }
 
 .btn {
@@ -69,45 +69,40 @@ button:hover {
 }
 
 a {
-  display: block;
   text-align: center;
 }
 
-p {
-  font-size: 16px;
-}
 </style>
 </head>
 <body>
 <div class="body-wrapper">
 <section id="pwchangeformArea">
- <h1>비밀번호 변경</h1>
+ <h1>비밀번호 변경</h1><br>
  <form name="pwchangeform" method="post" onsubmit="return validateForm()" action="memberPwChangeAction.mc">
 <!--  <form name="pwchangeform" method="post" action="memberPwChangeAction.mc"> -->
 <%
 String pwValue = (String) request.getAttribute("pwValue");
 %>
-    <p>본인확인이 완료되었습니다.</p>
+    <p style="font-size:16px;">본인확인이 완료되었습니다.</p><br>
     <input type="hidden" name="oldpw" value="<%= pwValue %>">
     <input type="hidden" name="id" value="<%=request.getParameter("id") %>">
     <input type="hidden" name="name" value="<%=request.getParameter("name") %>">
     <input type="hidden" name="email" value="<%=request.getParameter("email") %>">
     	
-	<div>
-	<label for="newpass">변경할 비밀번호</label>
+	<div style="margin:5px 0px;">
+	<label for="newpass" style="margin: 5px 0;" >변경할 비밀번호</label><br>
 	<input type="password" name="newpass" id="newpass" pattern="[a-zA-Z0-9!_\-!@#$%^&*]+" minlength="8" maxlength="15" placeholder="새 비밀번호">
 	</div>
-	<div id="newpwerrorMessages" style="color: red; display: none;"></div>
-	<div id="oldpwerrorMessages" style="color: red; display: none;"></div>
+	<div id="newpwerrorMessages" style="color: red; display: none; margin:5px 0px;"></div>
+	<div id="oldpwerrorMessages" style="color: red; display: none; margin:5px 0px;"></div>
 	
-	<div>
-	<label for="newpasscf">변경할 비밀번호 확인</label>
+	<div style="margin:5px 0px;">
+<!-- 	<label for="newpasscf">변경할 비밀번호 확인</label> -->
 	<input type="password" name="newpasscf" id="newpasscf" pattern="[a-zA-Z0-9!_\-!@#$%^&*]+" minlength="8" maxlength="15" placeholder="새 비밀번호 확인">
 	</div>
-	<div id="newpwcferrorMessages" style="color: red; display: none;"></div>
- 	
+	<div id="newpwcferrorMessages" style="color: red; display: none; margin:5px 0px;"></div>
 
- 	<div class="btn">
+ 	<div class="btn" style="margin:5px 0px;">
  	<button id="changeBtn" >비밀번호 변경</button>
 	<button id="returnBtn" onclick="location.href='./memberLogin.mc'">로그인 페이지</button>
 	</div>

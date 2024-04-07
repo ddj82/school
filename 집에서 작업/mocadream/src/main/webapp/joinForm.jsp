@@ -46,11 +46,17 @@
 	}
 	
 	#joinformArea {
-		width: 30%;
-		margin: 50px auto;
-		padding: 20px;
-		border: 1px solid #ccc;
-		background-color: #fff;
+		width: 400px;
+		margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	}
+	
+	h1{
+	font-size: 25px;
+	text-align: center;
 	}
 	
 	table {
@@ -68,7 +74,7 @@
 	}
 	
 	input[type="text"], input[type="password"] {
-		width: calc(100% - 20px);
+		width: 100%;
 		padding: 8px;
 		margin-top: 5px;
 		border: 1px solid #ccc;
@@ -79,21 +85,21 @@
 	input[type="button"] {
 		width: 150px;
 		padding: 8px;
+		margin-top: 5px;
 		border: none;
 		border-radius: 5px;
-		background-color: rgb(205, 133, 63);
+		background-color: rgb(7, 10, 60);
 		color: #fff;
 		cursor: pointer;
 	}
 	
 	input[type="button"]:hover {
-		background-color: rgb(139, 69, 19);
+		background-color: rgba(6, 10, 70,0.7);
 	}
 	
 	a {
 		text-decoration: none;
 		color: rgb(139, 69, 19);
-		font-weight: bold;
 	}
 	
 	a:hover {
@@ -109,25 +115,25 @@
 		padding: 8px;
 		border: none;
 		border-radius: 5px;
-		background-color: rgb(205, 133, 63);
+		background-color: rgb(6, 10, 70);
 		color: #fff;
 		cursor: pointer;
 	}
 	
 	#idchkbtn {
-		position: absolute;
-		width: 80px;
+/* 		position: absolute; */
+		width: 30%;
 		height: 33px;
-		top: 6px;
 		bottom: 0;
 		right: 20px;
-		margin: auto 0;
+		margin-top:5px;
 		border-radius: 3px;
 		border: none;
-		background-color: rgb(205, 133, 63);
+		background-color: rgb(6, 10, 70);
 		color: #fff;
 		cursor: pointer;
 		font-size: 12px;
+		float: right;
 	}
 	
 	#btns {
@@ -171,8 +177,8 @@
 				<td>
 				<label for="id">아이디 </label><br>
 				<div id="idbox">
-					<input type="text" name="id" id="id" pattern="[a-zA-Z0-9]+" minlength="6" maxlength="20" placeholder="아이디" />
-					<button type="button" id="idchkbtn">중복확인</button>
+					<input type="text" name="id" id="id" pattern="[a-zA-Z0-9]+" minlength="6" maxlength="20" placeholder="아이디" style="width: 70%" />
+					<button type="button" id="idchkbtn" >중복확인</button>
 				</div>
 				</td>
 			</tr>
@@ -230,11 +236,11 @@
 			</section>
 
 			<section id="addr">
-				<td><b>주소</b></td>
+				<tr><td><label>주소</label></td></tr>
 				<tr>
 					<td>
-					<input type="button" name="adrbtn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" /><br>
-					<input type="text" name="addNum" id="sample6_postcode" placeholder="우편번호" readonly />
+					<input type="text" name="addNum" id="sample6_postcode" placeholder="우편번호" style="width: 40%" readonly />
+					<input type="button" name="adrbtn" onclick="sample6_execDaumPostcode()" style="float:right;" value="우편번호 찾기" /><br>
 					</td>
 				</tr>
 				<tr>

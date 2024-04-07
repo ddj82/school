@@ -23,8 +23,9 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 <html>
 <head>
 <link rel="stylesheet" href="./css/default.css">
-<meta charset="UTF-8" />
 
+<link rel="stylesheet" href="./css/modal.css">
+<meta charset="UTF-8" />
 <title>MVC 게시판</title>
 <style>
 #ListArea {
@@ -115,10 +116,6 @@ input {
 input:focus {
 	border: 2px solid #000;
 }
-
-html {
-	font-size: 15px;
-}
 h1 {
 	font-size: 1.6em;
 }
@@ -126,49 +123,91 @@ h1 {
 </head>
 <body>
 <div class="body-wrapper">
-<h1>방 목록</h1>
-	<section id="ListArea">
+    <h1>방 목록</h1>
 	<div class="right">
-		<a class="button-link" href="addroom.mc">방 추가</a>
+	    <button class="button-link" onclick="window.location.href='addroom.mc'">방 추가</button>
 	</div>
-		<table>
-			<% if (roomList != null && listCount > 0) { %>
-			<tr class="tr1">
-				<td>방번호</td>
-				<td>방이름</td>
-				<td>이용가능인원</td>
-				<td>소개</td>
-				<td>사진</td>
-				<td>수정</td>
-				<td>삭제</td>
-			</tr>
-			<% for (int i = 0; i < roomList.size(); i++) { %>
-			<tr>
-				<td><%=roomList.get(i).getR_no()%></td>
-				<td><%=roomList.get(i).getR_name()%></td>
-				<td><%=roomList.get(i).getR_max()%></td>
-				<td><%=roomList.get(i).getR_desc()%></td>
-				<td><%=roomList.get(i).getR_file()%></td>
+    <section id="ListArea">
+        <table>
+            <% if (roomList != null && listCount > 0) { %>
+                <tr class="tr1">
+                    <td>방번호</td>
+                    <td>방이름</td>
+                    <td>이용가능인원</td>
+                    <td>소개</td>
+                    <td>사진</td>
+                    <td>수정</td>
+                    <td>삭제</td>
+                </tr>
+                <% for (int i = 0; i < roomList.size(); i++) { %>
+                    <tr>
+                        <td><%=roomList.get(i).getR_no()%></td>
+                        <td><%=roomList.get(i).getR_name()%></td>
+                        <td><%=roomList.get(i).getR_max()%></td>
+                        <td><%=roomList.get(i).getR_desc()%></td>
+                        <td><%=roomList.get(i).getR_file()%></td>
+                        <td><button onclick="window.location.href='mocaModifyForm.mc?r_no=<%=roomList.get(i).getR_no()%>&page=<%=nowPage%>'">수정</button></td>
 
-				<td><a href="mocaModifyForm.mc?r_no=<%=roomList.get(i).getR_no()%>&page=<%=nowPage%>">[수정]
-				</a></td>
+                        <td><button class="modal_btn" data-rno="<%=roomList.get(i).getR_no()%>">삭제</button></td>
+                    </tr>
+                <% } %>
+        </table>
+    </section>
+</div>
 
-				<td><a href="mocaDeleteForm.mc?r_no=<%=roomList.get(i).getR_no()%>&page=<%=nowPage%>">[삭제]
-				</a></td>
+<% } else { %>
+    <section id="emptyArea">
+        등록된 방이 없습니다. <br>
+    </section>
+<%} %>
 
+ <div class="modal" id="myModal">
+        <div class="modal-content">
+            <form action="mocaDeletePro.mc" method="POST" id="deleteForm">
+                <fieldset>
+                    <table class="md-table">
+                        <tr class="md-tr">
+                            <td class="md-title md-td"><label for="id">삭제하시겠습니까?</label></td>
+                        </tr>
+                        <tr class="md-tr">
+                            <td class="md-td" style="text-align: center;">
+                                <button class="selectButton md-button" type="submit">네</button>
+                                <button class="close_btn md-button" type="button">아니요</button>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+        </div>
+    </div>
 
-			</tr>
-			<% } %>
-		</table>
-	</section>
-	</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById('myModal');
+    const modalOpenButtons = document.querySelectorAll('.modal_btn');
+    const modalCloseButton = document.querySelector('.close_btn');
+    const deleteForm = document.getElementById('deleteForm');
+    const deleteButton = document.querySelector('.modal .selectButton[type="submit"]');
+    const cancelButton = document.querySelector('.modal .selectButton[type="button"]');
 
-	<% } else { %>
-	<section id="emptyArea">
-		등록된 방이 없습니다. <br>
-	</section>
-	<%} %>
-	<br><br>
-	<a href="main.jsp">메인으로</a>&nbsp;
+    modalOpenButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            modal.style.display = 'flex';
+            const rNo = this.getAttribute('data-rno');
+            deleteForm.action = 'mocaDeletePro.mc?r_no=' + rNo;
+        });
+    });
+
+    modalCloseButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    cancelButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+});
+</script>
+
+<a href="main.jsp">메인으로</a>&nbsp;
 </body>
 </html>

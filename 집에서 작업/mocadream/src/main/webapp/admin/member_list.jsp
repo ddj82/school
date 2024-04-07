@@ -4,12 +4,12 @@
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-response.setHeader("Pragma","no-cache");
-response.setHeader("Expires","0");
-response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
+response.setHeader("Pragma", "no-cache");
+response.setHeader("Expires", "0");
+response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 %>
-<% 
-response.setContentType("text/html;charset=UTF-8"); 
+<%
+response.setContentType("text/html;charset=UTF-8");
 ArrayList<Mc_users> memberList = (ArrayList<Mc_users>) request.getAttribute("memberList");
 PageInfo pageInfo = (PageInfo) request.getAttribute("pageInfo");
 int listCount = pageInfo.getListCount();
@@ -17,7 +17,7 @@ int nowPage = pageInfo.getPage();
 int maxPage = pageInfo.getMaxPage();
 int startPage = pageInfo.getStartPage();
 int endPage = pageInfo.getEndPage();
-String search = (String)request.getAttribute("search");
+String search = (String) request.getAttribute("search");
 %>
 
 
@@ -27,22 +27,53 @@ String search = (String)request.getAttribute("search");
 <link rel="stylesheet" href="./css/default.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/table.css">
 <meta charset="UTF-8">
+<meta>
 <title>회원관리 시스템 관리자모드(회원 목록 보기)</title>
+<style>
+
+@media screen and (max-width: 1600px) {
+	td:nth-child(6) {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 1400px) {
+	td:nth-child(5), td:nth-child(6) {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 1100px) {
+	td:nth-child(2), td:nth-child(7) {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	td:nth-child(8), td:nth-child(9) {
+		display: none;
+	}
+}
+</style>
 </head>
 <body>
-<div class="body-wrapper">
-		<h1>회원 목록</h1>
+	<div class="body-wrapper">
+		<section class="title">회원 목록</section>
 		<div class="right">
-		<form action="memberListAction.mc" method="POST">
-			<input type="text" id="search" name="search" placeholder="검색어를 입력하세요">
-			<button class="table" type="submit">검색</button><br>
-		</form>
+			<form action="memberListAction.mc" method="POST">
+				<input type="text" id="search" name="search"
+					placeholder="검색어를 입력하세요">
+				<button class="btn" type="submit">검색</button>
+				<br>
+			</form>
+			<br> <small class="warning">*정지회원은 정지, 탈퇴회원은 탈퇴로
+				검색해주세요.*</small>
 		</div>
-		<small class="warning">*정지회원은 정지, 탈퇴회원은 탈퇴로 검색해주세요.*</small>
-		<br>
-		<section id="ListArea">
 
-		<% if (memberList != null && listCount > 0) { %>
+		<section id="ListArea">
+			<%
+			if (memberList != null && listCount > 0) {
+			%>
 			<table>
 				<tr class="tr1">
 					<td>아이디</td>
@@ -69,11 +100,12 @@ String search = (String)request.getAttribute("search");
 					<td><%=memberList.get(i).getEmail()%></td>
 					<td><%=memberList.get(i).getAddr()%></td>
 					<td><%=memberList.get(i).getWar()%></td>
-					
+
 					<td>
-					<button onclick="location.href='myOrderList.mc?id=<%=memberList.get(i).getId()%>'">내역확인</button>
+						<button class="btn"
+							onclick="location.href='myOrderList.mc?id=<%=memberList.get(i).getId()%>'">내역확인</button>
 					</td>
-					
+
 					<td>
 						<%
 						int state = memberList.get(i).getState();
@@ -88,57 +120,105 @@ String search = (String)request.getAttribute("search");
 						}
 						%>
 					</td>
-					
-					
 
-					<% if (state == 1) { %>
-					<td>
-						<button onclick="location.href='memberWarningAction.mc?id=<%=memberList.get(i).getId()%>'">경고주기</button>
-					</td>
-					<% } else { %>
-					<td></td>
-					<% } %>
 
-					<% if (state == 2) { %>
+
+					<%
+					if (state == 1) {
+					%>
 					<td>
-						<button onclick="location.href='memberReleaseAction.mc?id=<%=memberList.get(i).getId()%>'">정지해제</button>
+						<button class="btn warning"
+							onclick="location.href='memberWarningAction.mc?id=<%=memberList.get(i).getId()%>'">경고주기</button>
 					</td>
-					<% } else { %>
+					<%
+					} else {
+					%>
 					<td></td>
-					<% } %>
+					<%
+					}
+					%>
+
+					<%
+					if (state == 2) {
+					%>
+					<td>
+						<button class="btn release"
+							onclick="location.href='memberReleaseAction.mc?id=<%=memberList.get(i).getId()%>'">정지해제</button>
+					</td>
+					<%
+					} else {
+					%>
+					<td></td>
+					<%
+					}
+					%>
 				</tr>
-				<% }
+				<%
+				}
 
-				} %>
+				}
+				%>
 			</table>
 		</section>
 
-		<section style="text-align: center;">
-			<% if (nowPage <= 1) { %>
-			[이전]
-			<% } else { %>
-<%-- 			<a href="memberListAction.mc?page=<%=nowPage - 1%>&search=<%=search%>">[이전]</a>&nbsp; --%>
-			<button onclick="location.href = 'memberListAction.mc?page=<%=nowPage - 1%>&search=<%=search%>';">[이전]</button>
-			<% } %>
+		<br>
+		<section class="page-box">
+			<%
+			if (nowPage <= 1) {
+			%>
+			<button class="btn noactive">이전</button>
+			<%
+			} else {
+			%>
+			<button class="btn"
+				onclick="location.href = 'memberListAction.mc?page=<%=nowPage - 1%>&search=<%=search%>';">이전</button>
+			<%
+			}
+			%>
 
-			<% for (int a = startPage; a <= endPage; a++) {
-				if (a == nowPage) { %>
-			[<%=a%>]
-			<% } else { %>
-			<a href="memberListAction.mc?page=<%=a%>&search=<%=search%>">[<%=a%>]</a>&nbsp;
-			<% } %>
-			<% } %>
+			<%
+			for (int a = startPage; a <= endPage; a++) {
+				if (a == nowPage) {
+			%>
+			<button class="btn active">
+				<%=a%>
+			</button>
+			<%
+			} else {
+			%>
+			<button class="btn"
+				onclick="location.href = 'memberListAction.mc?page=<%=a%>&search=<%=search%>';">
+				<%=a%>
+			</button>
+			<%
+			}
+			%>
+			<%
+			}
+			%>
 
-			<% if (nowPage >= maxPage) { %>
-			[다음]
-			<% } else { %>
-			<a href="memberListAction.mc?page=<%=nowPage + 1%>&search=<%=search%>">[다음]</a>
-			<% } %>
+			<%
+			if (nowPage >= maxPage) {
+			%>
+			<button class="btn noactive">다음</button>
+			<%
+			} else {
+			%>
+			<button class="btn"
+				onclick="location.href = 'memberListAction.mc?page=<%=nowPage + 1%>&search=<%=search%>';">다음</button>
+			<%
+			}
+			%>
 
-		<% } else { %>
-		<section id="emptyArea">해당 회원이 없습니다.</section>
-		<% } %>
+			<%
+			} else {
+			%>
+			<section id="emptyArea">해당 회원이 없습니다.</section>
+			<%
+			}
+			%>
 		</section>
+		<br>
 	</div>
 	<br>
 	<br>

@@ -149,7 +149,7 @@ form table tr td textarea {
 		<table>
 			<tr>
 				<td colspan="2" style="padding-left: 10px;">
-					<h1 style="font-size:25px; padding: 8px 0 15px 0;">방 추 가</h1>
+					<h1 style="font-size:25px; padding: 8px 0 15px 0;">방 추가</h1>
 				</td>
 			</tr>
 			<tr>

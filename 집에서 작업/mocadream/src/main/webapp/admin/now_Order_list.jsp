@@ -27,10 +27,6 @@ response.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	body * {
-		text-align: center;
-	}
-	
 	#registForm {
 		width: 500px;
 		height: 600px;
