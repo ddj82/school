@@ -8823,53 +8823,120 @@ USING (ADDRESS); 또는 ON S.ADDRESS = C.ADDRESS;
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//85
+//필기
+//
 
 
 
+스프링프레임워크란 : SpringFramework
 
+자바 기반의 빈객체 생성이나 생명주기관리, 의존성 주입, 제어의 역행, AOP등을 제공해주는 프레임워크를 말한다.
 
+- IoC (Inversion of Controller) : 제어의 역행.
+개발자가 일일이 설정해주고 직접 관리하던 것을 프레임워크로 제어나 관리를 넘겨버리는 것을 제어의 역행이라고 한다.
 
+- 의존성 주입 (Dependency Injection) : 
+개발자가 일일이 객체를 생성해서 필요한 부분에 객체를 보내거나 받는 작업을 처리하던 것을 스프링프레임워크의 컨테이너가 처리하도록 하는것.
 
+- 의존성 검색 (Dependency Lookup) : 
+필요한 기능을 알아서 검색해오는 기능
 
+- AOP (Aspect Orientied Programming) : 관심지향 프로그래밍
 
 
 
 
+<<스프링 프레임워크 프로젝트 생성시 알아두기>>
 
 
+Maven(메이븐)방식으로 형상관리 진행
+형상관리란 : 파일이나 문서, 라이브러리 등의 버전을 관리하는 것을 형상관리라고 한다.
 
+형상관리 방법 : 
+Maven방식 : 태그 형식으로 라이브러리 버전을 관리하는 방식 
+Gradle 방식 : json형식으로 라이브러리 버전을 관리하는 방식
 
 
+프로젝트 생성방법 : 
+Dynamic Web Project생성 (Perspective Mode - JavaEE) => 생성한 프로젝트에서 마우스 우버튼 메뉴에 있는 configure => Convert to Maven Project로 변환해 주어야 한다.
 
+** 반드시 프로젝트 생성 시 가장 처음에 생성되는 패키지는 3단 이상이 되어야 한다.
 
+Maven프로젝트 설정 시 나오는 창에서 
+Group ID부분에 들어가야 하는 값은 3단 패키지명 중 2단까지 기술 
+(예: com.kr.co 까지 일때 -> com.kr)
+Group ID : com.kr
+Artifact ID : co => 이 부분이 나중에 프로젝트의 contextPath가 되는 부분임.
+Name : 프로젝트명 기술하는 자리
+**나머지는 디폴트값 그대로 두면 됨. 
 
 
+Bean(빈) : 스프링 프레임워크에서 만드는 모든 객체를 빈이라고 한다.
 
+빈객체를 생성하는 방법 : pom.xml에서 만들거나 어노테이션으로 만드는 방법 두가지가 있다.
 
 
+<<빈 객체 생성 방법>>
+src -> main폴더 안에 resources 폴더 생성하기
+resources 폴더 안에 스프링 빈 설정 파일 생성하기
 
 
+스프링 빈 설정 파일의 경로
+1. src/main/resources
+2. src/main/wabapp/WEB-INF
 
 
 
+<bean id="객체명" class="패키지경로포함.클래스명까지" />
+명명규칙 : 영어소문자, 공백x, 카멜기법, 특수문자 _ $
+<bean name="객체명" class="패키지경로포함.클래스명까지"></bean>
+명명규칙 : 공백만 제외하고 다 가능
 
+java코드 => 패키지경로포함.클래스명까지 객체명 = new 기본생성자호출문();
 
 
 
 
+TVMain예제
 
+factory => 
+객체명(Bean) : http://stv || 자료형 : Samsung, TV
+=>즉시로딩, 
+객체명(Bean) : ltv || 자료형 : Lg, TV
+=>지연로딩, 
 
 
+scope 속성 : singleton(디폴트값), prototype(new)
+로딩방식 속성 (lazy-init값 : true, false(디폴트값)) => 객체 생성 시점
+즉시로딩 (pre-loading) : lazy-init="false" 인 경우(기술안함)
+=> 스프링 컨테이너가 구동될때 객체 생성을 한다.(미리 객체 준비)
 
+게으른로딩=지연로딩 (lazy-loading) : lazy-init="true" 인 경우 
+=> getBean()메소드로 객체를 얻을 때 생성된다.
 
 
 
 
 
+// GenericXmlApplicationContext 파일시스템이나 클래스 경로에 있는 xml설정 파일을 로딩하여 구동하는 컨테이너 클래스
+// GenericXmlApplicationContext이 인식하는 경로 : src/main/resources/ 까지 자동으로 인식함.
 
+AbstractApplicationContext factory = new GenericXmlApplicationContext("applicationContext.xml");
 
+*************
+// ㄴ위 코드가 하는 일
+// 1. 스프링 컨테이너 구동
+// 2. Spring Bean Configuration file을 읽어들인다.
+// 3. 빈 설정 파일에 기술되어 있는 빈 객체를 생성하여 컨테이너에 모아둔다.
+// 4. 객체를 주입해야 하는 부분에 자동으로 객체 주입을 진행한다.
 
 
+예제 :
+<bean name="http://stv" class="com.kr.co.Samsung" init-method="initSamsung" destroy-method="destroySamsung"/>
+name = 빈객체명, class = 자료형(패키지경로포함.클래스명까지), init-method = 객체생성 후 가장 먼저 실행되는 메소드, destroy-method = 객체생성 후 할일이 끝나면 마지막에 실행되는 메소드
 
 
 
@@ -8877,17 +8944,44 @@ USING (ADDRESS); 또는 ON S.ADDRESS = C.ADDRESS;
 
 
 
+// AnnotationConfigApplictionContext 자바 설정 정보를 읽어오는 클래스
+AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppContext.class);
 
+@Lazy만 기술되면 lazy-init="true" (게으른로딩=지연로딩)
 
+예: @Bean @Lazy
 
 
+ctx => 
+객체명(Bean) : stv || 자료형 : Samsung, TV
+=>즉시로딩, 싱글톤
 
+객체명(Bean) : greeter || 자료형 : Greeter
+=>즉시로딩, prototype
 
+객체명(Bean) : greeter1 || 자료형 : Greeter
+=>지연로딩, 싱글톤
 
+객체명(Bean) : inter || 자료형 : Integer
+=>즉시로딩, 싱글톤
 
 
 
 
+two프로젝트 예제
+스프링 컨테이너 객체 : factory
+객체명(Bean) : sony
+자료형 : SonySpeaker, Speaker
+즉시로딩, 싱글톤
+
+객체명(Bean) : apple
+자료형 : AppleSpeaker, Speaker
+즉시로딩, 싱글톤
+
+객체명(Bean) : tv
+자료형 : SamsungTV, TV
+SamsungTV(sony)로 객체생성
+즉시로딩, 싱글톤
 
 
 
